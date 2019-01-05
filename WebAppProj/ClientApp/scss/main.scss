@@ -1,0 +1,9 @@
+﻿@import 'StyleSheet.scss';
+
+body {
+    background-color: $main-color-Light;
+
+    h1, h2 {
+        color: $main-color-Dark;
+    }
+}

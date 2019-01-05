@@ -18,7 +18,9 @@ module.exports = (env) => {
         module: {
             rules: [
                 { test: /\.tsx?$/, include: /ClientApp/, use: 'awesome-typescript-loader?silent=true' },
-                { test: /\.css$/, use: isDevBuild ? ['style-loader', 'css-loader'] : ExtractTextPlugin.extract({ use: 'css-loader?minimize' }) },
+                //{ test: /\.css$/, use: isDevBuild ? ['style-loader', 'css-loader'] : ExtractTextPlugin.extract({ use: 'css-loader?minimize' }) },
+                //{ test: /\.scss$/, use: ['sass-loader'] },
+                { test: /\.(s*)css$/, use: ['style-loader', 'css-loader', 'sass-loader'] }, //https://medium.com/a-beginners-guide-for-webpack-2/using-sass-9f52e447c5ae
                 { test: /\.(png|jpg|jpeg|gif|svg)$/, use: 'url-loader?limit=25000' }
             ]
         },
