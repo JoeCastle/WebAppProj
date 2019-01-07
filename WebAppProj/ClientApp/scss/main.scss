@@ -1,4 +1,5 @@
 ﻿@import 'StyleSheet.scss';
+@import 'Login.scss';
 
 body {
     background-color: $main-color-Light;
@@ -6,4 +7,28 @@ body {
     h1, h2 {
         color: $main-color-Dark;
     }
+}
+
+html, body, #react-app, .container-fluid {
+    height: 100%;
+}
+
+.container-fluid {
+    display: flex;
+    flex-direction: row;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.main-nav {
+    position: relative;
+    margin: 0px;
+
+    .navbar {
+        margin: 0px;
+    }
+}
+
+.page {
+    width: 100%;
 }

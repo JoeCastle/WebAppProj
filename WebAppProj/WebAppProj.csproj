@@ -20,6 +20,21 @@
     <Content Remove="ClientApp\**" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="ClientApp\components\Login.tsx" />
+    <None Remove="ClientApp\components\register.tsx" />
+    <None Remove="ClientApp\stores\AuthStore.tsx" />
+    <None Remove="ClientApp\stores\AuthStore\AuthStore.ts" />
+    <None Remove="ClientApp\stores\index.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\components\Login.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\register.tsx" />
+    <TypeScriptCompile Include="ClientApp\stores\AuthStore\AuthStore.ts" />
+    <TypeScriptCompile Include="ClientApp\stores\index.ts" />
+  </ItemGroup>
+
   <Target Name="DebugRunWebpack" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('wwwroot\dist') ">
     <!-- Ensure Node.js is installed -->
     <Exec Command="node --version" ContinueOnError="true">

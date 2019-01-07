@@ -12,7 +12,7 @@ export class Counter extends React.Component<RouteComponentProps<{}>, CounterSta
     }
 
     public render() {
-        return <div>
+        return <div className="page login-page">
             <h1>Counter</h1>
 
             <p>This is a simple example of a React component.</p>

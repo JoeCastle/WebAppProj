@@ -1,0 +1,11 @@
+﻿.login-page, .register-page {
+    form {
+        display: flex;
+        flex-direction: column;
+        max-width: 400px;
+
+        .textbox {
+            margin-bottom: 20px;
+        }
+    }
+}
