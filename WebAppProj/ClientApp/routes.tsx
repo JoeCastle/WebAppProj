@@ -1,5 +1,6 @@
 //https://blog.logrocket.com/react-router-dom-set-up-essential-components-parameterized-routes-505dc93642f1
 //https://reacttraining.com/react-router/web/example/no-match
+//https://reacttraining.com/react-router/web/example/auth-workflow
 
 import * as React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
