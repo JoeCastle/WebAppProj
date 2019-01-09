@@ -17,8 +17,10 @@ export const routes = <Layout> {/*switch statement, perhaps move to seperate com
         <Route exact path='/' component={ Home } />
         <Route exact path='/counter' component={ Counter } />
         <Route exact path='/fetchdata' component={FetchData} />
-        <Route exact path='/login' component={Login} /> {/*render={props => <Login {...props}/>}*/}
-        <Route exact path='/register' component={Register} />
+        {/*<Route exact path='/login' component={Login} />*/} {/*render={props => <Login {...props}/>}*/}
+        <Route exact path='/login' render={(props: any) => <Login {...props} />} />
+        {/*<Route exact path='/register' component={Register} />*/}
+        <Route exact path='/register' render={(props: any) => <Register {...props} />} />
         {/*<Redirect to="/404" component={Register}/>*/}
         <Route component={FourZeroFour} />
     </Switch>
