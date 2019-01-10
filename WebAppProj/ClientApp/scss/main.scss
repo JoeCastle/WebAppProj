@@ -1,4 +1,8 @@
-﻿@import 'StyleSheet.scss';
+﻿//Add Autoprefixer with sass
+//https://www.youtube.com/watch?v=1uweInAfAoo
+//https://github.com/postcss/autoprefixer
+
+@import 'StyleSheet.scss';
 @import 'Login.scss';
 
 body {

@@ -25,9 +25,12 @@ class AuthStore {
         //Log the user in.
         if (this.username != "" && this.password != "") {
             this.isLoggedIn = true;
+            localStorage.setItem("userID", this.username);
+            sessionStorage.setItem("userID", this.username);
         } else {
             this.isLoggedIn = false;
         }
+        
     }
 
     @action
@@ -37,6 +40,14 @@ class AuthStore {
         this.password = "";
         this.confirmPassword = "";
         this.isRegistered = false;
+        localStorage.clear;
+    }
+
+    @action
+    public getUserID = (): void => {
+        console.log(localStorage.getItem("userID"));
+        console.log(sessionStorage.getItem("userID"));
+        
     }
 
     @action

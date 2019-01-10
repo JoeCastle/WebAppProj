@@ -28,8 +28,7 @@
 //https://dzone.com/articles/cookie-authentication-with-aspnet-core-20
 //https://www.c-sharpcorner.com/article/asp-net-core-working-with-cookie/
 //http://codereform.com/blog/post/asp-net-core-2-0-cookie-authentication-local-logins/
-
-
+//https://medium.com/@rossbulat/using-cookies-in-react-redux-and-react-router-4-f5f6079905dc
 
 //---------
 //https://stormpath.com/blog/build-a-react-app-with-user-authentication
@@ -119,10 +118,32 @@ https://stackoverflow.com/questions/54100640/authentication-for-dotnet-core-spa-
 https://stackoverflow.com/search?q=asp.net+core+spa+authorization
 https://docs.microsoft.com/en-us/aspnet/core/security/authentication/identity?view=aspnetcore-2.1&tabs=visual-studio
 
-
+LOCAL STORAGE
+https://www.reddit.com/r/reactjs/comments/7n6spn/help_with_jwt_authentication/ - look into local storage. Should be queried on page load, can this be acessed by all components, or the main component and passed down, or a single store that can be accessed by other stores, see how to acess multiple mobx stores.
+Research local storage, session storage, cookies with javascript
+https://dev.to/rdegges/please-stop-using-local-storage-1i04
+Don't store user ids, session ids, jwts etc in local storage as it is not secure.
+Use a "server-side session" and cookies. See: https://dev.to/rdegges/please-stop-using-local-storage-1i04
 
 
 //Up to here
+
+See localStorage or session storage
+https://hackernoon.com/how-to-take-advantage-of-local-storage-in-your-react-projects-a895f2b2d3f2
+https://medium.com/@siobhanpmahoney/local-storage-in-a-react-single-page-application-34ba30fc977d
+https://www.robinwieruch.de/local-storage-react/
+https://www.reddit.com/r/reactjs/comments/83cfka/handling_login_actions_after_authentication/
+https://www.reddit.com/r/reactjs/comments/7n6spn/help_with_jwt_authentication/
+https://www.reddit.com/r/reactjs/comments/6ouuma/using_json_web_tokens_with_react_only_not_redux/
+https://www.reddit.com/r/reactjs/comments/6xpfvi/advice_on_login_authentication/
+https://www.reddit.com/r/reactjs/comments/aajr2q/need_help_with_privateroute/
+https://www.reddit.com/r/reactjs/comments/9ji93d/how_to_handle_login_in_react/
+https://www.reddit.com/r/reactjs/comments/9if3eh/confused_on_implementing_login_system_in_a_react/
+
+
+Could for example store entered values into local storage, if they refresh they keep the entered data.
+Mimic a login system with localStorage. Form sends login details to local storage, uses that to persist the "session".
+End localStorage
 
 Search by single page app (SPA) and authintication/authorization with .net core 2.0
 
@@ -188,6 +209,13 @@ export class Login extends React.Component<Props> {
                     > Login
                 </button>
             </form>
+            <button
+                onClick={
+                    this.getUserID
+                }
+            >
+                Get user id
+            </button>
         </div>;
     }
 
@@ -218,5 +246,9 @@ export class Login extends React.Component<Props> {
         this.props.authStore.onPasswordChange(password);
 
         console.log(this.props.authStore.password);
+    }
+
+    private getUserID = () => {
+        this.props.authStore.getUserID();
     }
 }
