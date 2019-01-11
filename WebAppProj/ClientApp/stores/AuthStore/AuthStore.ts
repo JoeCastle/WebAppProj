@@ -21,7 +21,7 @@ class AuthStore {
     })*/
 
     @action
-    public userLogin = (): void => {
+    public userLogin = async (): Promise<void> => {
         //Validate username and password, potentially do this in the component.
         //Check we exist in database.
         //Log the user in.
@@ -30,14 +30,35 @@ class AuthStore {
             localStorage.setItem("userID", this.username);
             sessionStorage.setItem("userID", this.username);
 
-            debugger;
-
+            //Create data transfer object
             let userLoginDetailsDTO: UserLoginDetails = {
                 username: this.username,
                 password: this.password
             }
 
-            const test = api.loginUser(userLoginDetailsDTO);
+            //Use fetch to call the login controller
+            //await api.loginUser(userLoginDetailsDTO).then(response => alert(response));  
+            const test = await api.loginUser(userLoginDetailsDTO);         
+
+            console.log(test);
+            alert(test);
+
+            //---------------
+            //This works.
+            /*const rawResponse = await fetch('api/Auth/UserLogin', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(userLoginDetailsDTO)
+            });
+            const content = await rawResponse.json();
+
+            console.log(content);
+            alert(content);*/
+
+            //----------------
 
         } else {
             this.isLoggedIn = false;

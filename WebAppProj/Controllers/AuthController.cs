@@ -12,19 +12,19 @@ namespace WebAppProj.Controllers
     public class AuthController : Controller
     {
         [HttpPost("[action]")]
-        public async Task<string> UserLogin(UserLoginDetails userLoginDetails)
+        public string UserLogin([FromBody]UserLoginDetails userLoginDetails)
         {
             if (userLoginDetails.Username != "")
             {
                 Console.WriteLine(userLoginDetails.Username);
             }
 
-            if (userLoginDetails.Username != "")
+            if (userLoginDetails.Password != "")
             {
                 Console.WriteLine(userLoginDetails.Password);
             }
 
-            return "";
+            return "joetestreturn";
         }
 
         [HttpPost("[action]")]
