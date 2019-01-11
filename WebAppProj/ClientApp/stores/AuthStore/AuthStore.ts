@@ -4,6 +4,8 @@
 //https://reactcheatsheet.com/
 
 import { observable, computed, reaction, action } from 'mobx';
+import { api } from '../../api';
+import UserLoginDetails from '../../models/userLoginDetails';
 
 class AuthStore {
     @observable username = "";
@@ -27,6 +29,16 @@ class AuthStore {
             this.isLoggedIn = true;
             localStorage.setItem("userID", this.username);
             sessionStorage.setItem("userID", this.username);
+
+            debugger;
+
+            let userLoginDetailsDTO: UserLoginDetails = {
+                username: this.username,
+                password: this.password
+            }
+
+            const test = api.loginUser(userLoginDetailsDTO);
+
         } else {
             this.isLoggedIn = false;
         }

@@ -1,4 +1,6 @@
-﻿import * as React from 'react';
+﻿//https://dzone.com/articles/aspnet-core-crud-with-reactjs-and-entity-framework
+
+import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import { AuthStore } from '../stores/AuthStore/AuthStore';
 import { inject, observer } from 'mobx-react';

@@ -143,6 +143,9 @@ https://www.reddit.com/r/reactjs/comments/9if3eh/confused_on_implementing_login_
 
 Could for example store entered values into local storage, if they refresh they keep the entered data.
 Mimic a login system with localStorage. Form sends login details to local storage, uses that to persist the "session".
+
+Fake login: https://jonhilton.net/connecting-react-to-asp-net-core-web-api/
+
 End localStorage
 
 Search by single page app (SPA) and authintication/authorization with .net core 2.0
@@ -237,7 +240,7 @@ export class Login extends React.Component<Props> {
 
         this.props.authStore.onUsernameChange(name);
 
-        console.log(this.props.authStore.username);
+        //console.log(this.props.authStore.username);
     }
 
     private onPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -245,7 +248,7 @@ export class Login extends React.Component<Props> {
 
         this.props.authStore.onPasswordChange(password);
 
-        console.log(this.props.authStore.password);
+        //console.log(this.props.authStore.password);
     }
 
     private getUserID = () => {
