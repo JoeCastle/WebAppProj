@@ -7,6 +7,7 @@
 //https://stackoverflow.com/questions/29775797/fetch-post-json-data
 
 import UserLoginDetails from '../models/userLoginDetails';
+import UserDetails from '../models/userDetails';
 
 /*let getJson = async (url: string) => {
     let responseJson = await fetch(url, {
@@ -40,7 +41,7 @@ let postJson = async (url: string, body: any) => {
     }
 }
 
-let loginUser = (userLoginDetails: UserLoginDetails): Promise<string> => {
+let loginUser = (userLoginDetails: UserLoginDetails): Promise<UserDetails> => {
     let url = "api/Auth/UserLogin";
 
     return postJson(url, userLoginDetails);

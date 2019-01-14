@@ -3,9 +3,16 @@
 //https://github.com/pinqy520/mobx-persist
 //https://reactcheatsheet.com/
 
+
+//https://serverless-stack.com/chapters/redirect-on-login-and-logout.html
+
+
 import { observable, computed, reaction, action } from 'mobx';
 import { api } from '../../api';
 import UserLoginDetails from '../../models/userLoginDetails';
+import UserDetails from '../../models/userDetails';
+
+//TODO: Check the validity of the JWT on the server when navigating/on page refresh.
 
 class AuthStore {
     @observable username = "";
@@ -38,10 +45,19 @@ class AuthStore {
 
             //Use fetch to call the login controller
             //await api.loginUser(userLoginDetailsDTO).then(response => alert(response));  
-            const test = await api.loginUser(userLoginDetailsDTO);         
+            let userDetails: UserDetails = await api.loginUser(userLoginDetailsDTO); 
 
-            console.log(test);
-            alert(test);
+            //Promise.resolve(userDetails);
+
+            if (userDetails) {
+                localStorage.setItem('userDetails', JSON.stringify(userDetails)); //consider using a user object that contains username/id, jwt and other info, role and name
+            }
+            console.log(userDetails);
+            console.log(localStorage.getItem('userDetails'));
+
+            //Push location - https://stackoverflow.com/questions/42701129/how-to-push-to-history-in-react-router-v4
+
+            //alert(JSON.stringify(userDetails));      
 
             //---------------
             //This works.
@@ -77,9 +93,11 @@ class AuthStore {
     }
 
     @action
-    public getUserID = (): void => {
+    public logout = (): void => {
         console.log(localStorage.getItem("userID"));
         console.log(sessionStorage.getItem("userID"));
+        localStorage.clear();
+        sessionStorage.clear();
         
     }
 

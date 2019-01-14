@@ -6,7 +6,7 @@ export interface LayoutProps {
     children?: React.ReactNode;
 }
 
-export class Layout extends React.Component<LayoutProps, {}> {
+export class Layout extends React.Component<LayoutProps, {}> { //On page load check jwt, update sessionstorage?
     public render() {
         return <div className='container-fluid'>
             <NavMenu />

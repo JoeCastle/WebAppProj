@@ -29,6 +29,7 @@
 //https://www.c-sharpcorner.com/article/asp-net-core-working-with-cookie/
 //http://codereform.com/blog/post/asp-net-core-2-0-cookie-authentication-local-logins/
 //https://medium.com/@rossbulat/using-cookies-in-react-redux-and-react-router-4-f5f6079905dc
+//https://stackoverflow.com/questions/34360874/how-to-build-authorization-based-systems-with-react
 
 //---------
 //https://stormpath.com/blog/build-a-react-app-with-user-authentication
@@ -161,6 +162,15 @@ ExampleReactMobx
  * https://react.rocks/tag/Login
  * https://medium.com/technoetics/create-basic-login-forms-using-create-react-app-module-in-reactjs-511b9790dede
  * https://serverless-stack.com/chapters/create-a-login-page.html
+ * https://alligator.io/react/simple-authorization/ - client-side
+ * https://www.npmjs.com/package/react-router-role-authorization
+ * https://marmelab.com/react-admin/index.html
+ * https://labnotes.panderalabs.com/access-control-in-a-react-ui-71f1df60f354
+ * https://hackernoon.com/role-based-authorization-in-react-c70bb7641db4
+ * https://github.com/burczu/react-router-role-authorization
+ * https://tylermcginnis.com/react-router-protected-routes-authentication/
+ * https://stackoverflow.com/questions/49390063/how-to-use-role-based-authentication-in-react-router-dom
+ * 
  */
 
 import * as React from 'react';
@@ -214,10 +224,10 @@ export class Login extends React.Component<Props> {
             </form>
             <button
                 onClick={
-                    this.getUserID
+                    this.logout
                 }
             >
-                Get user id
+                Logout
             </button>
         </div>;
     }
@@ -233,6 +243,8 @@ export class Login extends React.Component<Props> {
 
         //Prevent the page from refreshing when the form is submitted
         e.preventDefault();
+        setTimeout(250);
+        this.props.history.push('/');
     }
 
     private onUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -251,7 +263,7 @@ export class Login extends React.Component<Props> {
         //console.log(this.props.authStore.password);
     }
 
-    private getUserID = () => {
-        this.props.authStore.getUserID();
+    private logout = () => {
+        this.props.authStore.logout();
     }
 }

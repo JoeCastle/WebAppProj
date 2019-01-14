@@ -10,10 +10,9 @@
 
 /* Try these examples:
  * http://jasonwatmore.com/post/2018/08/14/aspnet-core-21-jwt-authentication-tutorial-with-example-api
- * http://jasonwatmore.com/post/2018/08/14/aspnet-core-21-jwt-authentication-tutorial-with-example-api
  * http://jasonwatmore.com/post/2017/12/07/react-redux-jwt-authentication-tutorial-example
  * https://www.pointblankdevelopment.com.au/blog/135/react-redux-with-aspnet-core-20-login-registration-tutorial-example
- * https://jonhilton.net/2017/10/11/secure-your-asp.net-core-2.0-api-part-1---issuing-a-jwt/ - https://jonhilton.net/security/apis/secure-your-asp.net-core-2.0-api-part-2---jwt-bearer-authentication/
+ * https://jonhilton.net/2017/10/11/secure-your-asp.net-core-2.0-api-part-1---issuing-a-jwt/ - https://jonhilton.net/security/apis/secure-your-asp.net-core-2.0-api-part-2---jwt-bearer-authentication/ - https://github.com/jonhilt/NetCoreAuth
  * https://jonhilton.net/identify-users-permissions-with-jwts-and-asp-net-core-webapi/
  * https://jonhilton.net/2017/10/07/a-simple-way-to-secure-your-.net-core-2.0-web-app/
  * https://stackoverflow.com/questions/51119926/jwt-authentication-usermanager-getuserasync-returns-null
