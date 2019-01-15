@@ -2,12 +2,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
+//https://stackoverflow.com/questions/49717239/invalidoperationexception-the-authorizationpolicy-named-bearer-was-not-found
+
 namespace WebAppProj.Controllers
 {
-    [Authorize]
+    //[Authorize(JwtBearerDefaults.AuthenticationScheme)]
+    //[Authorize("Trainer")]
+    [Authorize(AuthenticationSchemes = "Bearer")]
+    //[Authorize]
     [Route("api/[controller]")]
     public class SampleDataController : Controller
     {

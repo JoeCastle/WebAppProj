@@ -15,19 +15,32 @@ import { TrainerHome } from './components/TrainerHome';
 import { TraineeHome } from './components/TraineeHome';
 import UserDetails from './models/userDetails';
 
-export const routes = <Layout> {/*switch statement, perhaps move to seperate component*/}
+//TODO:
+/* Experiment with Redirect and <Login>.
+ * Perhaps move routes/switch to seperate component
+ * Try adding routs to components, (Private route) see: https://www.pointblankdevelopment.com.au/blog/135/react-redux-with-aspnet-core-20-login-registration-tutorial-example#private-route-jsx
+ */
+
+export const routes = <Layout>
     <Switch>
-        {/*<Route exact path='/' component={ Home } />*/}
-        <Route exact path='/' render={(props: any) => {
+        <Route exact path='/' component={ Home } />
+        <Route exact path='/home' render={(props: any) => {
             /*let user: UserDetails = JSON.parse(localStorage.getItem('userDetails'));
             const userjson = localStorage.getItem('userDetails');
             let user: UserDetails = JSON.parse(userjson);*/
-            var userJSON = JSON.parse(localStorage.getItem('userDetails'));
+            var userJSON = JSON.parse(localStorage.getItem('userDetails') || '{}');
 
-            if (userJSON.user.userRole == 'Trainer') {
-                return <TrainerHome {...props} />
-            } else if (userJSON.user.userRole == 'Trainee') {
-                return <TraineeHome {...props} />
+            if (Object.keys(userJSON).length != 0) {
+                if (userJSON.user.userRole == 'Trainer') {
+                    return <TrainerHome {...props} />
+                } else if (userJSON.user.userRole == 'Trainee') {
+                    return <TraineeHome {...props} />
+                } else {
+                    return <Redirect to={{
+                        pathname: '/login',
+                        state: { from: props.location }
+                    }} />
+                }
             } else {
                 return <Redirect to={{
                     pathname: '/login',
@@ -37,15 +50,15 @@ export const routes = <Layout> {/*switch statement, perhaps move to seperate com
         }} />
 
         <Route exact path='/login' render={(props: any) => {
-            var userJSON = JSON.parse(localStorage.getItem('userDetails'));
+            var userJSON = JSON.parse(localStorage.getItem('userDetails') || '{}');
 
-            if (userJSON) {
+            if (Object.keys(userJSON).length != 0) {
                 return <Redirect to={{
-                    pathname: '/',
+                    pathname: '/home',
                     state: { from: props.location }
                 }} />
             } else {
-                return <Route exact path='/login' render={(props: any) => <Login {...props} />} />
+                return <Login {...props} />
             }
         }} />
 

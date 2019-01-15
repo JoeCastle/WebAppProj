@@ -12,7 +12,20 @@ export class FetchData extends React.Component<RouteComponentProps<{}>, FetchDat
         super();
         this.state = { forecasts: [], loading: true };
 
-        fetch('api/SampleData/WeatherForecasts')
+        var userJSON = JSON.parse(localStorage.getItem('userDetails') || '{}');
+        let bearer;
+        if (Object.keys(userJSON).length != 0) {
+            bearer = 'Bearer ' + userJSON.user.jwt;
+        } else {
+            var token = '';
+            bearer = 'Bearer ' + token;
+        }       
+
+        fetch('api/SampleData/WeatherForecasts', {
+            headers: {
+                'Authorization': bearer,
+            }
+        })
             .then(response => response.json() as Promise<WeatherForecast[]>)
             .then(data => {
                 this.setState({ forecasts: data, loading: false });

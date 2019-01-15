@@ -232,19 +232,20 @@ export class Login extends React.Component<Props> {
         </div>;
     }
 
-    private formSubmit = () => {
-        
+    private formSubmit = (e: any) => {
+        e.preventDefault();
     }
 
-    private login = (e: any) => {
+    private login = async (e: any) => {
         console.log(this.props.authStore.isLoggedIn);
-        this.props.authStore.userLogin();
+        await this.props.authStore.userLogin();
         console.log(this.props.authStore.isLoggedIn);
 
         //Prevent the page from refreshing when the form is submitted
         e.preventDefault();
-        setTimeout(250);
-        this.props.history.push('/');
+
+        this.props.history.push('/home');
+        
     }
 
     private onUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {

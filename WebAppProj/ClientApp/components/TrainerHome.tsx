@@ -24,7 +24,8 @@ export class TrainerHome extends React.Component<Props> {
         </div>;
     }
 
-    private logout = () => {
-        this.props.authStore.logout();
+    private logout = async () => {
+        await this.props.authStore.userLogout();
+        this.props.history.push('/login');
     }
 }

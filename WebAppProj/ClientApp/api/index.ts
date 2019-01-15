@@ -23,6 +23,16 @@ import UserDetails from '../models/userDetails';
 
 //If not returning value/unexpected token, ensure the correct headers are used
 //See https://stackoverflow.com/questions/37269808/react-js-uncaught-in-promise-syntaxerror-unexpected-token-in-json-at-posit
+
+// TODO: For authorization - see the following: 
+/* https://www.pointblankdevelopment.com.au/blog/135/react-redux-with-aspnet-core-20-login-registration-tutorial-example#auth-header-js
+ * https://medium.com/@maison.moa/using-jwt-json-web-tokens-to-authorize-users-and-protect-api-routes-3e04a1453c3e
+ * https://stackoverflow.com/questions/47878735/how-to-send-jwt-token-with-fetch-and-cors-to-an-express-server-in-authorization
+ * https://www.youtube.com/watch?v=uO8OreL0Ml4
+ * https://github.com/dwyl/learn-json-web-tokens
+ * 
+ * Send JWT with requests, decode it on server to check user permission. (Return ok or not ok)
+ */
 let postJson = async (url: string, body: any) => {
     let responseJson = await fetch(url, {
         credentials: 'include',

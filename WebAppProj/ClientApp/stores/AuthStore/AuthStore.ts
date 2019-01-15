@@ -11,6 +11,7 @@ import { observable, computed, reaction, action } from 'mobx';
 import { api } from '../../api';
 import UserLoginDetails from '../../models/userLoginDetails';
 import UserDetails from '../../models/userDetails';
+//import browserHistory from '../../history';
 
 //TODO: Check the validity of the JWT on the server when navigating/on page refresh.
 
@@ -55,6 +56,8 @@ class AuthStore {
             console.log(userDetails);
             console.log(localStorage.getItem('userDetails'));
 
+            //browserHistory.push('/home');
+
             //Push location - https://stackoverflow.com/questions/42701129/how-to-push-to-history-in-react-router-v4
 
             //alert(JSON.stringify(userDetails));      
@@ -83,13 +86,17 @@ class AuthStore {
     }
 
     @action
-    public userLogout = (): void => {
+    public userLogout = async (): Promise<void> => {
         this.isLoggedIn = false;
         this.username = "";
         this.password = "";
         this.confirmPassword = "";
         this.isRegistered = false;
-        localStorage.clear;
+        localStorage.clear();
+        sessionStorage.clear();
+        //debugger;
+        
+        
     }
 
     @action

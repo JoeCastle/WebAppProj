@@ -13,6 +13,7 @@ using Microsoft.IdentityModel.Tokens;
 using WebAppProj.Data;
 
 //https://medium.com/@alexandarzaharyan/jwt-authentication-with-net-core-2-1-and-react-f12a9725c3bc
+//https://www.meziantou.net/2018/04/30/jwt-authentication-with-asp-net-core
 
 namespace WebAppProj.Controllers
 {

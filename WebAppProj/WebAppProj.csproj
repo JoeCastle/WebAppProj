@@ -27,10 +27,12 @@
     <None Remove="ClientApp\components\register.tsx" />
     <None Remove="ClientApp\components\TraineeHome.tsx" />
     <None Remove="ClientApp\components\TrainerHome.tsx" />
+    <None Remove="ClientApp\history.ts" />
     <None Remove="ClientApp\models\userDetails.ts" />
     <None Remove="ClientApp\stores\AuthStore.tsx" />
     <None Remove="ClientApp\stores\AuthStore\AuthStore.ts" />
     <None Remove="ClientApp\stores\index.ts" />
+    <None Remove="ClientApp\stores\TraineeStore\TraineeStore.ts" />
     <None Remove="ClientApp\userLoginDetails.ts" />
   </ItemGroup>
 
@@ -41,10 +43,12 @@
     <TypeScriptCompile Include="ClientApp\components\Register.tsx" />
     <TypeScriptCompile Include="ClientApp\components\TraineeHome.tsx" />
     <TypeScriptCompile Include="ClientApp\components\TrainerHome.tsx" />
+    <TypeScriptCompile Include="ClientApp\history.ts" />
     <TypeScriptCompile Include="ClientApp\models\userDetails.ts" />
     <TypeScriptCompile Include="ClientApp\stores\AuthStore\AuthStore.ts" />
     <TypeScriptCompile Include="ClientApp\stores\index.ts" />
     <TypeScriptCompile Include="ClientApp\models\userLoginDetails.ts" />
+    <TypeScriptCompile Include="ClientApp\stores\TraineeStore\TraineeStore.ts" />
   </ItemGroup>
 
   <Target Name="DebugRunWebpack" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('wwwroot\dist') ">
