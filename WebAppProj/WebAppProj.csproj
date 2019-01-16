@@ -25,6 +25,7 @@
     <None Remove="ClientApp\components\FourZeroFour.tsx" />
     <None Remove="ClientApp\components\Login.tsx" />
     <None Remove="ClientApp\components\register.tsx" />
+    <None Remove="ClientApp\components\RouteContainer.tsx" />
     <None Remove="ClientApp\components\TraineeHome.tsx" />
     <None Remove="ClientApp\components\TrainerHome.tsx" />
     <None Remove="ClientApp\history.ts" />
@@ -41,6 +42,7 @@
     <TypeScriptCompile Include="ClientApp\components\FourZeroFour.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Login.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Register.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\RouteContainer.tsx" />
     <TypeScriptCompile Include="ClientApp\components\TraineeHome.tsx" />
     <TypeScriptCompile Include="ClientApp\components\TrainerHome.tsx" />
     <TypeScriptCompile Include="ClientApp\history.ts" />

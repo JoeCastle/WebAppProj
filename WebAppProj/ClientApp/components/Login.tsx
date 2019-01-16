@@ -265,6 +265,6 @@ export class Login extends React.Component<Props> {
     }
 
     private logout = () => {
-        this.props.authStore.logout();
+        this.props.authStore.userLogout();
     }
 }

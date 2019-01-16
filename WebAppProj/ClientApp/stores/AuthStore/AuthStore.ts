@@ -100,15 +100,6 @@ class AuthStore {
     }
 
     @action
-    public logout = (): void => {
-        console.log(localStorage.getItem("userID"));
-        console.log(sessionStorage.getItem("userID"));
-        localStorage.clear();
-        sessionStorage.clear();
-        
-    }
-
-    @action
     public userRegister = (): void => {
         //Validate username and password, potentially do this in the component.
         //Check that the password and conform password match.
@@ -121,6 +112,12 @@ class AuthStore {
         } else {
             this.isRegistered = false;
         }
+    }
+
+    @action
+    public isUserLoggedIn = (): void => {
+        this.isLoggedIn = true;
+        console.log("joetest7" + this.isLoggedIn);
     }
 
     //Figure out how to put this into one function
