@@ -56,11 +56,27 @@ namespace WebAppProj.Controllers
                 //Generate credentials using secret key.
                 var credentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
 
+                var role = "";
+
+                //Set user role
+                if (userLoginDetails.Username == "jim")
+                {
+                    role = "Trainer";
+                }
+                else
+                {
+                    role = "Trainee";
+                }
+
                 //Create claims.
                 var claims = new[]
                 {
-                    new Claim(ClaimTypes.Name, userLoginDetails.Username),
-                    new Claim(ClaimTypes.Role, "Trainer"),//Get from database
+                    new Claim("UserID", "User id"),//Get from database
+                    new Claim("Username", userLoginDetails.Username),
+                    new Claim(ClaimTypes.Role, role),//Get from database
+                    new Claim("Firstname", "jimmy"),//Get from database
+                    new Claim("Surname", "jommy"),//Get from database
+
                 };
 
                 //Create JWT.
@@ -72,22 +88,13 @@ namespace WebAppProj.Controllers
                     signingCredentials: credentials);
 
                 var jsonWebTokenString = new JwtSecurityTokenHandler().WriteToken(jsonWebToken);
-                var role = "";
-
-                //Set user role
-                if (userLoginDetails.Username == "jim")
-                {
-                    role = "Trainer";
-                } else
-                {
-                    role = "Trainee";
-                }
+                
 
                 //Create user
                 var user = new UserDetails
                 {
                     UserID = "User id",
-                    Username = "User name",
+                    Username = userLoginDetails.Username,
                     UserRole = role,
                     Firstname = "jimmy",
                     Surname = "jommy",
@@ -105,13 +112,59 @@ namespace WebAppProj.Controllers
             return BadRequest("Login credentials invalid");
         }
 
-        /*[HttpPost("[action]")]
-        public async Task<string> UserLogout()
+        [AllowAnonymous]
+        [HttpPost("[action]")]
+        public IActionResult VerifyJWT([FromBody] string jsonWebTokenString)//Mighy need different type.
         {
-            return "";
+            var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWT:SecretKey"]));
+
+            SecurityToken securityToken;
+
+            var tokenValidationParameters = new TokenValidationParameters
+            {
+                IssuerSigningKey = secretKey,
+                ValidAudience = Configuration["JWT:ValidAudience"],
+                ValidIssuer = Configuration["JWT:ValidIssuer"]
+            };
+
+            ClaimsPrincipal claimsPrincipal = new JwtSecurityTokenHandler().ValidateToken(jsonWebTokenString, tokenValidationParameters, out securityToken);
+
+            if (claimsPrincipal == null) {
+                return BadRequest("Invalid JWT");
+            }
+
+            ClaimsIdentity identity = (ClaimsIdentity)claimsPrincipal.Identity;
+
+            if (identity == null)
+            {
+                return BadRequest("Invalid JWT");
+            }
+
+            Claim userIDClaim = identity.FindFirst("UserID");
+            Claim usernameClaim = identity.FindFirst("Username");
+            Claim roleClaim = identity.FindFirst(ClaimTypes.Role);
+            Claim firstnameClaim = identity.FindFirst("Firstname");
+            Claim surnameClaim = identity.FindFirst("Surname");
+
+            //Create user
+            var user = new UserDetails
+            {
+                UserID = userIDClaim.Value,
+                Username = usernameClaim.Value,
+                UserRole = roleClaim.Value,
+                Firstname = firstnameClaim.Value,
+                Surname = surnameClaim.Value,
+                JWT = jsonWebTokenString
+            };
+            //return BadRequest("Invalid JWT");
+            //Return OK result with user
+            return Ok(new
+            {
+                user
+            });
         }
 
-        [HttpPost("[action]")]
+        /*[HttpPost("[action]")]
         public async Task<string> UserRegister()
         {
             return "";

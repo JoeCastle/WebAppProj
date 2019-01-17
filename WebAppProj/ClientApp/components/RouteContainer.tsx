@@ -22,7 +22,7 @@ interface Props extends RouteComponentProps<any>, React.Props<any> {
 @observer
 export class RouteContainer extends React.Component<Props> {
     componentDidMount() {
-        //this.props.authStore.isUserLoggedIn();
+        this.props.authStore.validateJWT();
         //TODO: On page refresh, check that the JWT is still valid, if so, update the state.
     }
 
@@ -40,7 +40,7 @@ export class RouteContainer extends React.Component<Props> {
                     var userJSON = JSON.parse(localStorage.getItem('userDetails') || '{}'); //Replace with not null operator:
                     //https://stackoverflow.com/questions/46915002/argument-of-type-string-null-is-not-assignable-to-parameter-of-type-string
                     //https://github.com/Microsoft/TypeScript/wiki/What's-new-in-TypeScript#non-null-assertion-operator
-
+                    
                     if (Object.keys(userJSON).length != 0) {
                         if (userJSON.user.userRole == 'Trainer') {
                             return <TrainerHome {...props} />

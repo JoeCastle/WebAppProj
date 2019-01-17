@@ -48,7 +48,23 @@ let postJson = async (url: string, body: any) => {
         return responseJson.json();
     } else if (responseJson.status === 204) {
         return null;
+    } else { //400 for bad request
+        return responseJson.status;
     }
+}
+
+let postJsonResponse = async (url: string, body: any) => {
+    let responseJson = await fetch(url, {
+        credentials: 'include',
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body)
+    });
+
+    return responseJson;
 }
 
 let loginUser = (userLoginDetails: UserLoginDetails): Promise<UserDetails> => {
@@ -57,6 +73,13 @@ let loginUser = (userLoginDetails: UserLoginDetails): Promise<UserDetails> => {
     return postJson(url, userLoginDetails);
 }
 
+let verifyJWT = (jsonWebToken: string): Promise<Response> => {
+    let url = "api/Auth/VerifyJWT";
+
+    return postJsonResponse(url, jsonWebToken);
+}
+
 export const api = {
     loginUser,
+    verifyJWT,
 }

@@ -114,10 +114,32 @@ class AuthStore {
         }
     }
 
+    private setUserObservables = (): void => {
+        let userJSON = JSON.parse(localStorage.getItem("userDetails") || '{}');
+
+        this.isLoggedIn = true;
+        this.username = JSON.stringify(userJSON.user.username);
+    }
+
     @action
-    public isUserLoggedIn = (): void => {
+    public validateJWT = async (): Promise<void> => {
         this.isLoggedIn = true;
         console.log("joetest7" + this.isLoggedIn);
+
+        let userJSON = JSON.parse(localStorage.getItem("userDetails") || '{}');
+
+        debugger;
+
+        if (Object.keys(userJSON).length != 0) {
+            let responseJson = await api.verifyJWT(JSON.stringify(userJSON.user.jwt));//recieves 500 error.
+            if (responseJson.status === 200) {
+                this.setUserObservables();
+            } else { //400 for bad request
+                this.userLogout();
+            }
+        } else {
+            this.userLogout();
+        }
     }
 
     //Figure out how to put this into one function
