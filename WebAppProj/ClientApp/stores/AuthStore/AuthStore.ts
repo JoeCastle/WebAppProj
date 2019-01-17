@@ -114,6 +114,7 @@ class AuthStore {
         }
     }
 
+    @action
     private setUserObservables = (): void => {
         let userJSON = JSON.parse(localStorage.getItem("userDetails") || '{}');
 
@@ -125,13 +126,11 @@ class AuthStore {
     public validateJWT = async (): Promise<void> => {
         this.isLoggedIn = true;
         console.log("joetest7" + this.isLoggedIn);
-
+        //check if local storage/jwt exists
         let userJSON = JSON.parse(localStorage.getItem("userDetails") || '{}');
 
-        debugger;
-
         if (Object.keys(userJSON).length != 0) {
-            let responseJson = await api.verifyJWT(JSON.stringify(userJSON.user.jwt));//recieves 500 error.
+            let responseJson = await api.verifyJWT(userJSON.user.jwt);//recieves 500 error.
             if (responseJson.status === 200) {
                 this.setUserObservables();
             } else { //400 for bad request
