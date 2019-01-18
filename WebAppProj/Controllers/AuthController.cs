@@ -116,10 +116,10 @@ namespace WebAppProj.Controllers
         [HttpPost("[action]")]
         public IActionResult VerifyJWT([FromBody] string jsonWebTokenString)//Mighy need different type.
         {
+            //Get secret key from appsettings.json.
             var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWT:SecretKey"]));
 
-            SecurityToken securityToken;
-
+            //Set token validation parameters.
             var tokenValidationParameters = new TokenValidationParameters
             {
                 IssuerSigningKey = secretKey,
@@ -127,12 +127,16 @@ namespace WebAppProj.Controllers
                 ValidIssuer = Configuration["JWT:ValidIssuer"]
             };
 
+            //Generate claims principal.
+            SecurityToken securityToken;
             ClaimsPrincipal claimsPrincipal = new JwtSecurityTokenHandler().ValidateToken(jsonWebTokenString, tokenValidationParameters, out securityToken);
 
-            if (claimsPrincipal == null) {
+            if (claimsPrincipal == null)
+            {
                 return BadRequest("Invalid JWT");
             }
 
+            //Generate claims identity.
             ClaimsIdentity identity = (ClaimsIdentity)claimsPrincipal.Identity;
 
             if (identity == null)
@@ -140,6 +144,7 @@ namespace WebAppProj.Controllers
                 return BadRequest("Invalid JWT");
             }
 
+            //Get claims from identity.
             Claim userIDClaim = identity.FindFirst("UserID");
             Claim usernameClaim = identity.FindFirst("Username");
             Claim roleClaim = identity.FindFirst(ClaimTypes.Role);
@@ -156,7 +161,7 @@ namespace WebAppProj.Controllers
                 Surname = surnameClaim.Value,
                 JWT = jsonWebTokenString
             };
-            //return BadRequest("Invalid JWT");
+
             //Return OK result with user
             return Ok(new
             {

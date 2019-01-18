@@ -18,12 +18,16 @@ interface Props extends RouteComponentProps<any>, React.Props<any> {
     authStore: AuthStore
 }
 
+//https://auth0.com/blog/react-router-4-practical-tutorial/
+//https://logrocket.com/blog/jwt-authentication-best-practices/
+//https://stormpath.com/blog/where-to-store-your-jwts-cookies-vs-html5-web-storage
+
+//@withRouter
 @inject('authStore')
 @observer
 export class RouteContainer extends React.Component<Props> {
-    componentDidMount() {
-        this.props.authStore.validateJWT();
-        //TODO: On page refresh, check that the JWT is still valid, if so, update the state.
+    async componentDidMount() {
+        await this.props.authStore.validateJWT();
     }
 
     public render() {
@@ -31,16 +35,15 @@ export class RouteContainer extends React.Component<Props> {
 
         return <div className="page-parent">
             <Route path={`${match.url}`} render={(props: any) => <NavMenu {...props} />} />
+
             <Switch>
                 <Route exact path={`${match.url}`} component={Home} />
+
+                {/*The checking here will be potentially moved to the Home component if the TraineeHome and TrainerHome are merged*/}
                 <Route exact path={`${match.url}home`} render={(props: any) => {
-                    /*let user: UserDetails = JSON.parse(localStorage.getItem('userDetails'));
-                    const userjson = localStorage.getItem('userDetails');
-                    let user: UserDetails = JSON.parse(userjson);*/
-                    var userJSON = JSON.parse(localStorage.getItem('userDetails') || '{}'); //Replace with not null operator:
-                    //https://stackoverflow.com/questions/46915002/argument-of-type-string-null-is-not-assignable-to-parameter-of-type-string
-                    //https://github.com/Microsoft/TypeScript/wiki/What's-new-in-TypeScript#non-null-assertion-operator
-                    
+
+                    var userJSON = JSON.parse(localStorage.getItem('userDetails') || '{}');
+
                     if (Object.keys(userJSON).length != 0) {
                         if (userJSON.user.userRole == 'Trainer') {
                             return <TrainerHome {...props} />
@@ -73,23 +76,9 @@ export class RouteContainer extends React.Component<Props> {
                     }
                 }} />
 
-
                 <Route exact path={`${match.url}counter`} component={Counter} />
                 <Route exact path={`${match.url}fetchdata`} component={FetchData} />
-                {/*<Route exact path='/login' component={Login} />*/} {/*render={props => <Login {...props}/>}*/}
-                {/* <Route exact path='/login' render={(props: any) => <Login {...props} />} />*/}
-                {/*<Route exact path='/register' component={Register} />*/}
                 <Route exact path='/register' render={(props: any) => <Register {...props} />} />
-                {/*<Redirect to="/404" component={Register}/>*/}
-
-                {/*<Route exact path='/' render={props => ( //if role trainer else if role trainee
-            localStorage.getItem('userDetails')
-                ? <TrainerHome {...props} />
-                : <Redirect to={{ pathname: '/login', state: { from: props.location } }} />
-        )} />*/}
-
-
-
                 <Route component={FourZeroFour} />
             </Switch>
         </div>;
