@@ -21,6 +21,14 @@ interface Props extends RouteComponentProps<any>, React.Props<any> {
 //https://auth0.com/blog/react-router-4-practical-tutorial/
 //https://logrocket.com/blog/jwt-authentication-best-practices/
 //https://stormpath.com/blog/where-to-store-your-jwts-cookies-vs-html5-web-storage
+//http://qaru.site/questions/2456228/react-typescript-hoc-passing-component-as-the-prop
+//https://www.onedot.com/blog/tricks-with-redux-and-react-router
+//https://stackoverflow.com/questions/53104165/implement-react-router-privateroute-in-typescript-project
+//https://github.com/mhaagens/react-mobx-react-router4-boilerplate
+//https://github.com/mhaagens/react-mobx-react-router4-boilerplate
+//https://alexhisen.gitbooks.io/mobx-recipes/content/observable-based-routing.html
+//https://www.google.com/search?rlz=1C1CHBF_en-GBGB755GB755&ei=YyVCXPjgIp2E1fAPov2nqAQ&q=react+mobx+role+based+routing&oq=react+mobx+role+based+routing&gs_l=psy-ab.3...2523.3211..3347...0.0..0.203.693.5j1j1......0....1..gws-wiz.......0i71j33i21j33i160.2rtnNABkmXc
+
 
 //@withRouter
 @inject('authStore')

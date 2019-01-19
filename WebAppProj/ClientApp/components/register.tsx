@@ -40,7 +40,7 @@ export class Register extends React.Component<Props> {
         return <div className="page register-page">
             <h1>This is the register page</h1>
             <p>Please register with your details below</p>
-            <form onSubmit={this.formsubmit}>
+            <form onSubmit={this.formSubmit}>
                 <label htmlFor='username'>Username:</label>
                 <input
                     className="textbox"
@@ -49,10 +49,6 @@ export class Register extends React.Component<Props> {
                     placeholder='Username'
                     autoComplete='off'
                     required
-                    /*onChange={(e) => {
-                        this.props.actions.setFieldValue('email', e.target.value);
-                    }}*/
-                    //value={this.props.email}
                     onChange={this.onUsernameChange}
 
                 />
@@ -73,9 +69,24 @@ export class Register extends React.Component<Props> {
                     type='password'
                     placeholder='Confirm password'
                     autoComplete='off'
-                    onChange={this.onConformPasswordChange}
+                    onChange={this.onConfirmPasswordChange}
                     required
                 />
+
+                <label htmlFor='role'>Role:</label>
+                <select
+                    id='role'
+                    value={this.props.authStore.userRole}
+                    onChange={(e) => {
+                        this.onUserRoleChange(e);
+                        }}
+                    required
+                >
+                    <option value="">Please select...</option>
+                    <option value="trainer">Trainer</option>
+                    <option value="trainee">Trainee</option>
+                </select>
+
                 <button className='register-button'
                     onClick={
                         this.register
@@ -86,38 +97,47 @@ export class Register extends React.Component<Props> {
         </div>;
     }
 
-    private formsubmit = () => {
-
+    private formSubmit = (e: any) => {
+        e.preventDefault();
     }
 
-    private register = (e: any) => {
+    private register = async (e: any) => {
         console.log(this.props.authStore.isRegistered);
-        this.props.authStore.userRegister();
+        let authenticated = await this.props.authStore.userRegister();
         console.log(this.props.authStore.isRegistered);
+
+        //Prevent the page from refreshing when the form is submitted
         e.preventDefault();
+
+        if (authenticated) {
+            this.props.history.push('/login');
+            alert("You have now registered, please login.");
+        } else {
+            return false;
+        }
     }
 
     private onUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         let name = e.target.value;
 
         this.props.authStore.onUsernameChange(name);
-
-        console.log(this.props.authStore.username);
     }
 
     private onPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         let password = e.target.value;
 
         this.props.authStore.onPasswordChange(password);
-
-        console.log(this.props.authStore.password);
     }
 
-    private onConformPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    private onConfirmPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         let confirmPassword = e.target.value;
 
         this.props.authStore.onConfirmPasswordChange(confirmPassword);
+    }
 
-        console.log(this.props.authStore.confirmPassword);
+    private onUserRoleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        let userRole = e.target.value;
+
+        this.props.authStore.onUserRoleChange(userRole);
     }
 }

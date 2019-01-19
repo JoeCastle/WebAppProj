@@ -76,7 +76,6 @@ namespace WebAppProj.Controllers
                     new Claim(ClaimTypes.Role, role),//Get from database
                     new Claim("Firstname", "jimmy"),//Get from database
                     new Claim("Surname", "jommy"),//Get from database
-
                 };
 
                 //Create JWT.
@@ -89,7 +88,6 @@ namespace WebAppProj.Controllers
 
                 var jsonWebTokenString = new JwtSecurityTokenHandler().WriteToken(jsonWebToken);
                 
-
                 //Create user
                 var user = new UserDetails
                 {
@@ -110,6 +108,62 @@ namespace WebAppProj.Controllers
 
             //Return bad request.
             return BadRequest("Login credentials invalid");
+        }
+
+        [AllowAnonymous]
+        [HttpPost("[action]")]
+        public bool UserRegister([FromBody] UserRegisterDetails userRegisterDetails)
+        {
+            if (userRegisterDetails.Username != "" && userRegisterDetails.Password != "") //Check the database
+            {
+                ////Get secret key from appsettings.json.
+                //var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWT:SecretKey"]));
+
+                ////Generate credentials using secret key.
+                //var credentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
+
+                ////Create claims.
+                //var claims = new[]
+                //{
+                //    new Claim("UserID", "User id"),//Get from database
+                //    new Claim("Username", userRegisterDetails.Username),
+                //    new Claim(ClaimTypes.Role, userRegisterDetails.UserRole),//Get from database
+                //    new Claim("Firstname", "jimmy"),//Get from database
+                //    new Claim("Surname", "jommy"),//Get from database
+                //};
+
+                ////Create JWT.
+                //var jsonWebToken = new JwtSecurityToken(
+                //    issuer: Configuration["JWT:ValidIssuer"],
+                //    audience: Configuration["JWT:ValidAudience"],
+                //    claims: claims,
+                //    expires: DateTime.Now.AddMinutes(60),
+                //    signingCredentials: credentials);
+
+                //var jsonWebTokenString = new JwtSecurityTokenHandler().WriteToken(jsonWebToken);
+
+                ////Create user
+                //var user = new UserDetails
+                //{
+                //    UserID = "User id",
+                //    Username = userRegisterDetails.Username,
+                //    UserRole = userRegisterDetails.UserRole,
+                //    Firstname = "jimmy",
+                //    Surname = "jommy",
+                //    JWT = jsonWebTokenString
+                //};
+
+                ////Return OK result with user
+                //return Ok(new
+                //{
+                //    user
+                //});
+                return true;
+            }
+
+            //Return bad request.
+            //return BadRequest("Login credentials invalid");
+            return false;
         }
 
         [AllowAnonymous]

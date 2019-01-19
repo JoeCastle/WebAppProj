@@ -10,6 +10,7 @@
 import { observable, computed, reaction, action } from 'mobx';
 import { api } from '../../api';
 import UserLoginDetails from '../../models/userLoginDetails';
+import UserRegisterDetails from '../../models/userRegisterDetails';
 import UserDetails from '../../models/userDetails';
 //import browserHistory from '../../history';
 
@@ -21,6 +22,7 @@ class AuthStore {
     @observable confirmPassword = "";
     @observable isLoggedIn = false;
     @observable isRegistered = false;
+    @observable userRole = "";
 
     /*@observable user = ({
         username: "",
@@ -29,15 +31,12 @@ class AuthStore {
     })*/
 
     @action
-    public userLogin = async (): Promise<void> => {
+    public userLogin = async (): Promise<boolean> => {
         //Validate username and password, potentially do this in the component.
         //Check we exist in database.
         //Log the user in.
         if (this.username != "" && this.password != "") {
-            this.isLoggedIn = true;
-            localStorage.setItem("userID", this.username);
-            sessionStorage.setItem("userID", this.username);
-
+            
             //Create data transfer object
             let userLoginDetailsDTO: UserLoginDetails = {
                 username: this.username,
@@ -45,16 +44,22 @@ class AuthStore {
             }
 
             //Use fetch to call the login controller
-            //await api.loginUser(userLoginDetailsDTO).then(response => alert(response));  
-            let userDetails: UserDetails = await api.loginUser(userLoginDetailsDTO); 
-
-            //Promise.resolve(userDetails);
-
+            let userDetails: UserDetails = await api.loginUser(userLoginDetailsDTO);
+            
+            //Check response
             if (userDetails) {
+                this.setIsLoggedIn(true);
                 localStorage.setItem('userDetails', JSON.stringify(userDetails)); //consider using a user object that contains username/id, jwt and other info, role and name
+                console.log(userDetails);
+                console.log(localStorage.getItem('userDetails'));
+                return true;
+            } else {
+                console.log(userDetails);
+                console.log(localStorage.getItem('userDetails'));
+                this.setIsLoggedIn(false);
+                return false;
             }
-            console.log(userDetails);
-            console.log(localStorage.getItem('userDetails'));
+            
 
             //browserHistory.push('/home');
 
@@ -80,7 +85,8 @@ class AuthStore {
             //----------------
 
         } else {
-            this.isLoggedIn = false;
+            this.setIsLoggedIn(false);
+            return false;
         }
         
     }
@@ -94,23 +100,45 @@ class AuthStore {
         this.isRegistered = false;
         localStorage.clear();
         sessionStorage.clear();
-        //debugger;
-        
-        
     }
 
     @action
-    public userRegister = (): void => {
+    public userRegister = async (): Promise<boolean> => {
         //Validate username and password, potentially do this in the component.
         //Check that the password and conform password match.
         //Check that these credentials don't already exist.
         //Add user credentials to database.
         //Log the user in.
 
-        if (this.username != "" && this.password != "" && this.confirmPassword != "") {
-            this.isRegistered = true;
+
+        //Change to this format:
+        //if (checkfail) then return false
+        //if (checkfail) then return false
+        //if (authenticated) then return true
+        //else return false
+
+        if (this.username != "" && this.password != "" && this.confirmPassword != "" && this.userRole != "") {
+            //Create data transfer object
+            let userRegisterDetailsDTO: UserRegisterDetails = {
+                username: this.username,
+                password: this.password,
+                userRole: this.userRole
+            }
+
+            //Use fetch to call the login controller
+            let isRegistered = await api.registerUser(userRegisterDetailsDTO);
+
+            //Check response
+            if (isRegistered) {
+                this.setIsRegistered(true);
+                return true;
+            } else {
+                this.setIsRegistered(false);
+                return false;
+            }
         } else {
-            this.isRegistered = false;
+            this.setIsRegistered(false);
+            return false;
         }
     }
 
@@ -118,14 +146,14 @@ class AuthStore {
     private setUserObservables = (): void => {
         let userJSON = JSON.parse(localStorage.getItem("userDetails") || '{}');
 
-        this.isLoggedIn = true;
+        this.setIsLoggedIn(true);
         this.username = JSON.stringify(userJSON.user.username);
     }
 
     @action
     public validateJWT = async (): Promise<void> => {
-        this.isLoggedIn = true;
-        console.log("joetest7" + this.isLoggedIn);
+        this.setIsLoggedIn(true);
+        
         //check if local storage/jwt exists
         let userJSON = JSON.parse(localStorage.getItem("userDetails") || '{}');
 
@@ -139,6 +167,16 @@ class AuthStore {
         } else {
             this.userLogout();
         }
+    }
+
+    @action
+    private setIsLoggedIn = (isLoggedIn: boolean): void => {
+        this.isLoggedIn = isLoggedIn;
+    }
+
+    @action
+    private setIsRegistered = (isRegistered: boolean): void => {
+        this.isRegistered = isRegistered;
     }
 
     //Figure out how to put this into one function
@@ -155,6 +193,11 @@ class AuthStore {
     @action
     public onConfirmPasswordChange = (confirmPassword: string): void => {
         this.confirmPassword = confirmPassword;
+    }
+
+    @action
+    public onUserRoleChange = (userRole: string): void => {
+        this.userRole = userRole;
     }
 }
 

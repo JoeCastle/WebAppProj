@@ -7,6 +7,7 @@
 //https://stackoverflow.com/questions/29775797/fetch-post-json-data
 
 import UserLoginDetails from '../models/userLoginDetails';
+import UserRegisterDetails from '../models/userRegisterDetails';
 import UserDetails from '../models/userDetails';
 
 /*let getJson = async (url: string) => {
@@ -46,10 +47,8 @@ let postJson = async (url: string, body: any) => {
 
     if (responseJson.status === 200) {
         return responseJson.json();
-    } else if (responseJson.status === 204) {
+    } else {
         return null;
-    } else { //400 for bad request
-        return responseJson.status;
     }
 }
 
@@ -73,6 +72,12 @@ let loginUser = (userLoginDetails: UserLoginDetails): Promise<UserDetails> => {
     return postJson(url, userLoginDetails);
 }
 
+let registerUser = (userResigterDetails: UserRegisterDetails): Promise<boolean> => {
+    let url = "api/Auth/UserRegister";
+
+    return postJson(url, userResigterDetails);
+}
+
 let verifyJWT = (jsonWebToken: string): Promise<Response> => {
     let url = "api/Auth/VerifyJWT";
 
@@ -81,5 +86,6 @@ let verifyJWT = (jsonWebToken: string): Promise<Response> => {
 
 export const api = {
     loginUser,
+    registerUser,
     verifyJWT,
 }

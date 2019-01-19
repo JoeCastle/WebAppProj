@@ -238,14 +238,17 @@ export class Login extends React.Component<Props> {
 
     private login = async (e: any) => {
         console.log(this.props.authStore.isLoggedIn);
-        await this.props.authStore.userLogin();
+        let authenticated = await this.props.authStore.userLogin();
         console.log(this.props.authStore.isLoggedIn);
 
         //Prevent the page from refreshing when the form is submitted
         e.preventDefault();
 
-        this.props.history.push('/home');
-        
+        if (authenticated) {
+            this.props.history.push('/home');
+        } else {
+            return false;
+        }
     }
 
     private onUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
