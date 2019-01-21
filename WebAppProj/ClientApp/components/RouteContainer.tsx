@@ -94,3 +94,30 @@ export class RouteContainer extends React.Component<Props> {
 
 
 }
+
+
+//{
+//    this.props.authStore.isAuthenticated &&
+//    <Route exact path={`${match.url}home`} render={(props: any) => {
+
+//        var userJSON = JSON.parse(localStorage.getItem('userDetails') || '{}');
+
+//        if (Object.keys(userJSON).length != 0) {
+//            if (userJSON.user.userRole == 'Trainer') {
+//                return <TrainerHome {...props} />
+//            } else if (userJSON.user.userRole == 'Trainee') {
+//                return <TraineeHome {...props} />
+//            } else {
+//                return <Redirect to={{
+//                    pathname: '/login',
+//                    state: { from: props.location }
+//                }} />
+//            }
+//        } else {
+//            return <Redirect to={{
+//                pathname: '/login',
+//                state: { from: props.location }
+//            }} />
+//        }
+//    }} />
+//}

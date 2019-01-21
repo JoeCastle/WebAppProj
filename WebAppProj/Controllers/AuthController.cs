@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Diagnostics;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
@@ -110,10 +111,59 @@ namespace WebAppProj.Controllers
             return BadRequest("Login credentials invalid");
         }
 
+        //https://www.google.com/search?rlz=1C1CHBF_en-GBGB755GB755&ei=JtVDXNvyJJOF1fAPp5KVuA8&q=asp.net+core+2.0+hash+and+salt+password&oq=asp.net+core+2.0+hash+and+salt+password&gs_l=psy-ab.3...3460.4283..4443...0.0..0.46.172.4......0....1..gws-wiz.......0i71j33i21.HdLxHPMTG9I
+        //https://stackoverflow.com/questions/1054022/best-way-to-store-password-in-database
+        //https://stackoverflow.com/questions/53578182/best-way-to-store-user-password-on-net-core-mvc-application
+        //https://tahirnaushad.com/2017/09/09/hashing-in-asp-net-core-2-0/
+        //https://andrewlock.net/exploring-the-asp-net-core-identity-passwordhasher/
+        //https://stackoverflow.com/questions/4181198/how-to-hash-a-password/10402129#10402129
+        //https://github.com/defuse/password-hashing/blob/master/PasswordStorage.cs
+        //https://github.com/defuse/password-hashing
+        //https://medium.com/@mehanix/lets-talk-security-salted-password-hashing-in-c-5460be5c3aae
+        //asp.net core identity password hasher
+        //keyderivation.pbkdf2
+
+        //https://stackoverflow.com/questions/8218867/c-sharp-sql-insert-command
+        //https://www.youtube.com/watch?v=18Q4pGzL_U8
+        //https://docs.microsoft.com/en-us/ef/core/get-started/aspnetcore/existing-db
+        //https://docs.microsoft.com/en-us/aspnet/core/tutorials/razor-pages/sql?view=aspnetcore-2.2&tabs=visual-studio
+        //https://www.youtube.com/watch?v=_Q6fKXJYXdk
+        //https://www.youtube.com/watch?v=3MQE6Mj9u6U
+        //https://ef.readthedocs.io/en/staging/platforms/aspnetcore/existing-db.html
+        //https://codereview.stackexchange.com/questions/3170/inserting-records-into-a-database
+        //https://stackoverflow.com/questions/8218867/c-sharp-sql-insert-command
+        //https://stackoverflow.com/questions/19956533/sql-insert-query-using-c-sharp/19956944
+        //https://social.msdn.microsoft.com/Forums/vstudio/en-US/e5fa4f20-8293-4461-9fee-91867d4318ea/c-sql-insert-statement?forum=csharpgeneral
+        //https://www.codeproject.com/Questions/459498/SQL-INSERT-statements-in-Csharp
+        //
         [AllowAnonymous]
         [HttpPost("[action]")]
         public bool UserRegister([FromBody] UserRegisterDetails userRegisterDetails)
         {
+            string connectionString = Configuration["ConnectionStrings:DefaultConnectionString"];
+            string statement = "INSERT INTO dbo.SMS_PW (Username,Password,Firstname,Surname,Role, Subject) VALUES (@username,@password,@firstname,@surname,@role)";
+
+            SqlConnection connection = new SqlConnection(connectionString);
+
+            connection.Open();
+
+            SqlCommand command = new SqlCommand(statement, connection);
+            //command.Parameters.Add("", );
+            //command.Parameters.Add("@username", "abc");
+            //command.Parameters.Add("@password", "abc");
+
+            connection.Close();
+
+            int queryResult = command.ExecuteNonQuery();
+
+            // Check Error
+            if (queryResult < 0)
+            {
+                Console.WriteLine("Error inserting data into Database!");
+            }
+
+            connection.Close();
+
             if (userRegisterDetails.Username != "" && userRegisterDetails.Password != "") //Check the database
             {
                 ////Get secret key from appsettings.json.

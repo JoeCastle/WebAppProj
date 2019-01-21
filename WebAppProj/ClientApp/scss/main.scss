@@ -2,6 +2,12 @@
 //https://www.youtube.com/watch?v=1uweInAfAoo
 //https://github.com/postcss/autoprefixer
 
+//https://stackoverflow.com/questions/52261260/react-dynamic-themes
+//https://itnext.io/css-variables-dynamic-app-themes-86c0db61cbbb
+//Basically set all colours in SASS variables, then use a mobx variable and local storage to change the theme
+//https://codeburst.io/a-successful-sass-theme-structure-ca9d1c477dc7
+
+
 @import 'StyleSheet.scss';
 @import 'Login.scss';
 
