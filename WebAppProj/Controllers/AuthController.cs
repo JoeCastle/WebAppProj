@@ -152,9 +152,10 @@ namespace WebAppProj.Controllers
                 var role = "Trainee";
                 var firstname = "testname";
                 var surname = "testsurname";
-                int groupid = 1;
+                var subject = "testsubject";
+                int groupid = 1; //Have default "unassigned" group in the table
 
-                SqlCommand command = new SqlCommand("Add_User", connection);
+                SqlCommand command = new SqlCommand("User_Register", connection);
                 command.CommandType = System.Data.CommandType.StoredProcedure;
                 //command.Parameters.Add("", );
                 command.Parameters.AddWithValue("@username", username);
@@ -171,6 +172,9 @@ namespace WebAppProj.Controllers
 
                 command.Parameters.AddWithValue("@surname", surname);
                 //command.Parameters["@surname"].Value = surname;
+
+                command.Parameters.AddWithValue("@subject", subject);
+                //command.Parameters["@groupid"].Value = groupid;
 
                 command.Parameters.AddWithValue("@groupid", groupid);
                 //command.Parameters["@groupid"].Value = groupid;
