@@ -140,29 +140,57 @@ namespace WebAppProj.Controllers
         [HttpPost("[action]")]
         public bool UserRegister([FromBody] UserRegisterDetails userRegisterDetails)
         {
+            int queryResult = -1;
             string connectionString = Configuration["ConnectionStrings:DefaultConnectionString"];
-            string statement = "INSERT INTO dbo.SMS_PW (Username,Password,Firstname,Surname,Role, Subject) VALUES (@username,@password,@firstname,@surname,@role)";
+            //string statement = "INSERT INTO dbo.SMS_PW (Username,Password,Firstname,Surname,Role, Subject) VALUES (@username,@password,@firstname,@surname,@role)";
 
-            SqlConnection connection = new SqlConnection(connectionString);
-
-            connection.Open();
-
-            SqlCommand command = new SqlCommand(statement, connection);
-            //command.Parameters.Add("", );
-            //command.Parameters.Add("@username", "abc");
-            //command.Parameters.Add("@password", "abc");
-
-            connection.Close();
-
-            int queryResult = command.ExecuteNonQuery();
-
-            // Check Error
-            if (queryResult < 0)
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                Console.WriteLine("Error inserting data into Database!");
+
+                var username = "testusername";
+                var password = "testpassword";
+                var role = "Trainee";
+                var firstname = "testname";
+                var surname = "testsurname";
+                int groupid = 1;
+
+                SqlCommand command = new SqlCommand("Add_User", connection);
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+                //command.Parameters.Add("", );
+                command.Parameters.AddWithValue("@username", username);
+                //command.Parameters["@username"].Value = username;
+
+                command.Parameters.AddWithValue("@password", password);
+                //command.Parameters["@password"].Value = password;
+
+                command.Parameters.AddWithValue("@role", role);
+                //command.Parameters["@role"].Value = role;
+
+                command.Parameters.AddWithValue("@firstname", firstname);
+                //command.Parameters["@firstname"].Value = firstname;
+
+                command.Parameters.AddWithValue("@surname", surname);
+                //command.Parameters["@surname"].Value = surname;
+
+                command.Parameters.AddWithValue("@groupid", groupid);
+                //command.Parameters["@groupid"].Value = groupid;
+
+                connection.Open();
+
+                queryResult = command.ExecuteNonQuery();
             }
 
-            connection.Close();
+            // Check Error
+            if (queryResult == 0)
+            {
+                //SUCCESS
+                Console.WriteLine("Error inserting data into Database!");
+            }
+            else
+            {
+                //FAIL
+                Console.WriteLine("Error inserting data into Database!");
+            }
 
             if (userRegisterDetails.Username != "" && userRegisterDetails.Password != "") //Check the database
             {
