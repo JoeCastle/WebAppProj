@@ -245,7 +245,7 @@ export class Login extends React.Component<Props> {
         e.preventDefault();
 
         if (authenticated) {
-            this.props.history.push('/home');
+            this.props.history.push('/');
         } else {
             return false;
         }

@@ -100,6 +100,7 @@ class AuthStore {
         this.username = "";
         this.password = "";
         this.confirmPassword = "";
+        this.userRole = "";
         this.isRegistered = false;
         localStorage.clear();
         sessionStorage.clear();
@@ -154,7 +155,8 @@ class AuthStore {
         let userJSON = JSON.parse(localStorage.getItem("userDetails") || '{}');
 
         this.setIsLoggedIn(true);
-        this.username = JSON.stringify(userJSON.user.username);
+        this.username = userJSON.user.username;
+        this.userRole = userJSON.user.userRole;
     }
 
     @action

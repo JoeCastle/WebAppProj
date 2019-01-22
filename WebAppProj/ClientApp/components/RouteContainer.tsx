@@ -45,10 +45,10 @@ export class RouteContainer extends React.Component<Props> {
             <Route path={`${match.url}`} render={(props: any) => <NavMenu {...props} />} />
 
             <Switch>
-                <Route exact path={`${match.url}`} component={Home} />
+                <Route exact path={`${match.url}`} render={(props: any) => <Home {...props} />} />
 
                 {/*The checking here will be potentially moved to the Home component if the TraineeHome and TrainerHome are merged*/}
-                <Route exact path={`${match.url}home`} render={(props: any) => {
+                {/*<Route exact path={`${match.url}home`} render={(props: any) => {
 
                     var userJSON = JSON.parse(localStorage.getItem('userDetails') || '{}');
 
@@ -69,7 +69,7 @@ export class RouteContainer extends React.Component<Props> {
                             state: { from: props.location }
                         }} />
                     }
-                }} />
+                }} />*/}
 
                 <Route exact path={`${match.url}login`} render={(props: any) => {
                     var userJSON = JSON.parse(localStorage.getItem('userDetails') || '{}');
