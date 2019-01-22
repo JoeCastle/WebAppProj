@@ -121,3 +121,84 @@ export class RouteContainer extends React.Component<Props> {
 //        }
 //    }} />
 //}
+
+//https://gist.github.com/kud/6b722de9238496663031dbacd0412e9d
+//Conditional routing
+//https://stackoverflow.com/questions/48497510/simple-conditional-routing-in-reactjs
+//https://css-tricks.com/react-router-4/
+
+//<Route exact path={`${match.url}home`} render={(props: any) => {
+//    {
+//        this.props.authStore.userRole == 'Trainer' && <TrainerHome {...props} />
+//    }
+
+//    {
+//        this.props.authStore.userRole == 'Trainee' && <TraineeHome {...props} />
+//    }
+
+//    {
+//        this.props.authStore.userRole == '' && <Redirect to={{
+//            pathname: '/login',
+//            state: { from: props.location }
+//        }} />
+//    }
+//}} />
+
+
+
+
+
+
+
+
+
+
+//return this.props.authStore.isLoggedIn ? <div className="page-parent">
+//    <Route path={`${match.url}`} render={(props: any) => <NavMenu {...props} />} />
+
+//    <Switch>
+//        <Route exact path={`${match.url}`} component={Home} />
+
+//        {/*The checking here will be potentially moved to the Home component if the TraineeHome and TrainerHome are merged*/}
+//        <Route exact path={`${match.url}home`} render={(props: any) => {
+
+//            var userJSON = JSON.parse(localStorage.getItem('userDetails') || '{}');
+
+//            if (Object.keys(userJSON).length != 0) {
+//                if (userJSON.user.userRole == 'Trainer') {
+//                    return <TrainerHome {...props} />
+//                } else if (userJSON.user.userRole == 'Trainee') {
+//                    return <TraineeHome {...props} />
+//                } else {
+//                    return <Redirect to={{
+//                        pathname: '/login',
+//                        state: { from: props.location }
+//                    }} />
+//                }
+//            } else {
+//                return <Redirect to={{
+//                    pathname: '/login',
+//                    state: { from: props.location }
+//                }} />
+//            }
+//        }} />
+
+//        <Route exact path={`${match.url}login`} render={(props: any) => {
+//            var userJSON = JSON.parse(localStorage.getItem('userDetails') || '{}');
+
+//            if (Object.keys(userJSON).length != 0) {
+//                return <Redirect to={{
+//                    pathname: '/home',
+//                    state: { from: props.location }
+//                }} />
+//            } else {
+//                return <Login {...props} />
+//            }
+//        }} />
+
+//        <Route exact path={`${match.url}counter`} component={Counter} />
+//        <Route exact path={`${match.url}fetchdata`} component={FetchData} />
+//        <Route exact path='/register' render={(props: any) => <Register {...props} />} />
+//        <Route component={FourZeroFour} />
+//    </Switch>
+//</div> : <div>...Loading</div>;

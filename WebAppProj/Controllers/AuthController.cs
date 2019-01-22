@@ -140,60 +140,46 @@ namespace WebAppProj.Controllers
         [HttpPost("[action]")]
         public bool UserRegister([FromBody] UserRegisterDetails userRegisterDetails)
         {
-            int queryResult = -1;
+            int queryResult = -1; //Set query result to fail.
             string connectionString = Configuration["ConnectionStrings:DefaultConnectionString"];
-            //string statement = "INSERT INTO dbo.SMS_PW (Username,Password,Firstname,Surname,Role, Subject) VALUES (@username,@password,@firstname,@surname,@role)";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-
-                var username = "testusername";
-                var password = "testpassword";
-                var role = "Trainee";
-                var firstname = "testname";
-                var surname = "testsurname";
-                var subject = "testsubject";
+                var username = userRegisterDetails.Username;
+                var password = userRegisterDetails.Password; //Encrypt this.
+                var role = userRegisterDetails.UserRole;
+                var firstname = userRegisterDetails.Firstname;
+                var surname = userRegisterDetails.Surname;
                 int groupid = 1; //Have default "unassigned" group in the table
 
+                //Create the SQL command and set type to stored procedure.
                 SqlCommand command = new SqlCommand("User_Register", connection);
                 command.CommandType = System.Data.CommandType.StoredProcedure;
-                //command.Parameters.Add("", );
+
+                //Set the parameters for the command.
                 command.Parameters.AddWithValue("@username", username);
-                //command.Parameters["@username"].Value = username;
-
                 command.Parameters.AddWithValue("@password", password);
-                //command.Parameters["@password"].Value = password;
-
                 command.Parameters.AddWithValue("@role", role);
-                //command.Parameters["@role"].Value = role;
-
                 command.Parameters.AddWithValue("@firstname", firstname);
-                //command.Parameters["@firstname"].Value = firstname;
-
                 command.Parameters.AddWithValue("@surname", surname);
-                //command.Parameters["@surname"].Value = surname;
-
-                command.Parameters.AddWithValue("@subject", subject);
-                //command.Parameters["@groupid"].Value = groupid;
-
                 command.Parameters.AddWithValue("@groupid", groupid);
-                //command.Parameters["@groupid"].Value = groupid;
 
                 connection.Open();
 
+                //Execute the query and store the result
                 queryResult = command.ExecuteNonQuery();
             }
 
             // Check Error
-            if (queryResult == 0)
+            if (queryResult == 1)
             {
                 //SUCCESS
-                Console.WriteLine("Error inserting data into Database!");
+                return true;
             }
             else
             {
                 //FAIL
-                Console.WriteLine("Error inserting data into Database!");
+                return false;
             }
 
             if (userRegisterDetails.Username != "" && userRegisterDetails.Password != "") //Check the database

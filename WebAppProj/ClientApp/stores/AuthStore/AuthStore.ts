@@ -23,6 +23,9 @@ class AuthStore {
     @observable isLoggedIn = false;
     @observable isRegistered = false;
     @observable userRole = "";
+    @observable firstname = "";
+    @observable surname = "";
+    @observable registerError = "";
 
     /*@observable user = ({
         username: "",
@@ -122,7 +125,9 @@ class AuthStore {
             let userRegisterDetailsDTO: UserRegisterDetails = {
                 username: this.username,
                 password: this.password,
-                userRole: this.userRole
+                userRole: this.userRole,
+                firstname: this.firstname,
+                surname: this.surname
             }
 
             //Use fetch to call the login controller
@@ -131,9 +136,11 @@ class AuthStore {
             //Check response
             if (isRegistered) {
                 this.setIsRegistered(true);
+                this.setRegisterError("");
                 return true;
             } else {
                 this.setIsRegistered(false);
+                this.setRegisterError("Failed to register, please try again.");
                 return false;
             }
         } else {
@@ -170,6 +177,11 @@ class AuthStore {
     }
 
     @action
+    private setRegisterError = (registerError: string): void => {
+        this.registerError = registerError;
+    }
+
+    @action
     private setIsLoggedIn = (isLoggedIn: boolean): void => {
         this.isLoggedIn = isLoggedIn;
     }
@@ -198,6 +210,16 @@ class AuthStore {
     @action
     public onUserRoleChange = (userRole: string): void => {
         this.userRole = userRole;
+    }
+
+    @action
+    public onFirstnameChange = (firstname: string): void => {
+        this.firstname = firstname;
+    }
+
+    @action
+    public onSurnameChange = (surname: string): void => {
+        this.surname = surname;
     }
 }
 

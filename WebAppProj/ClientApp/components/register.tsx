@@ -87,12 +87,35 @@ export class Register extends React.Component<Props> {
                     <option value="trainee">Trainee</option>
                 </select>
 
+                <label htmlFor='firstname'>Firstname:</label>
+                <input
+                    className="textbox"
+                    id='firstname'
+                    type='text'
+                    placeholder='Firstname'
+                    autoComplete='off'
+                    required
+                    onChange={this.onFirstnameChange}
+                />
+                <label htmlFor='surname'>Surname:</label>
+                <input
+                    className="textbox"
+                    id='surname'
+                    type='text'
+                    placeholder='Surname'
+                    autoComplete='off'
+                    required
+                    onChange={this.onSurnameChange}
+                />
+
                 <button className='register-button'
                     onClick={
                         this.register
                     }
                 > Register
                 </button>
+
+                <div>{this.props.authStore.registerError}</div>
             </form>
         </div>;
     }
@@ -139,5 +162,18 @@ export class Register extends React.Component<Props> {
         let userRole = e.target.value;
 
         this.props.authStore.onUserRoleChange(userRole);
+    }
+
+    //
+    private onFirstnameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        let firstname = e.target.value;
+
+        this.props.authStore.onFirstnameChange(firstname);
+    }
+
+    private onSurnameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        let surname = e.target.value;
+
+        this.props.authStore.onSurnameChange(surname);
     }
 }
