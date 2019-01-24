@@ -5,9 +5,11 @@ using System.Diagnostics;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -49,6 +51,8 @@ namespace WebAppProj.Controllers
         [HttpPost("[action]")]
         public IActionResult UserLogin([FromBody] UserLoginDetails userLoginDetails)
         {
+
+
             if ((userLoginDetails.Username == "jim" && userLoginDetails.Password == "jim") || (userLoginDetails.Username == "john" && userLoginDetails.Password == "john")) //Check the database
             {
                 //Get secret key from appsettings.json.
@@ -143,10 +147,13 @@ namespace WebAppProj.Controllers
             int queryResult = -1; //Set query result to fail.
             string connectionString = Configuration["ConnectionStrings:DefaultConnectionString"];
 
+            //Hash the password.
+            string hashedAndSaltedPassword = GetPasswordHashAndSalt(userRegisterDetails.Password);
+
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 var username = userRegisterDetails.Username;
-                var password = userRegisterDetails.Password; //Encrypt this.
+                var password = hashedAndSaltedPassword;
                 var role = userRegisterDetails.UserRole;
                 var firstname = userRegisterDetails.Firstname;
                 var surname = userRegisterDetails.Surname;
@@ -168,6 +175,8 @@ namespace WebAppProj.Controllers
 
                 //Execute the query and store the result
                 queryResult = command.ExecuteNonQuery();
+
+                connection.Close();
             }
 
             // Check Error
@@ -234,6 +243,11 @@ namespace WebAppProj.Controllers
             return false;
         }
 
+        /// <summary>
+        /// Verifys the json web token.
+        /// </summary>
+        /// <param name="jsonWebTokenString">The users json web token.</param>
+        /// <returns>Returns ok if the token is valid.</returns>
         [AllowAnonymous]
         [HttpPost("[action]")]
         public IActionResult VerifyJWT([FromBody] string jsonWebTokenString)//Mighy need different type.
@@ -291,10 +305,66 @@ namespace WebAppProj.Controllers
             });
         }
 
-        /*[HttpPost("[action]")]
-        public async Task<string> UserRegister()
+        /// <summary>
+        /// Hashes and salts a password.
+        /// </summary>
+        /// <param name="password">The plain password to be hashed and salted.</param>
+        /// <returns>The hashed and salted password.</returns>
+        private string GetPasswordHashAndSalt(string password)
         {
-            return "";
-        }*/
+            //Generate random salt value.
+            byte[] salt;
+            new RNGCryptoServiceProvider().GetBytes(salt = new byte[16]);//128 bit, 16 bytes.
+
+            //Hash and salt the plain text password
+            byte[] hash = new Rfc2898DeriveBytes(password, salt, 5000).GetBytes(20);
+
+            //Combine hash and salt.
+            byte[] hashSaltPasswordBytes = new byte[36];
+            Array.Copy(salt, 0, hashSaltPasswordBytes, 0, 16);
+            Array.Copy(hash, 0, hashSaltPasswordBytes, 16, 20);
+
+            //Get string value for the hashed and talted password.
+            string hashSaltPassword = Convert.ToBase64String(hashSaltPasswordBytes);
+
+            return hashSaltPassword;
+        }
+
+        /// <summary>
+        /// Compares plain password to a hashed and salted password.
+        /// </summary>
+        /// <param name="password">The plain text password entered.</param>
+        /// <param name="dbPassword">The hashed and salted password.</param>
+        /// <returns>Returns whether the passwords match.</returns>
+        private bool VerifyPasswordHashAndSalt(string password, string dbPassword)
+        {
+            //Convert strings to bytes.
+            byte[] passwordBytes = Convert.FromBase64String(password);
+            byte[] hashSaltPasswordBytes = Convert.FromBase64String(dbPassword);
+
+            //Get the salt value from the hashed and salted password from the database.
+            byte[] dbSalt = new byte[16];
+            Array.Copy(hashSaltPasswordBytes, 0, dbSalt, 0, 16);
+
+            //Get the hash value from the hashed and salted password from the database.
+            byte[] dbHash = new byte[20];
+            Array.Copy(hashSaltPasswordBytes, 16, dbHash, 0, 20);
+
+            //Hash and salt the plain text password using the same salt.
+            byte[] hash = new Rfc2898DeriveBytes(password, dbSalt, 5000).GetBytes(20);
+
+            //Compare the hashed passwords.
+            for (int i = 0; i < 20; i++)
+            {
+                //If the hashed passwords don't match, return false.
+                if (dbHash[i] != hash[i])
+                {
+                    return false;
+                }
+            }
+
+            //Otherwise return true.
+            return true;
+        }
     }
 }
