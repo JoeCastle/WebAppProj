@@ -31,22 +31,6 @@ namespace WebAppProj.Controllers
 
         public IConfiguration Configuration { get; }
 
-        /*[HttpPost("[action]")]
-        public string UserLogin([FromBody]UserLoginDetails userLoginDetails)
-        {
-            if (userLoginDetails.Username != "")
-            {
-                Console.WriteLine(userLoginDetails.Username);
-            }
-
-            if (userLoginDetails.Password != "")
-            {
-                Console.WriteLine(userLoginDetails.Password);
-            }
-
-            return "joetestreturn";
-        }*/
-
         [AllowAnonymous]
         [HttpPost("[action]")]
         public IActionResult UserLogin([FromBody] UserLoginDetails userLoginDetails)

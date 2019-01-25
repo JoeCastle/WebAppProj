@@ -41,16 +41,16 @@ export class Register extends React.Component<Props> {
             <h1>This is the register page</h1>
             <p>Please register with your details below</p>
             <form onSubmit={this.formSubmit}>
-                <label htmlFor='username'>Username:</label>
+                <label htmlFor='username'>Username (email):</label>
                 <input
                     className="textbox"
                     id='username'
-                    type='text'
-                    placeholder='Username'
+                    type='email'
+                    placeholder='Username (email)'
                     autoComplete='off'
                     required
                     onChange={this.onUsernameChange}
-
+                    maxLength={20}
                 />
                 <label htmlFor='password'>Password:</label>
                 <input
@@ -61,6 +61,9 @@ export class Register extends React.Component<Props> {
                     autoComplete='off'
                     required
                     onChange={this.onPasswordChange}
+                    maxLength={25}
+                    pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)"
+                    title="Password must contain atlease: 1 uppercase letter, 1 lowercase letter and a number."
                 />
                 <label htmlFor='confirmpassword'>Confirm password:</label>
                 <input
@@ -71,6 +74,9 @@ export class Register extends React.Component<Props> {
                     autoComplete='off'
                     onChange={this.onConfirmPasswordChange}
                     required
+                    maxLength={25}
+                    pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)"
+                    title="Password must contain atlease: 1 uppercase letter, 1 lowercase letter and a number."
                 />
 
                 <label htmlFor='role'>Role:</label>
@@ -96,6 +102,7 @@ export class Register extends React.Component<Props> {
                     autoComplete='off'
                     required
                     onChange={this.onFirstnameChange}
+                    maxLength={25}
                 />
                 <label htmlFor='surname'>Surname:</label>
                 <input
@@ -106,6 +113,7 @@ export class Register extends React.Component<Props> {
                     autoComplete='off'
                     required
                     onChange={this.onSurnameChange}
+                    maxLength={25}
                 />
 
                 <button className='register-button'
