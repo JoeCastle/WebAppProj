@@ -48,6 +48,8 @@ class AuthStore {
 
             //Use fetch to call the login controller
             let userDetails: UserDetails = await api.loginUser(userLoginDetailsDTO);
+
+            debugger;
             
             //Check response
             if (userDetails) {

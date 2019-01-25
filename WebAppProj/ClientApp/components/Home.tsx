@@ -17,11 +17,11 @@ export class Home extends React.Component<Props> {
     public render() {
         return (<div className="page">
             {
-                this.props.authStore.userRole == "Trainer" &&
+                this.props.authStore.userRole == "trainer" &&
                 <TrainerHome {... this.props} />
             }
             {
-                this.props.authStore.userRole == "Trainee" &&
+                this.props.authStore.userRole == "trainee" &&
                 <TraineeHome {... this.props} />
             }
             {
