@@ -37,11 +37,6 @@ export class NavMenu extends React.Component<Props> {
                             </NavLink>
                         </li>
                         <li>
-                            <NavLink to={'/counter'} activeClassName='active'>
-                                <span className='glyphicon glyphicon-education'></span> Counter
-                            </NavLink>
-                        </li>
-                        <li>
 
                             <NavLink to={'/fetchdata'} activeClassName='active'>
                                 <span className='glyphicon glyphicon-th-list'></span> Fetch data
@@ -59,6 +54,26 @@ export class NavMenu extends React.Component<Props> {
                                 <NavLink to={'/register'} activeClassName='active'>
                                     <span className='glyphicon glyphicon-th-list'></span> Register
                             </NavLink>
+                            }
+                        </li>
+                        <li>
+                            {this.props.authStore.isLoggedIn &&
+                                <div className="dropdown">
+                                <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Dropdown button
+                                </button>
+                                <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <NavLink to={'/register'} activeClassName='active'>
+                                        <span className='glyphicon glyphicon-th-list'></span> Register
+                                    </NavLink>
+                                    <NavLink to={'/register'} activeClassName='active'>
+                                        <span className='glyphicon glyphicon-th-list'></span> Register
+                                    </NavLink>
+                                    <NavLink to={'/register'} activeClassName='active'>
+                                        <span className='glyphicon glyphicon-th-list'></span> Register
+                                    </NavLink>
+                                    </div>
+                                </div>
                             }
                         </li>
                         <li>

@@ -3,7 +3,6 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 import { Layout } from './Layout';
 import { Home } from './Home';
 import { FetchData } from './FetchData';
-import { Counter } from './Counter';
 import { Login } from './Login';
 import { Register } from './Register';
 import { FourZeroFour } from './FourZeroFour';
@@ -83,16 +82,12 @@ export class RouteContainer extends React.Component<Props> {
                         return <Login {...props} />
                     }
                 }} />
-
-                <Route exact path={`${match.url}counter`} component={Counter} />
                 <Route exact path={`${match.url}fetchdata`} component={FetchData} />
                 <Route exact path='/register' render={(props: any) => <Register {...props} />} />
                 <Route component={FourZeroFour} />
             </Switch>
         </div>;
     }
-
-
 }
 
 

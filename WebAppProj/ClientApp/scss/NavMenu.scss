@@ -1,0 +1,36 @@
+﻿div.dropdown {
+    /* If a menu item's text is too long, truncate it */
+    padding: 10px 16px;
+    border-radius: 4px;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    .dropdown-menu {
+        position: static;
+        float: none;
+        width: auto;
+        margin-top: 0;
+        background-color: transparent;
+        border: 0;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+    }
+
+    > button {
+        color: #9d9d9d;
+        background-color: transparent;
+        padding: 0px;
+        margin: 0px;
+    }
+}
+
+.dropdown.open > .dropdown-menu {
+    display: flex;
+    flex-direction: column;
+}
+
+@media (min-width: 768px) {
+
+}
