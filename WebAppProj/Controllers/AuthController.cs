@@ -68,7 +68,6 @@ namespace WebAppProj.Controllers
                             user.Firstname = reader.GetString(reader.GetOrdinal("Firstname"));
                             user.Surname = reader.GetString(reader.GetOrdinal("Surname"));
                             user.GroupID = reader.GetInt32(reader.GetOrdinal("GroupID"));
-                            int z = 1;
                         }
                         reader.Close();
                     }
