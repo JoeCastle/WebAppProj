@@ -43,7 +43,7 @@ export const PrivateRoute = (props: Props) => {
 
     var userJSON = JSON.parse(localStorage.getItem('userDetails') || '{}');
 
-    debugger;
+    //debugger;
 
     if (Object.keys(userJSON).length != 0) {
         return <Redirect to={{

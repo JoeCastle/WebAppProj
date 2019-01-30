@@ -13,10 +13,17 @@ interface Props extends RouteComponentProps<any>, React.Props<any> {
 export class NavMenu extends React.Component<Props> {
 
     componentDidMount() {
-        
+
     }
 
     public render() {
+        let isTrainer = this.props.authStore.isLoggedIn && this.props.authStore.userRole == "trainer";
+        let isTrainee = this.props.authStore.isLoggedIn && this.props.authStore.userRole == "trainee";
+
+        let trainerHasGroup = this.props.authStore.userGroupID != "1" && this.props.authStore.userRole == "trainer";
+        let traineeHasGroup = this.props.authStore.userGroupID != "1" && this.props.authStore.userRole == "trainee";
+
+
         return <div className='main-nav'>
             <div className='navbar navbar-inverse'>
                 <div className='navbar-header'>
@@ -57,21 +64,27 @@ export class NavMenu extends React.Component<Props> {
                             }
                         </li>
                         <li>
-                            {this.props.authStore.isLoggedIn &&
+                            {isTrainer &&
                                 <div className="dropdown">
-                                <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Dropdown button
-                                </button>
-                                <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <NavLink to={'/register'} activeClassName='active'>
-                                        <span className='glyphicon glyphicon-th-list'></span> Register
-                                    </NavLink>
-                                    <NavLink to={'/register'} activeClassName='active'>
-                                        <span className='glyphicon glyphicon-th-list'></span> Register
-                                    </NavLink>
-                                    <NavLink to={'/register'} activeClassName='active'>
-                                        <span className='glyphicon glyphicon-th-list'></span> Register
-                                    </NavLink>
+                                    <button className="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <span className='glyphicon glyphicon-th-list'></span> Group <span className="caret"></span>
+                                    </button>
+                                    <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        {!trainerHasGroup &&
+                                            <NavLink to={'/creategroup'} activeClassName='active'>
+                                                <span className='glyphicon glyphicon-th-list'></span> Create group
+                                            </NavLink>
+                                        }
+                                        {trainerHasGroup &&
+                                            <NavLink to={'/addtogroup'} activeClassName='active'>
+                                                <span className='glyphicon glyphicon-th-list'></span> Add trainee
+                                            </NavLink>
+                                        }
+                                        {trainerHasGroup &&
+                                            <NavLink to={'/removefromgroup'} activeClassName='active'>
+                                                <span className='glyphicon glyphicon-th-list'></span> Remove trainee
+                                            </NavLink>
+                                        }
                                     </div>
                                 </div>
                             }

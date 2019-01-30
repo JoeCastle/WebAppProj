@@ -30,6 +30,7 @@
     <None Remove="ClientApp\components\RouteContainer.tsx" />
     <None Remove="ClientApp\components\TraineeHome.tsx" />
     <None Remove="ClientApp\components\TrainerHome.tsx" />
+    <None Remove="ClientApp\components\trainer\CreateGroup.tsx" />
     <None Remove="ClientApp\history.ts" />
     <None Remove="ClientApp\models\userDetails.ts" />
     <None Remove="ClientApp\models\userRegisterDetails.ts" />
@@ -50,6 +51,7 @@
     <TypeScriptCompile Include="ClientApp\components\RouteContainer.tsx" />
     <TypeScriptCompile Include="ClientApp\components\TraineeHome.tsx" />
     <TypeScriptCompile Include="ClientApp\components\TrainerHome.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\trainer\CreateGroup.tsx" />
     <TypeScriptCompile Include="ClientApp\history.ts" />
     <TypeScriptCompile Include="ClientApp\models\userDetails.ts" />
     <TypeScriptCompile Include="ClientApp\models\userRegisterDetails.ts" />

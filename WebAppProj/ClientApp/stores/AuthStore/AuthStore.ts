@@ -14,8 +14,6 @@ import UserRegisterDetails from '../../models/userRegisterDetails';
 import UserDetails from '../../models/userDetails';
 //import browserHistory from '../../history';
 
-//TODO: Check the validity of the JWT on the server when navigating/on page refresh.
-
 class AuthStore {
     @observable username = "";
     @observable password = "";
@@ -23,6 +21,7 @@ class AuthStore {
     @observable isLoggedIn = false;
     @observable isRegistered = false;
     @observable userRole = "";
+    @observable userGroupID = "";
     @observable firstname = "";
     @observable surname = "";
     @observable registerError = "";
@@ -103,6 +102,7 @@ class AuthStore {
         this.password = "";
         this.confirmPassword = "";
         this.userRole = "";
+        this.userGroupID = "";
         this.isRegistered = false;
         localStorage.clear();
         sessionStorage.clear();
@@ -159,6 +159,7 @@ class AuthStore {
         this.setIsLoggedIn(true);
         this.username = userJSON.user.username;
         this.userRole = userJSON.user.userRole;
+        this.userGroupID = userJSON.user.groupID;
     }
 
     @action

@@ -21,7 +21,7 @@ export const MultiPrivateRoute = (props: Props) => {
         <Route {...rest} render={(props) => {
             var userJSON = JSON.parse(localStorage.getItem('userDetails') || '{}');
 
-            debugger;
+            //debugger;
 
             if (Object.keys(userJSON).length != 0) {
                 if (userJSON.user.userRole == 'Trainer') {

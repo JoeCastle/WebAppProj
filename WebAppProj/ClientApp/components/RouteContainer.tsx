@@ -12,6 +12,7 @@ import { NavMenu } from './NavMenu';
 import { RouteComponentProps } from 'react-router';
 import { AuthStore } from '../stores/AuthStore/AuthStore';
 import { inject, observer } from 'mobx-react';
+import { CreateGroup } from './trainer/CreateGroup';
 
 interface Props extends RouteComponentProps<any>, React.Props<any> {
     authStore: AuthStore
@@ -75,15 +76,43 @@ export class RouteContainer extends React.Component<Props> {
 
                     if (Object.keys(userJSON).length != 0) {
                         return <Redirect to={{
-                            pathname: '/home',
+                            pathname: '/',
                             state: { from: props.location }
                         }} />
                     } else {
                         return <Login {...props} />
                     }
                 }} />
+
                 <Route exact path={`${match.url}fetchdata`} component={FetchData} />
-                <Route exact path='/register' render={(props: any) => <Register {...props} />} />
+
+                <Route exact path={`${match.url}register`} render={(props: any) => {
+                    var userJSON = JSON.parse(localStorage.getItem('userDetails') || '{}');
+
+                    if (Object.keys(userJSON).length != 0) {
+                        return <Redirect to={{
+                            pathname: '/',
+                            state: { from: props.location }
+                        }} />
+                    } else {
+                        return <Register {...props} />
+                    }
+                }} />
+
+                <Route exact path={`${match.url}creategroup`} render={(props: any) => {
+                    var userJSON = JSON.parse(localStorage.getItem('userDetails') || '{}');
+
+                    if (userJSON.user.userRole == 'trainer') {
+                        return <CreateGroup {...props} />
+                    } else {
+                        return <Redirect to={{
+                            pathname: '/',
+                            state: { from: props.location }
+                        }} />
+                    }
+
+                }} />
+
                 <Route component={FourZeroFour} />
             </Switch>
         </div>;
