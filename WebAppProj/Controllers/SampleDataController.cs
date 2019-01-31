@@ -11,8 +11,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace WebAppProj.Controllers
 {
     //[Authorize(JwtBearerDefaults.AuthenticationScheme)]
-    //[Authorize("Trainer")]
-    [Authorize(AuthenticationSchemes = "Bearer")]
+    [Authorize(Roles = "trainer")]
+    //[Authorize(AuthenticationSchemes = "Bearer")]
     //[Authorize]
     [Route("api/[controller]")]
     public class SampleDataController : Controller

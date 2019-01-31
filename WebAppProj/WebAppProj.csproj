@@ -32,12 +32,14 @@
     <None Remove="ClientApp\components\TrainerHome.tsx" />
     <None Remove="ClientApp\components\trainer\CreateGroup.tsx" />
     <None Remove="ClientApp\history.ts" />
+    <None Remove="ClientApp\models\createGroupDetails.ts" />
     <None Remove="ClientApp\models\userDetails.ts" />
     <None Remove="ClientApp\models\userRegisterDetails.ts" />
     <None Remove="ClientApp\stores\AuthStore.tsx" />
     <None Remove="ClientApp\stores\AuthStore\AuthStore.ts" />
     <None Remove="ClientApp\stores\index.ts" />
     <None Remove="ClientApp\stores\TraineeStore\TraineeStore.ts" />
+    <None Remove="ClientApp\stores\TrainerStore\TrainerStore.ts" />
     <None Remove="ClientApp\userLoginDetails.ts" />
   </ItemGroup>
 
@@ -53,12 +55,14 @@
     <TypeScriptCompile Include="ClientApp\components\TrainerHome.tsx" />
     <TypeScriptCompile Include="ClientApp\components\trainer\CreateGroup.tsx" />
     <TypeScriptCompile Include="ClientApp\history.ts" />
+    <TypeScriptCompile Include="ClientApp\models\createGroupDetails.ts" />
     <TypeScriptCompile Include="ClientApp\models\userDetails.ts" />
     <TypeScriptCompile Include="ClientApp\models\userRegisterDetails.ts" />
     <TypeScriptCompile Include="ClientApp\stores\AuthStore\AuthStore.ts" />
     <TypeScriptCompile Include="ClientApp\stores\index.ts" />
     <TypeScriptCompile Include="ClientApp\models\userLoginDetails.ts" />
     <TypeScriptCompile Include="ClientApp\stores\TraineeStore\TraineeStore.ts" />
+    <TypeScriptCompile Include="ClientApp\stores\TrainerStore\TrainerStore.ts" />
   </ItemGroup>
 
   <Target Name="DebugRunWebpack" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('wwwroot\dist') ">

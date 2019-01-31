@@ -15,6 +15,7 @@ import UserDetails from '../../models/userDetails';
 //import browserHistory from '../../history';
 
 class AuthStore {
+    @observable userID = -1;
     @observable username = "";
     @observable password = "";
     @observable confirmPassword = "";
@@ -48,7 +49,7 @@ class AuthStore {
             //Use fetch to call the login controller
             let userDetails: UserDetails = await api.loginUser(userLoginDetailsDTO);
 
-            debugger;
+            //debugger;
             
             //Check response
             if (userDetails) {
@@ -160,6 +161,7 @@ class AuthStore {
         this.username = userJSON.user.username;
         this.userRole = userJSON.user.userRole;
         this.userGroupID = userJSON.user.groupID;
+        this.userID = userJSON.user.userID;
     }
 
     @action
