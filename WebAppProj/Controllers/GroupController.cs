@@ -49,6 +49,9 @@ namespace WebAppProj.Controllers
                 connection.Close();
             }
 
+            //TODO: Figure out how to return a value from the stored procedure.
+            //TODO: Then return the updated user?, or this will just occur naturally on the jwt validation when pushing to a new page.
+
             // Check Error
             if (queryResult == 1)
             {
