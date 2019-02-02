@@ -20,9 +20,10 @@ export class NavMenu extends React.Component<Props> {
         let isTrainer = this.props.authStore.isLoggedIn && this.props.authStore.userRole == "trainer";
         let isTrainee = this.props.authStore.isLoggedIn && this.props.authStore.userRole == "trainee";
 
-        let trainerHasGroup = this.props.authStore.userGroupID != "1" && this.props.authStore.userRole == "trainer";
-        let traineeHasGroup = this.props.authStore.userGroupID != "1" && this.props.authStore.userRole == "trainee";
+        let trainerHasGroup = this.props.authStore.userGroupID != 1 && isTrainer;
+        let traineeHasGroup = this.props.authStore.userGroupID != 1 && isTrainee;
 
+        debugger;
 
         return <div className='main-nav'>
             <div className='navbar navbar-inverse'>

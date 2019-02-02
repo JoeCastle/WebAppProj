@@ -22,7 +22,7 @@ class AuthStore {
     @observable isLoggedIn = false;
     @observable isRegistered = false;
     @observable userRole = "";
-    @observable userGroupID = "";
+    @observable userGroupID = -1;
     @observable firstname = "";
     @observable surname = "";
     @observable registerError = "";
@@ -50,7 +50,8 @@ class AuthStore {
             let userDetails: UserDetails = await api.loginUser(userLoginDetailsDTO);
 
             //debugger;
-            
+
+            //TODO: Update what is being stored in local storage, should just by jwt and accessibility preferences
             //Check response
             if (userDetails) {
                 this.setIsLoggedIn(true);
@@ -103,7 +104,7 @@ class AuthStore {
         this.password = "";
         this.confirmPassword = "";
         this.userRole = "";
-        this.userGroupID = "";
+        this.userGroupID = -1;
         this.isRegistered = false;
         localStorage.clear();
         sessionStorage.clear();
@@ -154,27 +155,33 @@ class AuthStore {
     }
 
     @action
-    private setUserObservables = (): void => {
-        let userJSON = JSON.parse(localStorage.getItem("userDetails") || '{}');
+    private setUserObservables = (userDetails: UserDetails): void => {
+        debugger;
 
+
+        //TODO: Add other user information, first and surnames etc.
         this.setIsLoggedIn(true);
-        this.username = userJSON.user.username;
-        this.userRole = userJSON.user.userRole;
-        this.userGroupID = userJSON.user.groupID;
-        this.userID = userJSON.user.userID;
+        this.username = userDetails.user.username || "";
+        this.userRole = userDetails.user.userRole;
+        this.userGroupID = userDetails.user.groupID;
+        this.userID = userDetails.user.userID;
+
+        debugger;
     }
 
     @action
     public validateJWT = async (): Promise<void> => {
-        this.setIsLoggedIn(true);
+        //this.setIsLoggedIn(true);
         
         //check if local storage/jwt exists
         let userJSON = JSON.parse(localStorage.getItem("userDetails") || '{}');
 
         if (Object.keys(userJSON).length != 0) {
-            let responseJson = await api.verifyJWT(userJSON.user.jwt);//recieves 500 error.
-            if (responseJson.status === 200) {
-                this.setUserObservables();
+            let responseJson: UserDetails = await api.verifyJWT(userJSON.user.jwt);
+            debugger;
+
+            if (responseJson != null) {
+                this.setUserObservables(responseJson);
             } else { //400 for bad request
                 this.userLogout();
             }

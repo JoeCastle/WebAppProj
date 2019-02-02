@@ -117,10 +117,10 @@ let registerUser = (userResigterDetails: UserRegisterDetails): Promise<boolean> 
     return postJson(url, userResigterDetails);
 }
 
-let verifyJWT = (jsonWebToken: string): Promise<Response> => {
+let verifyJWT = (jsonWebToken: string): Promise<UserDetails> => {
     let url = "api/Auth/VerifyJWT";
 
-    return postJsonResponse(url, jsonWebToken);
+    return postJson(url, jsonWebToken);
 }
 
 export const api = {

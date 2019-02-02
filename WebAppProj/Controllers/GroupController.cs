@@ -28,7 +28,7 @@ namespace WebAppProj.Controllers
         [HttpPost("[action]")]
         public IActionResult CreateGroup([FromBody] CreateGroupDetails createGroupDetails)
         {
-            //var queryResult = -1; //Set query result to fail.
+            var queryResult = -1; //Set query result to fail.
             string connectionString = Configuration["ConnectionStrings:DefaultConnectionString"];
 
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -44,13 +44,26 @@ namespace WebAppProj.Controllers
                 connection.Open();
 
                 //Execute the query and store the result
-                command.ExecuteNonQuery();
+                queryResult = command.ExecuteNonQuery();
 
                 connection.Close();
             }
 
+            // Check Error
+            if (queryResult == 1)
+            {
+                //SUCCESS
+                return Ok();
+            }
+            else
+            {
+                //FAIL
+                return BadRequest("Failed to add group.");
+            }
+
+            //https://stackoverflow.com/questions/27326495/how-i-do-know-if-sql-server-stored-procedure-that-performs-an-update-worked
             //TODO: Figure out how to check the query result to determine if the request has succeeded or not. Maybe only check if connection has been made. Should the user be returned with an updated group id?
-            return Ok();
+            
         }
     }
 }

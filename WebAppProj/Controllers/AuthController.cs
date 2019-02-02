@@ -31,6 +31,11 @@ namespace WebAppProj.Controllers
 
         public IConfiguration Configuration { get; }
 
+        /// <summary>
+        /// Logs an existing user into the system.
+        /// </summary>
+        /// <param name="userLoginDetails"></param>
+        /// <returns>Returns the user object and action result.</returns>
         [AllowAnonymous]
         [HttpPost("[action]")]
         public IActionResult UserLogin([FromBody] UserLoginDetails userLoginDetails)
@@ -74,7 +79,7 @@ namespace WebAppProj.Controllers
                     else
                     {
                         return BadRequest("Login credentials invalid");
-                    }   
+                    }
                 }
 
                 connection.Close();
@@ -90,35 +95,8 @@ namespace WebAppProj.Controllers
                 return BadRequest("Login credentials invalid");
             }
 
-            //Get secret key from appsettings.json.
-            var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWT:SecretKey"]));
-
-            //Generate credentials using secret key.
-            var credentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
-
-            //Create claims.
-            var claims = new[]
-            {
-                    new Claim("UserID", user.UserID.ToString()),
-                    new Claim("Username", user.Username),
-                    new Claim(ClaimTypes.Role, user.UserRole),
-                    new Claim("Firstname", user.Firstname),
-                    new Claim("Surname", user.Surname),
-                    new Claim("GroupID", user.GroupID.ToString()),
-                };
-
-            //Create JWT.
-            var jsonWebToken = new JwtSecurityToken(
-                issuer: Configuration["JWT:ValidIssuer"],
-                audience: Configuration["JWT:ValidAudience"],
-                claims: claims,
-                expires: DateTime.Now.AddMinutes(60),
-                signingCredentials: credentials);
-
-            var jsonWebTokenString = new JwtSecurityTokenHandler().WriteToken(jsonWebToken);
-
-            //Create user
-            user.JWT = jsonWebTokenString;
+            //Get user JWT
+            user.JWT = CreateJWT(user.UserID, user.Username, user.UserRole); ;
 
             //Return OK result with user
             return Ok(new
@@ -127,6 +105,11 @@ namespace WebAppProj.Controllers
             });
         }
 
+        /// <summary>
+        /// Registers a new user.
+        /// </summary>
+        /// <param name="userRegisterDetails"></param>
+        /// <returns>Returns true if the user has been registered.</returns>
         [AllowAnonymous]
         [HttpPost("[action]")]
         public bool UserRegister([FromBody] UserRegisterDetails userRegisterDetails)
@@ -186,7 +169,7 @@ namespace WebAppProj.Controllers
         /// <returns>Returns ok if the token is valid.</returns>
         [AllowAnonymous]
         [HttpPost("[action]")]
-        public IActionResult VerifyJWT([FromBody] string jsonWebTokenString)//Mighy need different type.
+        public IActionResult VerifyJWT([FromBody] string jsonWebTokenString)//Might need different type.
         {
             //Get secret key from appsettings.json.
             var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWT:SecretKey"]));
@@ -216,31 +199,93 @@ namespace WebAppProj.Controllers
                 return BadRequest("Invalid JWT");
             }
 
-            //Get claims from identity.
-            Claim userIDClaim = identity.FindFirst("UserID");
-            Claim usernameClaim = identity.FindFirst("Username");
-            Claim roleClaim = identity.FindFirst(ClaimTypes.Role);
-            Claim firstnameClaim = identity.FindFirst("Firstname");
-            Claim surnameClaim = identity.FindFirst("Surname");
-            Claim groupIDClaim = identity.FindFirst("GroupID");
+            int userID = Int32.Parse(identity.FindFirst("UserID").Value);
+
+            string connectionString = Configuration["ConnectionStrings:DefaultConnectionString"];
 
             //Create user
-            var user = new UserDetails
+            var user = new UserDetails();
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                UserID = Int32.Parse(userIDClaim.Value),
-                Username = usernameClaim.Value,
-                UserRole = roleClaim.Value,
-                Firstname = firstnameClaim.Value,
-                Surname = surnameClaim.Value,
-                JWT = jsonWebTokenString,
-                GroupID = Int32.Parse(groupIDClaim.Value)
-            };
+                //Create the SQL command and set type to stored procedure.
+                SqlCommand command = new SqlCommand("User_GetByID", connection);
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                //Set the parameters for the command.
+                command.Parameters.AddWithValue("@userID", userID);
+
+                connection.Open();
+
+                //Execute the query and store the result
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            user.UserID = reader.GetInt32(reader.GetOrdinal("UserID"));
+                            user.Username = reader.GetString(reader.GetOrdinal("Username"));
+                            user.UserRole = reader.GetString(reader.GetOrdinal("Role"));
+                            user.Firstname = reader.GetString(reader.GetOrdinal("Firstname"));
+                            user.Surname = reader.GetString(reader.GetOrdinal("Surname"));
+                            user.GroupID = reader.GetInt32(reader.GetOrdinal("GroupID"));
+                        }
+                        reader.Close();
+                    }
+                    else
+                    {
+                        return BadRequest("Could not find matching user.");
+                    }
+                }
+
+                connection.Close();
+            }
+
+            //Get user JWT
+            user.JWT = CreateJWT(user.UserID, user.Username, user.UserRole); ;
 
             //Return OK result with user
             return Ok(new
             {
                 user
             });
+        }
+
+        /// <summary>
+        /// Generates a JWT for the user.
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <param name="username"></param>
+        /// <param name="userRole"></param>
+        /// <returns>Returns the users JWT as a string.</returns>
+        private string CreateJWT(int userID, string username, string userRole)
+        {
+            //Get secret key from appsettings.json.
+            var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWT:SecretKey"]));
+
+            //Generate credentials using secret key.
+            var credentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
+
+            //Create claims.
+            var claims = new[]
+            {
+                new Claim("UserID", userID.ToString()),
+                new Claim("Username", username),
+                new Claim(ClaimTypes.Role, userRole),
+            };
+
+            //Create JWT.
+            var jsonWebToken = new JwtSecurityToken(
+                issuer: Configuration["JWT:ValidIssuer"],
+                audience: Configuration["JWT:ValidAudience"],
+                claims: claims,
+                expires: DateTime.Now.AddMinutes(60),
+                signingCredentials: credentials);
+
+            var jsonWebTokenString = new JwtSecurityTokenHandler().WriteToken(jsonWebToken);
+
+            return jsonWebTokenString;
         }
 
         /// <summary>
