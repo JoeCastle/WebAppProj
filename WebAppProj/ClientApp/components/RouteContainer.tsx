@@ -13,6 +13,7 @@ import { RouteComponentProps } from 'react-router';
 import { AuthStore } from '../stores/AuthStore/AuthStore';
 import { inject, observer } from 'mobx-react';
 import { CreateGroup } from './trainer/CreateGroup';
+import { MyGroup } from './trainer/MyGroup';
 
 interface Props extends RouteComponentProps<any>, React.Props<any> {
     authStore: AuthStore
@@ -104,6 +105,20 @@ export class RouteContainer extends React.Component<Props> {
 
                     if (userJSON.user.userRole == 'trainer') {
                         return <CreateGroup {...props} />
+                    } else {
+                        return <Redirect to={{
+                            pathname: '/',
+                            state: { from: props.location }
+                        }} />
+                    }
+
+                }} />
+
+                <Route exact path={`${match.url}mygroup`} render={(props: any) => {
+                    var userJSON = JSON.parse(localStorage.getItem('userDetails') || '{}');
+
+                    if (userJSON.user.userRole == 'trainer') {
+                        return <MyGroup {...props} />
                     } else {
                         return <Redirect to={{
                             pathname: '/',

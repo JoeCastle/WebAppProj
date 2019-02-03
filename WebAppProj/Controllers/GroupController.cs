@@ -30,6 +30,7 @@ namespace WebAppProj.Controllers
         {
             var queryResult = -1; //Set query result to fail.
             string connectionString = Configuration["ConnectionStrings:DefaultConnectionString"];
+            int result = -1;
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -40,17 +41,31 @@ namespace WebAppProj.Controllers
                 //Set the parameters for the command.
                 command.Parameters.AddWithValue("@userID", createGroupDetails.UserID);
                 command.Parameters.AddWithValue("@groupName", createGroupDetails.GroupName);
+                command.Parameters.Add("@result", System.Data.SqlDbType.Int).Direction = System.Data.ParameterDirection.Output;
 
                 connection.Open();
 
                 //Execute the query and store the result
                 queryResult = command.ExecuteNonQuery();
 
+                result = (int)command.Parameters["@result"].Value;
+
                 connection.Close();
             }
 
             //TODO: Figure out how to return a value from the stored procedure.
             //TODO: Then return the updated user?, or this will just occur naturally on the jwt validation when pushing to a new page.
+
+            if (result == 1)
+            {
+                //SUCCESS
+                return Ok("Group created.");
+            }
+            else
+            {
+                //FAIL
+                return BadRequest("Failed to add group.");
+            }
 
             // Check Error
             if (queryResult == 1)

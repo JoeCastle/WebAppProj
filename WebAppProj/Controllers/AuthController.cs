@@ -319,7 +319,7 @@ namespace WebAppProj.Controllers
         /// <param name="password">The plain text password entered.</param>
         /// <param name="dbPassword">The hashed and salted password.</param>
         /// <returns>Returns whether the passwords match.</returns>
-        private bool VerifyPasswordHashAndSalt(string password, string dbPassword)
+        public bool VerifyPasswordHashAndSalt(string password, string dbPassword)
         {
             byte[] hashSaltPasswordBytes = Convert.FromBase64String(dbPassword);
 
@@ -346,6 +346,18 @@ namespace WebAppProj.Controllers
 
             //Otherwise return true.
             return true;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <param name="username"></param>
+        /// <param name="userRole"></param>
+        /// <returns></returns>
+        private string GetUser(int userID)
+        {
+            return "";
         }
     }
 }

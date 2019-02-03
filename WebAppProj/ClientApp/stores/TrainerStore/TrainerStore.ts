@@ -12,23 +12,14 @@ class TrainerStore {
         //Check we exist in database.
         //Log the user in.
         if (this.groupName != "") {
-
-            let test = authStore.userID;
-
-            debugger;
-
             //Create data transfer object
             let createGroupDetailsDTO: CreateGroupDetails = {
                 groupName: this.groupName,
                 userID: authStore.userID
             }
 
-            debugger;
-
             //Use fetch to call the login controller
-            let groupCreated: boolean = await api.createGroup(createGroupDetailsDTO);
-
-            debugger;
+            let groupCreated: Response = await api.createGroup(createGroupDetailsDTO);
 
             if (groupCreated) {
                 return true
@@ -38,7 +29,6 @@ class TrainerStore {
         } else {
             return false;
         }
-
     }
 
     @action

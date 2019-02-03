@@ -75,7 +75,12 @@ export class NavMenu extends React.Component<Props> {
                                             <NavLink to={'/creategroup'} activeClassName='active'>
                                                 <span className='glyphicon glyphicon-th-list'></span> Create group
                                             </NavLink>
-                                        }
+                                    }
+                                    {trainerHasGroup &&
+                                        <NavLink to={'/mygroup'} activeClassName='active'>
+                                            <span className='glyphicon glyphicon-th-list'></span> My group
+                                            </NavLink>
+                                    }
                                         {trainerHasGroup &&
                                             <NavLink to={'/addtogroup'} activeClassName='active'>
                                                 <span className='glyphicon glyphicon-th-list'></span> Add trainee

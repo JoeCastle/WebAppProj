@@ -49,8 +49,6 @@ class AuthStore {
             //Use fetch to call the login controller
             let userDetails: UserDetails = await api.loginUser(userLoginDetailsDTO);
 
-            //debugger;
-
             //TODO: Update what is being stored in local storage, should just by jwt and accessibility preferences
             //Check response
             if (userDetails) {
@@ -156,17 +154,12 @@ class AuthStore {
 
     @action
     private setUserObservables = (userDetails: UserDetails): void => {
-        debugger;
-
-
-        //TODO: Add other user information, first and surnames etc.
+        //TODO: Add other user information, first and surnames etc. groupname?
         this.setIsLoggedIn(true);
         this.username = userDetails.user.username || "";
         this.userRole = userDetails.user.userRole;
         this.userGroupID = userDetails.user.groupID;
         this.userID = userDetails.user.userID;
-
-        debugger;
     }
 
     @action
@@ -178,7 +171,6 @@ class AuthStore {
 
         if (Object.keys(userJSON).length != 0) {
             let responseJson: UserDetails = await api.verifyJWT(userJSON.user.jwt);
-            debugger;
 
             if (responseJson != null) {
                 this.setUserObservables(responseJson);

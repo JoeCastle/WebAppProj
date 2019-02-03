@@ -88,8 +88,6 @@ let postJsonBearer = async (url: string, body: any) => {
         body: JSON.stringify(body)
     });
 
-    debugger;
-
     if (responseJson.status === 200) {
         return responseJson.json();
     } else {
@@ -97,10 +95,8 @@ let postJsonBearer = async (url: string, body: any) => {
     }
 }
 
-let createGroup = (createGroupDetails: CreateGroupDetails): Promise<boolean> => {
+let createGroup = (createGroupDetails: CreateGroupDetails): Promise<Response> => {
     let url = "api/Group/CreateGroup";
-
-    debugger;
 
     return postJsonBearer(url, createGroupDetails);
 }
