@@ -53,9 +53,6 @@ namespace WebAppProj.Controllers
                 connection.Close();
             }
 
-            //TODO: Figure out how to return a value from the stored procedure.
-            //TODO: Then return the updated user?, or this will just occur naturally on the jwt validation when pushing to a new page.
-
             if (result == 1)
             {
                 //SUCCESS
@@ -64,24 +61,8 @@ namespace WebAppProj.Controllers
             else
             {
                 //FAIL
-                return BadRequest("Failed to add group.");
+                return BadRequest("Failed to add group, group name already exists.");
             }
-
-            // Check Error
-            if (queryResult == 1)
-            {
-                //SUCCESS
-                return Ok();
-            }
-            else
-            {
-                //FAIL
-                return BadRequest("Failed to add group.");
-            }
-
-            //https://stackoverflow.com/questions/27326495/how-i-do-know-if-sql-server-stored-procedure-that-performs-an-update-worked
-            //TODO: Figure out how to check the query result to determine if the request has succeeded or not. Maybe only check if connection has been made. Should the user be returned with an updated group id?
-            
         }
     }
 }

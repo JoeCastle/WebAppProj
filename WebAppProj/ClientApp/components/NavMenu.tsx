@@ -109,8 +109,10 @@ export class NavMenu extends React.Component<Props> {
     private handleLogout = async (e: any) => {
         e.preventDefault();
 
-        await this.props.authStore.userLogout();
+        if (confirm('Are you sure you want to logout?')) {
+            await this.props.authStore.userLogout();
 
-        this.props.history.push('/login');
+            this.props.history.push('/login');
+        }
     }
 }
