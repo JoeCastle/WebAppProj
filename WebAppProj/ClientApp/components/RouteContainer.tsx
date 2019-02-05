@@ -14,6 +14,8 @@ import { AuthStore } from '../stores/AuthStore/AuthStore';
 import { inject, observer } from 'mobx-react';
 import { CreateGroup } from './trainer/CreateGroup';
 import { MyGroup } from './trainer/MyGroup';
+import { About } from './About';
+import { Settings } from './Settings';
 
 interface Props extends RouteComponentProps<any>, React.Props<any> {
     authStore: AuthStore
@@ -30,6 +32,7 @@ interface Props extends RouteComponentProps<any>, React.Props<any> {
 //https://alexhisen.gitbooks.io/mobx-recipes/content/observable-based-routing.html
 //https://www.google.com/search?rlz=1C1CHBF_en-GBGB755GB755&ei=YyVCXPjgIp2E1fAPov2nqAQ&q=react+mobx+role+based+routing&oq=react+mobx+role+based+routing&gs_l=psy-ab.3...2523.3211..3347...0.0..0.203.693.5j1j1......0....1..gws-wiz.......0i71j33i21j33i160.2rtnNABkmXc
 
+//https://www.youtube.com/watch?v=XRfD8xIOroA
 
 //@withRouter
 @inject('authStore')
@@ -103,30 +106,46 @@ export class RouteContainer extends React.Component<Props> {
                 <Route exact path={`${match.url}creategroup`} render={(props: any) => {
                     var userJSON = JSON.parse(localStorage.getItem('userDetails') || '{}');
 
-                    if (userJSON.user.userRole == 'trainer') {
-                        return <CreateGroup {...props} />
+                    if (Object.keys(userJSON).length != 0) {
+                        if (userJSON.user.userRole == 'trainer') {
+                            return <CreateGroup {...props} />
+                        } else {
+                            return <Redirect to={{
+                                pathname: '/',
+                                state: { from: props.location }
+                            }} />
+                        }
                     } else {
                         return <Redirect to={{
-                            pathname: '/',
+                            pathname: '/login',
                             state: { from: props.location }
                         }} />
                     }
-
                 }} />
 
                 <Route exact path={`${match.url}mygroup`} render={(props: any) => {
                     var userJSON = JSON.parse(localStorage.getItem('userDetails') || '{}');
 
-                    if (userJSON.user.userRole == 'trainer') {
-                        return <MyGroup {...props} />
+                    if (Object.keys(userJSON).length != 0) {
+                        if (userJSON.user.userRole == 'trainer') {
+                            return <MyGroup {...props} />
+                        } else {
+                            return <Redirect to={{
+                                pathname: '/',
+                                state: { from: props.location }
+                            }} />
+                        }
                     } else {
                         return <Redirect to={{
-                            pathname: '/',
+                            pathname: '/login',
                             state: { from: props.location }
                         }} />
                     }
-
                 }} />
+
+                <Route exact path={`${match.url}about`} component={About} />
+
+                <Route exact path={`${match.url}settings`} component={Settings} />
 
                 <Route component={FourZeroFour} />
             </Switch>

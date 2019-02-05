@@ -22,12 +22,14 @@
 
   <ItemGroup>
     <None Remove="ClientApp\api\index.ts" />
+    <None Remove="ClientApp\components\About.tsx" />
     <None Remove="ClientApp\components\FourZeroFour.tsx" />
     <None Remove="ClientApp\components\Login.tsx" />
     <None Remove="ClientApp\components\MultiPrivateRoute.tsx" />
     <None Remove="ClientApp\components\PrivateRoute.tsx" />
     <None Remove="ClientApp\components\register.tsx" />
     <None Remove="ClientApp\components\RouteContainer.tsx" />
+    <None Remove="ClientApp\components\Settings.tsx" />
     <None Remove="ClientApp\components\TraineeHome.tsx" />
     <None Remove="ClientApp\components\TrainerHome.tsx" />
     <None Remove="ClientApp\components\trainer\CreateGroup.tsx" />
@@ -46,12 +48,14 @@
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\api\index.ts" />
+    <TypeScriptCompile Include="ClientApp\components\About.tsx" />
     <TypeScriptCompile Include="ClientApp\components\FourZeroFour.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Login.tsx" />
     <TypeScriptCompile Include="ClientApp\components\routehelpers\MultiPrivateRoute.tsx" />
     <TypeScriptCompile Include="ClientApp\components\routehelpers\PrivateRoute.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Register.tsx" />
     <TypeScriptCompile Include="ClientApp\components\RouteContainer.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\Settings.tsx" />
     <TypeScriptCompile Include="ClientApp\components\TraineeHome.tsx" />
     <TypeScriptCompile Include="ClientApp\components\TrainerHome.tsx" />
     <TypeScriptCompile Include="ClientApp\components\trainer\CreateGroup.tsx" />

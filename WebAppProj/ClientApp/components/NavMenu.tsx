@@ -96,8 +96,39 @@ export class NavMenu extends React.Component<Props> {
                             }
                         </li>
                         <li>
+                            {isTrainer &&
+                                <div className="dropdown">
+                                    <button className="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <span className='glyphicon glyphicon-th-list'></span> Quizzes <span className="caret"></span>
+                                    </button>
+                                    <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        {trainerHasGroup &&
+                                            <NavLink to={'/viewquizzes'} activeClassName='active'>
+                                                <span className='glyphicon glyphicon-th-list'></span> View quizzes
+                                            </NavLink>
+                                        }
+                                        {trainerHasGroup &&
+                                            <NavLink to={'/createquiz'} activeClassName='active'>
+                                        <span className='glyphicon glyphicon-pencil'></span> Create quiz
+                                            </NavLink>
+                                        }
+                                    </div>
+                                </div>
+                            }
+                        </li>
+                        <li>
+                            <NavLink to={'/about'} exact activeClassName='active'>
+                                <span className='glyphicon glyphicon-home'></span> About
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink to={'/settings'} exact activeClassName='active'>
+                                <span className='glyphicon glyphicon-cog'></span> Settings
+                            </NavLink>
+                        </li>
+                        <li>
                             {this.props.authStore.isLoggedIn &&
-                                <a href='#' className='nav-a-placeholder' onClick={this.handleLogout}><span className='glyphicon glyphicon-th-list'></span> Logout</a>
+                                <a href='#' className='nav-a-placeholder' onClick={this.handleLogout}><span className='glyphicon glyphicon-off'></span> Logout</a>
                             }
                         </li>
                     </ul>
