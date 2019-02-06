@@ -11,25 +11,25 @@ interface Props extends RouteComponentProps<any>, React.Props<any> {
 
 @inject('trainerStore', 'authStore')
 @observer
-export class MyGroup extends React.Component<Props> {
+export class AddToGroup extends React.Component<Props> {
     async componentDidMount() {
         await this.props.authStore.validateJWT();
     }
 
     public render() {
+        let isTrainer = this.props.authStore.isLoggedIn && this.props.authStore.userRole == "trainer";
+        let trainerHasGroup = this.props.authStore.userGroupID != 1 && this.props.authStore.userGroupID != -1 && isTrainer;
+
         let loading = <div>Loading...</div>; //TODO: Create dedicated loading component, also a default my group page for undefined group, asking if they would like to create one
         return (<div className="page">
-
-            {this.props.authStore.userGroupID == 1 ? loading : <MyGroupPage {... this.props} />} {/*Conditional render*/}
-            {/*{this.props.authStore.userGroupID == 1 && loading}*/}
+            {trainerHasGroup ? <AddToGroupPage {... this.props} /> : loading}
         </div>)
     }
 }
 
-const MyGroupPage = (props: Props) => {
+const AddToGroupPage = (props: Props) => {
     return <div>
-        <h1>This is the my group page.</h1>
-        <p>View your group.</p>
-        <p>Your group id is: {props.authStore.userGroupID}</p>
+        <h1>This is the add to group page.</h1>
+        <p>Here you can add new trainees to your existing group.</p>
     </div>
 };

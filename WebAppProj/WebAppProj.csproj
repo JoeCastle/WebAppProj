@@ -32,8 +32,10 @@
     <None Remove="ClientApp\components\Settings.tsx" />
     <None Remove="ClientApp\components\TraineeHome.tsx" />
     <None Remove="ClientApp\components\TrainerHome.tsx" />
+    <None Remove="ClientApp\components\trainer\AddToGroup.tsx" />
     <None Remove="ClientApp\components\trainer\CreateGroup.tsx" />
     <None Remove="ClientApp\components\trainer\MyGroup.tsx" />
+    <None Remove="ClientApp\components\trainer\RemoveFromGroup.tsx" />
     <None Remove="ClientApp\history.ts" />
     <None Remove="ClientApp\models\createGroupDetails.ts" />
     <None Remove="ClientApp\models\userDetails.ts" />
@@ -58,8 +60,10 @@
     <TypeScriptCompile Include="ClientApp\components\Settings.tsx" />
     <TypeScriptCompile Include="ClientApp\components\TraineeHome.tsx" />
     <TypeScriptCompile Include="ClientApp\components\TrainerHome.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\trainer\AddToGroup.tsx" />
     <TypeScriptCompile Include="ClientApp\components\trainer\CreateGroup.tsx" />
     <TypeScriptCompile Include="ClientApp\components\trainer\MyGroup.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\trainer\RemoveFromGroup.tsx" />
     <TypeScriptCompile Include="ClientApp\history.ts" />
     <TypeScriptCompile Include="ClientApp\models\createGroupDetails.ts" />
     <TypeScriptCompile Include="ClientApp\models\userDetails.ts" />

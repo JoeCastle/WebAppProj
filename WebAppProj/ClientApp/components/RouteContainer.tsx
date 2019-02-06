@@ -16,6 +16,8 @@ import { CreateGroup } from './trainer/CreateGroup';
 import { MyGroup } from './trainer/MyGroup';
 import { About } from './About';
 import { Settings } from './Settings';
+import { AddToGroup } from './trainer/AddToGroup';
+import { RemoveFromGroup } from './trainer/RemoveFromGroup';
 
 interface Props extends RouteComponentProps<any>, React.Props<any> {
     authStore: AuthStore
@@ -45,6 +47,17 @@ export class RouteContainer extends React.Component<Props> {
     public render() {
         const { match } = this.props;
 
+        let userJSON = JSON.parse(localStorage.getItem('userDetails') || '{}');
+
+        let isloggedIn = Object.keys(userJSON).length != 0 ? true : false;
+        let isTrainer = false;
+        let isTrainee = false;
+
+        if (isloggedIn) {
+            isTrainer = userJSON.user.userRole == 'trainer' ? true : false;
+            isTrainee = userJSON.user.userRole == 'trainee' ? true : false;
+        }
+
         return <div className="page-parent">
             <Route path={`${match.url}`} render={(props: any) => <NavMenu {...props} />} />
 
@@ -52,33 +65,9 @@ export class RouteContainer extends React.Component<Props> {
                 <Route exact path={`${match.url}`} render={(props: any) => <Home {...props} />} />
 
                 {/*The checking here will be potentially moved to the Home component if the TraineeHome and TrainerHome are merged*/}
-                {/*<Route exact path={`${match.url}home`} render={(props: any) => {
-
-                    var userJSON = JSON.parse(localStorage.getItem('userDetails') || '{}');
-
-                    if (Object.keys(userJSON).length != 0) {
-                        if (userJSON.user.userRole == 'Trainer') {
-                            return <TrainerHome {...props} />
-                        } else if (userJSON.user.userRole == 'Trainee') {
-                            return <TraineeHome {...props} />
-                        } else {
-                            return <Redirect to={{
-                                pathname: '/login',
-                                state: { from: props.location }
-                            }} />
-                        }
-                    } else {
-                        return <Redirect to={{
-                            pathname: '/login',
-                            state: { from: props.location }
-                        }} />
-                    }
-                }} />*/}
 
                 <Route exact path={`${match.url}login`} render={(props: any) => {
-                    var userJSON = JSON.parse(localStorage.getItem('userDetails') || '{}');
-
-                    if (Object.keys(userJSON).length != 0) {
+                    if (isloggedIn) {
                         return <Redirect to={{
                             pathname: '/',
                             state: { from: props.location }
@@ -91,9 +80,7 @@ export class RouteContainer extends React.Component<Props> {
                 <Route exact path={`${match.url}fetchdata`} component={FetchData} />
 
                 <Route exact path={`${match.url}register`} render={(props: any) => {
-                    var userJSON = JSON.parse(localStorage.getItem('userDetails') || '{}');
-
-                    if (Object.keys(userJSON).length != 0) {
+                    if (isloggedIn) {
                         return <Redirect to={{
                             pathname: '/',
                             state: { from: props.location }
@@ -104,10 +91,8 @@ export class RouteContainer extends React.Component<Props> {
                 }} />
 
                 <Route exact path={`${match.url}creategroup`} render={(props: any) => {
-                    var userJSON = JSON.parse(localStorage.getItem('userDetails') || '{}');
-
-                    if (Object.keys(userJSON).length != 0) {
-                        if (userJSON.user.userRole == 'trainer') {
+                    if (isloggedIn) {
+                        if (isTrainer) {
                             return <CreateGroup {...props} />
                         } else {
                             return <Redirect to={{
@@ -124,11 +109,45 @@ export class RouteContainer extends React.Component<Props> {
                 }} />
 
                 <Route exact path={`${match.url}mygroup`} render={(props: any) => {
-                    var userJSON = JSON.parse(localStorage.getItem('userDetails') || '{}');
-
-                    if (Object.keys(userJSON).length != 0) {
-                        if (userJSON.user.userRole == 'trainer') {
+                    if (isloggedIn) {
+                        if (isTrainer) {
                             return <MyGroup {...props} />
+                        } else {
+                            return <Redirect to={{
+                                pathname: '/',
+                                state: { from: props.location }
+                            }} />
+                        }
+                    } else {
+                        return <Redirect to={{
+                            pathname: '/login',
+                            state: { from: props.location }
+                        }} />
+                    }
+                }} />
+
+                <Route exact path={`${match.url}addtogroup`} render={(props: any) => {
+                    if (isloggedIn) {
+                        if (isTrainer) {
+                            return <AddToGroup {...props} />
+                        } else {
+                            return <Redirect to={{
+                                pathname: '/',
+                                state: { from: props.location }
+                            }} />
+                        }
+                    } else {
+                        return <Redirect to={{
+                            pathname: '/login',
+                            state: { from: props.location }
+                        }} />
+                    }
+                }} />
+
+                <Route exact path={`${match.url}removefromgroup`} render={(props: any) => {
+                    if (isloggedIn) {
+                        if (isTrainer) {
+                            return <RemoveFromGroup {...props} />
                         } else {
                             return <Redirect to={{
                                 pathname: '/',
