@@ -8,8 +8,9 @@
 
 import UserLoginDetails from '../models/userLoginDetails';
 import UserRegisterDetails from '../models/userRegisterDetails';
-import UserDetails from '../models/userDetails';
+import CurrentUserDetails from '../models/currentUserDetails';
 import CreateGroupDetails from '../models/createGroupDetails';
+import UserDetails from '../models/userDetails';
 
 /*let getJson = async (url: string) => {
     let responseJson = await fetch(url, {
@@ -95,13 +96,58 @@ let postJsonBearer = async (url: string, body: any) => {
     }
 }
 
+let postJsonBearerNoBody = async (url: string) => {
+    var userJSON = JSON.parse(localStorage.getItem('userDetails') || '{}');
+    let bearer;
+    if (Object.keys(userJSON).length != 0) {
+        bearer = 'Bearer ' + userJSON.user.jwt;
+    } else {
+        var token = '';
+        bearer = 'Bearer ' + token;
+    }
+
+    let responseJson = await fetch(url, {
+        credentials: 'include',
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Authorization': bearer,
+            'Content-Type': 'application/json'
+        }
+    });
+
+    if (responseJson.status === 200) {
+        return responseJson.json();
+    } else {
+        return null;
+    }
+}
+
 let createGroup = (createGroupDetails: CreateGroupDetails): Promise<Response> => {
     let url = "api/Group/CreateGroup";
 
     return postJsonBearer(url, createGroupDetails);
 }
 
-let loginUser = (userLoginDetails: UserLoginDetails): Promise<UserDetails> => {
+let getCurrentGroupDetails = (groupID: number): Promise<Response> => {
+    let url = "api/Group/GetCurrentGroupDetails";
+
+    return postJsonBearer(url, groupID);
+}
+
+let getCurrentGroupUsers = (groupID: number): Promise<UserDetails[]> => {
+    let url = "api/Group/GetUsersInGroup";
+
+    return postJsonBearer(url, groupID);
+}
+
+let getUsersNotInGroup = (): Promise<UserDetails[]> => {
+    let url = "api/Group/GetUsersNotInGroup";
+
+    return postJsonBearerNoBody(url);
+}
+
+let loginUser = (userLoginDetails: UserLoginDetails): Promise<CurrentUserDetails> => {
     let url = "api/Auth/UserLogin";
 
     return postJson(url, userLoginDetails);
@@ -113,7 +159,7 @@ let registerUser = (userResigterDetails: UserRegisterDetails): Promise<boolean> 
     return postJson(url, userResigterDetails);
 }
 
-let verifyJWT = (jsonWebToken: string): Promise<UserDetails> => {
+let verifyJWT = (jsonWebToken: string): Promise<CurrentUserDetails> => {
     let url = "api/Auth/VerifyJWT";
 
     return postJson(url, jsonWebToken);
@@ -121,6 +167,9 @@ let verifyJWT = (jsonWebToken: string): Promise<UserDetails> => {
 
 export const api = {
     createGroup,
+    getCurrentGroupDetails,
+    getCurrentGroupUsers,
+    getUsersNotInGroup,
     loginUser,
     registerUser,
     verifyJWT,

@@ -11,7 +11,7 @@ import { observable, computed, reaction, action } from 'mobx';
 import { api } from '../../api';
 import UserLoginDetails from '../../models/userLoginDetails';
 import UserRegisterDetails from '../../models/userRegisterDetails';
-import UserDetails from '../../models/userDetails';
+import CurrentUserDetails from '../../models/currentUserDetails';
 //import browserHistory from '../../history';
 
 class AuthStore {
@@ -47,7 +47,7 @@ class AuthStore {
             }
 
             //Use fetch to call the login controller
-            let userDetails: UserDetails = await api.loginUser(userLoginDetailsDTO);
+            let userDetails: CurrentUserDetails = await api.loginUser(userLoginDetailsDTO);
 
             //TODO: Update what is being stored in local storage, should just by jwt and accessibility preferences
             //Check response
@@ -153,7 +153,7 @@ class AuthStore {
     }
 
     @action
-    private setUserObservables = (userDetails: UserDetails): void => {
+    private setUserObservables = (userDetails: CurrentUserDetails): void => {
         //TODO: Add other user information, first and surnames etc. groupname?
         this.setIsLoggedIn(true);
         this.username = userDetails.user.username || "";
@@ -170,7 +170,7 @@ class AuthStore {
         let userJSON = JSON.parse(localStorage.getItem("userDetails") || '{}');
 
         if (Object.keys(userJSON).length != 0) {
-            let responseJson: UserDetails = await api.verifyJWT(userJSON.user.jwt);
+            let responseJson: CurrentUserDetails = await api.verifyJWT(userJSON.user.jwt);
 
             if (responseJson != null) {
                 this.setUserObservables(responseJson);

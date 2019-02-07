@@ -46,7 +46,7 @@ namespace WebAppProj.Controllers
             string password = "";
 
             //Create user
-            var user = new UserDetails();
+            var user = new CurrentUserDetails();
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -204,7 +204,7 @@ namespace WebAppProj.Controllers
             string connectionString = Configuration["ConnectionStrings:DefaultConnectionString"];
 
             //Create user
-            var user = new UserDetails();
+            var user = new CurrentUserDetails();
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -243,7 +243,7 @@ namespace WebAppProj.Controllers
             }
 
             //Get user JWT
-            user.JWT = CreateJWT(user.UserID, user.Username, user.UserRole); ;
+            user.JWT = CreateJWT(user.UserID, user.Username, user.UserRole);
 
             //Return OK result with user
             return Ok(new

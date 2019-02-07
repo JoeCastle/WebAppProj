@@ -8,9 +8,6 @@ class TrainerStore {
 
     @action
     public createGroup = async (): Promise<boolean> => {
-        //Validate username and password, potentially do this in the component.
-        //Check we exist in database.
-        //Log the user in.
         if (this.groupName != "") {
             //Create data transfer object
             let createGroupDetailsDTO: CreateGroupDetails = {
