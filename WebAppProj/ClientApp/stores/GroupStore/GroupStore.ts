@@ -7,10 +7,7 @@ import UserDetails from '../../models/userDetails';
 class GroupStore {
     @observable groupUsers: UserDetails[] = [];
     @observable nonGroupUsers: UserDetails[] = [];
-    todos = observable([
-    { title: "Spoil tea", completed: true },
-    { title: "Make coffee", completed: false }
-]);
+    @observable selectedUsers: UserDetails[] = [];
 
     @action
     public getCurrentGroupUsers = async (): Promise<void> => {
@@ -45,18 +42,9 @@ class GroupStore {
             let nonGroupUsers: UserDetails[] = await api.getUsersNotInGroup();
 
             if (nonGroupUsers) {
-                //this.nonGroupUsers = nonGroupUsers;
-
-                console.log("joetest: ");
-                console.log(nonGroupUsers);
-
-                debugger;
 
                 this.setNonGroupUsers(nonGroupUsers)
 
-                debugger;
-
-                //return this.groupUsers;
             } else {
                 //return false;
             }
@@ -81,14 +69,9 @@ class GroupStore {
 
     @action
     private setNonGroupUsers = (nonGroupUsers: UserDetails[]): void => {
-
         for (let user in nonGroupUsers) {
             this.nonGroupUsers[user] = nonGroupUsers[user];
-
-            debugger;
         }
-
-        debugger;
     }
 }
 

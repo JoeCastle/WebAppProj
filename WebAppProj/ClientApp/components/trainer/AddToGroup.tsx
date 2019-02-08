@@ -4,6 +4,7 @@ import { inject, observer } from 'mobx-react';
 import { GroupStore } from '../../stores/GroupStore/GroupStore';
 import { AuthStore } from '../../stores/AuthStore/AuthStore';
 import UserDetails from '../../models/userDetails';
+import { action } from 'mobx';
 
 interface Props extends RouteComponentProps<any>, React.Props<any> {
     groupStore: GroupStore,
@@ -22,28 +23,70 @@ export class AddToGroup extends React.Component<Props> {
         debugger;
     }
 
+    users = this.props.groupStore.nonGroupUsers;
+    selectedUsers: UserDetails[] = [];
+
     public render() {
         let isTrainer = this.props.authStore.isLoggedIn && this.props.authStore.userRole == "trainer";
         let trainerHasGroup = this.props.authStore.userGroupID != 1 && this.props.authStore.userGroupID != -1 && isTrainer;
 
-        //TODO: Value is being returned as object containing array of arrays
-        let users = this.props.groupStore.nonGroupUsers;
+        //let users = this.props.groupStore.nonGroupUsers;
 
-        let todos = this.props.groupStore.todos;
-
-        debugger;
+        //let selectedUsers: UserDetails[];
 
         let loading = <div>Loading...</div>; //TODO: Create dedicated loading component, also a default my group page for undefined group, asking if they would like to create one
         return (<div className="page">
             {trainerHasGroup ? <AddToGroupPage {... this.props} /> : loading}
-            <div>
-                {
-                    users.map(
-                        user => <div key={user.userID}>{user.firstname}, {user.surname}</div>
-                    )
-                }
+            <div className="addToGroupListsContainer">
+                <div className="noGroupUsersList">
+                    {
+                        this.users.map(
+                            user => <div
+                                key={user.userID}
+                                onClick={() => this.selectUser(user)}
+                            >
+                                {user.userID} - {user.firstname} {user.surname}
+                            </div>
+                        )
+                    }
+
+                    {!this.users && <div>No users</div>}
+                </div>
+
+                <div className="selectedUsersList">
+                    {
+                        this.selectedUsers.map(
+                            user => <div
+                                key={user.userID}
+                                onClick={() => this.unSelectUser(user)}
+                            >
+                                {user.userID} - {user.firstname} {user.surname}
+                            </div>
+                        )
+                    }
+
+                    {!this.users && <div>No users</div>}
+                </div>
             </div>
         </div>)
+    }
+
+    @action
+    private selectUser = async (user: UserDetails) => {
+        this.selectedUsers.push(user);
+        let index = this.users.indexOf(user);
+        this.users.splice(index, 1);
+
+        debugger;
+    }
+
+    @action
+    private unSelectUser = async (user: UserDetails) => {
+        this.users.push(user);
+        let index = this.selectedUsers.indexOf(user);
+        this.selectedUsers.splice(index, 1);
+
+        debugger;
     }
 }
 
