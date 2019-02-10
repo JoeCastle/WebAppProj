@@ -3,6 +3,7 @@ import authStore from '../AuthStore/AuthStore';
 import CreateGroupDetails from '../../models/createGroupDetails';
 import { api } from '../../api';
 import UserDetails from '../../models/userDetails';
+import UsersToAddToGroup from '../../models/usersToAddToGroup';
 
 class GroupStore {
     @observable groupUsers: UserDetails[] = [];
@@ -21,8 +22,6 @@ class GroupStore {
 
             if (groupUsers) {
                 this.groupUsers = groupUsers;
-
-                debugger;
 
                 //return this.groupUsers;
             } else {
@@ -54,6 +53,37 @@ class GroupStore {
     }
 
     @action
+    public addUsersToGroup = async (): Promise<boolean> => {
+        //Move to dedicated function, to reduce code. (Move to auth store?)
+        let isTrainer = authStore.isLoggedIn && authStore.userRole == "trainer";
+        let trainerHasGroup = authStore.userGroupID != 1 && authStore.userGroupID != -1 && isTrainer;
+
+        let selectedUsers: UserDetails[] = [];
+
+        for (let i = 0; i < this.selectedUsers.length; i++) {
+            selectedUsers[i] = this.selectedUsers[i];
+        }
+
+        //Create data transfer object
+        let DTO: UsersToAddToGroup = {
+            userDetails: selectedUsers,
+            groupID: authStore.userGroupID
+        }
+
+        if (trainerHasGroup) {
+            let response: Response = await api.addUsersToGroup(DTO);
+
+            if (response) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    @action
     public getCurrentGroupDetails = async (): Promise<boolean> => {
         let isTrainer = authStore.isLoggedIn && authStore.userRole == "trainer";
         let trainerHasGroup = authStore.userGroupID != 1 && authStore.userGroupID != -1 && isTrainer;
@@ -71,6 +101,13 @@ class GroupStore {
     private setNonGroupUsers = (nonGroupUsers: UserDetails[]): void => {
         for (let user in nonGroupUsers) {
             this.nonGroupUsers[user] = nonGroupUsers[user];
+        }
+    }
+
+    @action
+    public setSelectedUsers = (selectedUsers: UserDetails[]): void => {
+        for (let user in selectedUsers) {
+            this.selectedUsers[user] = selectedUsers[user];
         }
     }
 }

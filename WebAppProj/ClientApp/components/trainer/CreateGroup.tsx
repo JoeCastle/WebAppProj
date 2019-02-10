@@ -47,7 +47,7 @@ export class CreateGroup extends React.Component<Props> {
         //Prevent the page from refreshing when the form is submitted
         e.preventDefault();
 
-        debugger;
+        //debugger;
 
         if (groupCreated) {
             this.props.history.push('/mygroup');

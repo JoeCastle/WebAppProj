@@ -23,7 +23,7 @@ export class NavMenu extends React.Component<Props> {
         let trainerHasGroup = this.props.authStore.userGroupID != 1 && isTrainer;
         let traineeHasGroup = this.props.authStore.userGroupID != 1 && isTrainee;
 
-        debugger;
+        //debugger;
 
         return <div className='main-nav'>
             <div className='navbar navbar-inverse'>

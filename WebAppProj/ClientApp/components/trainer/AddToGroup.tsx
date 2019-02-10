@@ -18,9 +18,9 @@ export class AddToGroup extends React.Component<Props> {
         await this.props.authStore.validateJWT();
         await this.props.groupStore.getUsersNotInGroup();
 
-        console.log(this.props.groupStore.nonGroupUsers);
+        //console.log(this.props.groupStore.nonGroupUsers);
 
-        debugger;
+        //debugger;
     }
 
     users = this.props.groupStore.nonGroupUsers;
@@ -68,6 +68,14 @@ export class AddToGroup extends React.Component<Props> {
                     {!this.users && <div>No users</div>}
                 </div>
             </div>
+
+            <button
+                onClick={
+                    this.addTrainees
+                }
+            >
+                Add trainees to group
+            </button>
         </div>)
     }
 
@@ -76,8 +84,6 @@ export class AddToGroup extends React.Component<Props> {
         this.selectedUsers.push(user);
         let index = this.users.indexOf(user);
         this.users.splice(index, 1);
-
-        debugger;
     }
 
     @action
@@ -85,8 +91,20 @@ export class AddToGroup extends React.Component<Props> {
         this.users.push(user);
         let index = this.selectedUsers.indexOf(user);
         this.selectedUsers.splice(index, 1);
+    }
 
-        debugger;
+    private addTrainees = async (e: any) => {
+        this.props.groupStore.setSelectedUsers(this.selectedUsers);
+
+        let completed =  await this.props.groupStore.addUsersToGroup();
+
+        if (completed) {
+            this.props.history.push('/');
+            alert("The users have been added to your group.");
+        } else {
+            //display error, move to store, have error observable
+            return false;
+        }
     }
 }
 

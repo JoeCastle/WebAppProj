@@ -11,6 +11,7 @@ import UserRegisterDetails from '../models/userRegisterDetails';
 import CurrentUserDetails from '../models/currentUserDetails';
 import CreateGroupDetails from '../models/createGroupDetails';
 import UserDetails from '../models/userDetails';
+import UsersToAddToGroup from '../models/usersToAddToGroup';
 
 /*let getJson = async (url: string) => {
     let responseJson = await fetch(url, {
@@ -96,6 +97,7 @@ let postJsonBearer = async (url: string, body: any) => {
     }
 }
 
+//Replace with get?
 let postJsonBearerNoBody = async (url: string) => {
     var userJSON = JSON.parse(localStorage.getItem('userDetails') || '{}');
     let bearer;
@@ -121,6 +123,12 @@ let postJsonBearerNoBody = async (url: string) => {
     } else {
         return null;
     }
+}
+
+let addUsersToGroup = (usersToAddToGroup: any): Promise<Response> => {
+    let url = "api/Group/AddUsersToGroup";
+
+    return postJsonBearer(url, usersToAddToGroup);
 }
 
 let createGroup = (createGroupDetails: CreateGroupDetails): Promise<Response> => {
@@ -166,6 +174,7 @@ let verifyJWT = (jsonWebToken: string): Promise<CurrentUserDetails> => {
 }
 
 export const api = {
+    addUsersToGroup,
     createGroup,
     getCurrentGroupDetails,
     getCurrentGroupUsers,

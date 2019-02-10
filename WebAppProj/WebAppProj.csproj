@@ -41,6 +41,7 @@
     <None Remove="ClientApp\models\currentUserDetails.ts" />
     <None Remove="ClientApp\models\userDetails.ts" />
     <None Remove="ClientApp\models\userRegisterDetails.ts" />
+    <None Remove="ClientApp\models\usersToAddToGroup.ts" />
     <None Remove="ClientApp\stores\AuthStore.tsx" />
     <None Remove="ClientApp\stores\AuthStore\AuthStore.ts" />
     <None Remove="ClientApp\stores\GroupStore\GroupStore.ts" />
@@ -71,6 +72,7 @@
     <TypeScriptCompile Include="ClientApp\models\currentUserDetails.ts" />
     <TypeScriptCompile Include="ClientApp\models\userDetails.ts" />
     <TypeScriptCompile Include="ClientApp\models\userRegisterDetails.ts" />
+    <TypeScriptCompile Include="ClientApp\models\usersToAddToGroup.ts" />
     <TypeScriptCompile Include="ClientApp\stores\AuthStore\AuthStore.ts" />
     <TypeScriptCompile Include="ClientApp\stores\GroupStore\GroupStore.ts" />
     <TypeScriptCompile Include="ClientApp\stores\index.ts" />
