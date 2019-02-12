@@ -167,6 +167,12 @@ let registerUser = (userResigterDetails: UserRegisterDetails): Promise<boolean> 
     return postJson(url, userResigterDetails);
 }
 
+let removeUsersFromGroup = (removeUsersFromGroup: any): Promise<Response> => {
+    let url = "api/Group/RemoveUsersFromGroup";
+
+    return postJsonBearer(url, removeUsersFromGroup);
+}
+
 let verifyJWT = (jsonWebToken: string): Promise<CurrentUserDetails> => {
     let url = "api/Auth/VerifyJWT";
 
@@ -181,5 +187,6 @@ export const api = {
     getUsersNotInGroup,
     loginUser,
     registerUser,
+    removeUsersFromGroup,
     verifyJWT,
 }

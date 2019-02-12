@@ -17,10 +17,6 @@ export class AddToGroup extends React.Component<Props> {
     async componentDidMount() {
         await this.props.authStore.validateJWT();
         await this.props.groupStore.getUsersNotInGroup();
-
-        //console.log(this.props.groupStore.nonGroupUsers);
-
-        //debugger;
     }
 
     users = this.props.groupStore.nonGroupUsers;
@@ -29,10 +25,6 @@ export class AddToGroup extends React.Component<Props> {
     public render() {
         let isTrainer = this.props.authStore.isLoggedIn && this.props.authStore.userRole == "trainer";
         let trainerHasGroup = this.props.authStore.userGroupID != 1 && this.props.authStore.userGroupID != -1 && isTrainer;
-
-        //let users = this.props.groupStore.nonGroupUsers;
-
-        //let selectedUsers: UserDetails[];
 
         let loading = <div>Loading...</div>; //TODO: Create dedicated loading component, also a default my group page for undefined group, asking if they would like to create one
         return (<div className="page">

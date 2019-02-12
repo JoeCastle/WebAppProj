@@ -116,10 +116,9 @@ namespace WebAppProj.Controllers
             }
 
             //Return OK result with user
-            return Ok(new
-            {
+            return Ok(
                 users
-            });
+            );
         }
 
         [Authorize(Roles = "trainer")]
@@ -286,12 +285,77 @@ namespace WebAppProj.Controllers
             if (result == 1)
             {
                 //SUCCESS
-                return Ok("Group created.");
+                return Ok("Users successfully added to group.");
             }
             else
             {
                 //FAIL
-                return BadRequest("Failed to add group, group name already exists.");
+                return BadRequest("Failed to add users to group.");
+            }
+        }
+
+        [Authorize(Roles = "trainer")]
+        [HttpPost("[action]")]
+        public IActionResult RemoveUsersFromGroup([FromBody] UsersToAddToGroup usersToAddToGroup)
+        {
+            var queryResult = -1; //Set query result to fail.
+            string connectionString = Configuration["ConnectionStrings:DefaultConnectionString"];
+            int result = -1;
+
+            DataTable tableUsers = new DataTable("Users");
+            tableUsers.Columns.Add("UserID", typeof(int));
+            tableUsers.Columns.Add("GroupID", typeof(int));
+
+            foreach (UserDetails User in usersToAddToGroup.UserDetails)
+            {
+                DataRow row = tableUsers.NewRow();
+                row["UserID"] = User.UserID;
+                row["GroupID"] = usersToAddToGroup.GroupID;
+
+                tableUsers.Rows.Add(row);
+            }
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                //Create the SQL command and set type to stored procedure.
+                SqlCommand command = new SqlCommand("User_RemoveFromGroup", connection);
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                //Set the parameters for the command.
+                //command.Parameters.Add("@users", SqlDbType.Structured);
+
+                //Parameter declaration    
+                SqlParameter Parameter = new SqlParameter();
+                Parameter.ParameterName = "@users";
+                Parameter.SqlDbType = SqlDbType.Structured;
+                Parameter.Value = tableUsers;
+
+                command.Parameters.Add(Parameter);
+                //command.Parameters.AddWithValue("@groupID", usersToAddToGroup.GroupID);
+                command.Parameters.Add("@result", System.Data.SqlDbType.Int).Direction = System.Data.ParameterDirection.Output;
+
+
+                //SqlBulkCopy sqlBulkCopy = new SqlBulkCopy();
+
+                connection.Open();
+
+                //Execute the query and store the result
+                queryResult = command.ExecuteNonQuery();
+
+                result = (int)command.Parameters["@result"].Value;
+
+                connection.Close();
+            }
+
+            if (result == 1)
+            {
+                //SUCCESS
+                return Ok("Users successfully removed from group.");
+            }
+            else
+            {
+                //FAIL
+                return BadRequest("Failed to remove users from group.");
             }
         }
     }
