@@ -62,7 +62,7 @@ export class RemoveFromGroup extends React.Component<Props> {
                 </div>
             </div>
 
-            <button
+            <button className="btn btn-primary strd-btn"
                 onClick={
                     this.removeTrainees
                 }

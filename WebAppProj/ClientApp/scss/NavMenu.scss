@@ -55,6 +55,25 @@
         height: 100%;
         width: 340px;
         min-width: 340px;
+        position: relative;
+        top: 0px;
+    }
+
+    .main-nav {
+        .navbar {
+            display: flex;
+            flex-direction: column;
+
+            .navbar-collapse {
+                display: flex !important;
+                flex-direction: column;
+                height: 100% !important;
+
+                .navbar-nav {
+                    overflow: auto;
+                }
+            }
+        }
     }
 
     .main-nav .navbar {

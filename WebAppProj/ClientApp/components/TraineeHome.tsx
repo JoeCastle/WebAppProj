@@ -23,24 +23,12 @@ export class TraineeHome extends React.Component<Props> {
             <p>This is the trainee home.</p>
             <button
                 onClick={
-                    this.logout
-                }
-            >
-                Logout
-            </button>
-            <button
-                onClick={
                     this.traineeTest
                 }
             >
                 TraineeTest
             </button>
         </div>;
-    }
-
-    private logout = async () => {
-        await this.props.authStore.userLogout();
-        this.props.history.push('/login');
     }
 
     private traineeTest = () => {

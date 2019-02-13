@@ -36,20 +36,13 @@ export class Login extends React.Component<Props> {
                     required
                     onChange={this.onPasswordChange}
                 />
-                <button className='login-button'
+                <button className='btn btn-primary strd-btn login-button'
                     onClick={
                         this.login
                     }
                     > Login
                 </button>
             </form>
-            <button
-                onClick={
-                    this.logout
-                }
-            >
-                Logout
-            </button>
         </div>;
     }
 
@@ -80,9 +73,5 @@ export class Login extends React.Component<Props> {
         let password = e.target.value;
 
         this.props.authStore.onPasswordChange(password);
-    }
-
-    private logout = () => {
-        this.props.authStore.userLogout();
     }
 }

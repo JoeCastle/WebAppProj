@@ -14,18 +14,6 @@ export class TrainerHome extends React.Component<Props> {
         return <div className="page">
             <h1>Hello, trainer!</h1>
             <p>This is the trainer home.</p>
-            <button
-                onClick={
-                    this.logout
-                }
-            >
-                Logout
-            </button>
         </div>;
-    }
-
-    private logout = async () => {
-        await this.props.authStore.userLogout();
-        this.props.history.push('/login');
     }
 }

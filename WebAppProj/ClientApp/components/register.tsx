@@ -116,7 +116,7 @@ export class Register extends React.Component<Props> {
                     maxLength={25}
                 />
 
-                <button className='register-button'
+                <button className='btn btn-primary strd-btn register-button'
                     onClick={
                         this.register
                     }

@@ -27,7 +27,7 @@ export class CreateGroup extends React.Component<Props> {
                     onChange={this.onGroupNameChange}
 
                 />
-                <button className='create-group-button'
+                <button className='btn btn-primary strd-btn create-group-button'
                     onClick={
                         this.createGroup
                     }

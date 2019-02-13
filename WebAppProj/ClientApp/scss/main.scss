@@ -19,10 +19,22 @@ body {
     h1, h2 {
         color: $main-color-Dark;
     }
+
+    /*@media (min-width: 768px) {
+        padding-top: 0px !important;
+    }*/
+
+    @media (max-width: 767px)  {
+        padding-top: 0px;
+    }
 }
 
 html, body, #react-app, .container-fluid {
     height: 100%;
+
+    @media (min-width: 768px) {
+        overflow: hidden;
+    }
 }
 
 .container-fluid {
@@ -36,10 +48,6 @@ html, body, #react-app, .container-fluid {
     position: relative;
     margin: 0px;
 
-    @media (max-width: 767px) {
-        position: fixed;
-    }
-
     .navbar {
         margin: 0px;
     }
@@ -47,6 +55,12 @@ html, body, #react-app, .container-fluid {
 
 .page {
     width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    @media (min-width: 768px) {
+        overflow: auto;
+    }
 }
 
 .page-parent {
@@ -60,4 +74,8 @@ html, body, #react-app, .container-fluid {
     @media (max-width: 767px) {
         flex-direction: column;
     }
+}
+
+.strd-btn {
+    max-width: 200px;
 }
