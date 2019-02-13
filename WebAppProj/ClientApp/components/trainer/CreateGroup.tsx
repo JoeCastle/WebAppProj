@@ -8,6 +8,7 @@ interface Props extends RouteComponentProps<any>, React.Props<any> {
     trainerStore: TrainerStore
 }
 
+//TODO: Move to groupstore.
 @inject('trainerStore')
 @observer
 export class CreateGroup extends React.Component<Props> {
