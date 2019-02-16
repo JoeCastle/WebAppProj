@@ -12,6 +12,7 @@ import CurrentUserDetails from '../models/currentUserDetails';
 import CreateGroupDetails from '../models/createGroupDetails';
 import UserDetails from '../models/userDetails';
 import UsersToAddToGroup from '../models/usersToAddToGroup';
+import CreateQuizDetails from '../models/CreateQuiz/createQuizDetails';
 
 /*let getJson = async (url: string) => {
     let responseJson = await fetch(url, {
@@ -137,6 +138,12 @@ let createGroup = (createGroupDetails: CreateGroupDetails): Promise<Response> =>
     return postJsonBearer(url, createGroupDetails);
 }
 
+let createQuiz = (createQuizDetails: CreateQuizDetails): Promise<Response> => {
+    let url = "api/Quiz/CreateQuiz";
+
+    return postJsonBearer(url, createQuizDetails);
+}
+
 let getCurrentGroupDetails = (groupID: number): Promise<Response> => {
     let url = "api/Group/GetCurrentGroupDetails";
 
@@ -182,6 +189,7 @@ let verifyJWT = (jsonWebToken: string): Promise<CurrentUserDetails> => {
 export const api = {
     addUsersToGroup,
     createGroup,
+    createQuiz,
     getCurrentGroupDetails,
     getCurrentGroupUsers,
     getUsersNotInGroup,

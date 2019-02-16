@@ -18,9 +18,8 @@ export class CreateQuiz extends React.Component<Props> {
     questions: JSX.Element[] = [];
 
     createQuestions = () => {
-        //let questions = [];
         for (let i = 0; i < 5; i++) {
-            this.questions.push(<QuestionComponent {... this.props} />)
+            this.questions.push(<QuestionComponent key={i} questionID={i} {... this.props} />)
         }
     }
 
@@ -28,7 +27,7 @@ export class CreateQuiz extends React.Component<Props> {
         return <div className="page">
             <h1>This is the create quiz page.</h1>
             <p>Create a quiz.</p>
-            
+
             <form onSubmit={this.formSubmit}>
                 <label htmlFor='quizname'>Quiz name: </label>
                 <input
@@ -38,7 +37,7 @@ export class CreateQuiz extends React.Component<Props> {
                     placeholder='Quiz name'
                     autoComplete='off'
                     required
-                    //onChange={}
+                    onChange={this.onQuizNameChange}
 
                 />
 
@@ -71,19 +70,31 @@ export class CreateQuiz extends React.Component<Props> {
             return false;
         }
     }
+
+    private onQuizNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        let quizName = e.target.value;
+
+        this.props.quizStore.onQuizNameChange(quizName);
+    }
 }
 
-const QuestionComponent = (props: Props) => {
+const QuestionComponent = (props: any) => {
     let createChoices = () => {
         let choices = [];
         for (let i = 0; i < 4; i++) {
-            choices.push(<ChoiceComponent {...props} />)
+            choices.push(<ChoiceComponent key={i} choiceID={i} {...props} />)
         }
         return choices;
     }
 
+    let onQuestionTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        let questionText = e.target.value;
+
+        props.quizStore.onQuestionTextChange(questionText, props.questionID);
+    }
+
     return <div className="question-component">
-        <label htmlFor='questiontext'>Question text: </label>
+        <label htmlFor='questiontext'>{props.questionID + 1} Question text: </label>
         <input
             className="textbox"
             id='questiontext'
@@ -91,31 +102,50 @@ const QuestionComponent = (props: Props) => {
             placeholder='Question text'
             autoComplete='off'
             required
-        //onChange={}
+            onChange={onQuestionTextChange}
 
         />
 
         {createChoices()}
-
-              
     </div>
 };
 
 
-const ChoiceComponent = (props: Props) => {
-    return <div className="choice-component">
-        <label htmlFor='choicetext'>Choice text: </label>
-        <input
-            className="textbox"
-            id='choicetext'
-            type='text'
-            placeholder='Question text'
-            autoComplete='off'
-            required
-            //onChange={}
-        />
+const ChoiceComponent = (props: any) => {
+    let onChoiceTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        let choiceText = e.target.value;
 
-        <label htmlFor='ischoicecorrect'>Is correct answer?: </label>
-        <input id='ischoicecorrect' type='radio' name='choice' value='male' checked />
+        props.quizStore.onChoiceTextChange(choiceText, props.questionID, props.choiceID);
+    }
+
+    let onChoiceIsCorrectChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        let isChoiceCorrect = e.target.value;
+
+        props.quizStore.onChoiceIsCorrectChange(isChoiceCorrect, props.questionID, props.choiceID);
+    }
+
+    return <div className='choice-component' id={'group' + props.questionID}>
+        <div className='choice-container'>
+            <label htmlFor='choicetext'>{props.questionID + 1} {props.choiceID + 1} Choice text: </label>
+            <input
+                className='textbox'
+                id='choicetext'
+                type='text'
+                placeholder='Question text'
+                autoComplete='off'
+                required
+                onChange={onChoiceTextChange}
+            />
+        </div>
+        <div className='iscorrect-container'>
+            <label htmlFor='ischoicecorrect'>Is correct answer?: </label>
+            <input
+                id='ischoicecorrect'
+                type='radio'
+                name={'group' + props.questionID}
+                onChange={onChoiceIsCorrectChange}
+                required
+            />
+        </div>
     </div>
 };

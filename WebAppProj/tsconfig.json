@@ -9,6 +9,7 @@
     "sourceMap": true,
     "skipDefaultLibCheck": true,
     "strict": true,
+    "strictPropertyInitialization": false,
     "types": [ "webpack-env" ],
     "experimentalDecorators": true
   },
