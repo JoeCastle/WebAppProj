@@ -88,7 +88,7 @@ class QuizStore {
 
             //Set choice text and choice is correct.
             for (let j: number = 0; j < 4; j++) {
-                let index = i + j;
+                let index = j + (i * 4);
 
                 let createdChoices: CreateChoiceDetails = {
                     choiceText: this.choicesText[index],
@@ -131,7 +131,6 @@ class QuizStore {
 
             //Reset other grouped value to false
             for (let i: number = 0; i < 4; i++) {
-                debugger;
                 let j = i + (questionID * 4);
 
                 if (index != j) {
@@ -141,8 +140,6 @@ class QuizStore {
         } else {
             this.choicesCorrect[index] = false;
         }
-
-        debugger;
     }
 }
 

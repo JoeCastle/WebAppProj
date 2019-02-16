@@ -118,10 +118,10 @@ const ChoiceComponent = (props: any) => {
         props.quizStore.onChoiceTextChange(choiceText, props.questionID, props.choiceID);
     }
 
-    let onChoiceIsCorrectChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let onChoiceIsCorrectChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
         let isChoiceCorrect = e.target.value;
 
-        props.quizStore.onChoiceIsCorrectChange(isChoiceCorrect, props.questionID, props.choiceID);
+        await props.quizStore.onChoiceIsCorrectChange(isChoiceCorrect, props.questionID, props.choiceID);
     }
 
     return <div className='choice-component' id={'group' + props.questionID}>
