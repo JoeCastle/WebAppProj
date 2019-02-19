@@ -8,17 +8,10 @@ import CreateChoiceDetails from '../../models/CreateQuiz/createChoiceDetails';
 import { CreateQuiz } from '../../components/trainer/CreateQuiz';
 
 class QuizStore {
-    //@observable quiz: CreateQuizDetails;
-    //@observable questions: CreateQuestionDetails[];
-    //@observable choices: CreateChoiceDetails[];
-
-    //@observable quiz: CreateQuizDetails;
-    //@observable questions: Array<CreateQuestionDetails> = new Array(5);
-    //@observable choices: CreateChoiceDetails[];
-
     @observable quiz: CreateQuizDetails;
     @observable questions: string[];
     @observable choicesText: string[];
+
     private choicesCorrect: boolean[];
     private quizName: string;
 
@@ -26,24 +19,13 @@ class QuizStore {
 
     constructor() {
         this.quiz = {} as CreateQuizDetails;
-        //this.quiz.createdQuestions = [] as CreateQuestionDetails[];
-        //this.quiz.createdQuestions[].createdChoices = [] as CreateChoiceDetails[];
-        //this.quiz.createdQuestions[].createdChoices = [];
-
         this.questions = new Array(5).fill("");
         this.choicesText = new Array(20).fill("");
         this.choicesCorrect = new Array(20).fill(false);
-
-        //this.questions = [{}] as CreateQuestionDetails[];
-        //this.choices = [{}] as CreateChoiceDetails[];
-
-        //this.questions = [];
-        //this.choices = [];
-
     }
 
     @action
-    public createQuiz = async (): Promise<void> => {
+    public createQuiz = async (): Promise<boolean> => {
         let isTrainer = authStore.isLoggedIn && authStore.userRole == "trainer";
         let trainerHasGroup = authStore.userGroupID != 1 && authStore.userGroupID != -1 && isTrainer;
 
@@ -59,13 +41,14 @@ class QuizStore {
             if (response) {
 
                 //this.setNonGroupUsers(nonGroupUsers)
+                return true;
 
             } else {
-                //return false;
+                return false;
             }
+        } else {
+            return false;
         }
-
-        //return true;
     }
 
     //TODO: Fix the iscorrect value being incorrect. Sometimes multiple radio options are true in one group.

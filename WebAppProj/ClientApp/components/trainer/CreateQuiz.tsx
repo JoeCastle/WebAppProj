@@ -41,7 +41,7 @@ export class CreateQuiz extends React.Component<Props> {
 
                 />
 
-                {this.questions}
+                <div className='questions-container'>{this.questions}</div>
 
                 <button className='btn btn-primary strd-btn create-group-button'
                     onClick={
@@ -65,9 +65,9 @@ export class CreateQuiz extends React.Component<Props> {
 
         if (quizCreated) {
             //this.props.history.push('/mygroup');
-            alert("Your group has been created.");
+            alert("Successfully created quiz.");
         } else {
-            return false;
+            alert("Failed to create quiz.");
         }
     }
 
@@ -94,6 +94,7 @@ const QuestionComponent = (props: any) => {
     }
 
     return <div className="question-component">
+        <div className='question-text-container'>
         <label htmlFor='questiontext'>{props.questionID + 1} Question text: </label>
         <input
             className="textbox"
@@ -103,10 +104,9 @@ const QuestionComponent = (props: any) => {
             autoComplete='off'
             required
             onChange={onQuestionTextChange}
-
         />
-
-        {createChoices()}
+            </div>
+        <div className='choices-container'>{createChoices()}</div>
     </div>
 };
 
