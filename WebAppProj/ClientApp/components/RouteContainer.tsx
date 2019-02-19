@@ -2,7 +2,6 @@
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { Layout } from './Layout';
 import { Home } from './Home';
-import { FetchData } from './FetchData';
 import { Login } from './Login';
 import { Register } from './Register';
 import { FourZeroFour } from './FourZeroFour';
@@ -77,8 +76,6 @@ export class RouteContainer extends React.Component<Props> {
                         return <Login {...props} />
                     }
                 }} />
-
-                <Route exact path={`${match.url}fetchdata`} component={FetchData} />
 
                 <Route exact path={`${match.url}register`} render={(props: any) => {
                     if (isloggedIn) {
