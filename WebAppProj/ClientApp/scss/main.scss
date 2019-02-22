@@ -15,17 +15,22 @@
 @import 'CreateQuiz.scss';
 
 body {
-    background-color: $main-color-Light;
+    background-color: $main-background-colour;
 
-    h1, h2 {
-        color: $main-color-Dark;
+    h1, h2, h3, h4, h5, h6 {
+        color: $main-text-colour;
     }
 
-    /*@media (min-width: 768px) {
-        padding-top: 0px !important;
-    }*/
+    p, label, div {
+        color: $main-text-colour;
+    }
 
-    @media (max-width: 767px)  {
+    .btn, .btn-primary {
+        //background-color: $main-btn-background-colour;
+        color: $main-btn-text-colour !important;
+    }
+    
+    @media (max-width: 767px) {
         padding-top: 0px;
     }
 }
@@ -58,6 +63,7 @@ html, body, #react-app, .container-fluid {
     width: 100%;
     display: flex;
     flex-direction: column;
+    padding: 15px;
 
     @media (min-width: 768px) {
         overflow: auto;

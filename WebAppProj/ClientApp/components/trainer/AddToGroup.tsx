@@ -103,7 +103,7 @@ export class AddToGroup extends React.Component<Props> {
 const AddToGroupPage = (props: Props) => {
     //let users = props.groupStore.nonGroupUsers;
     return <div>
-        <h1>This is the add to group page.</h1>
+        <h1>Add to Group.</h1>
         <p>Here you can add new trainees to your existing group.</p>
 
         {/*<div>

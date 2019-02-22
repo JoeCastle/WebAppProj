@@ -28,7 +28,7 @@ export class MyGroup extends React.Component<Props> {
 
 const MyGroupPage = (props: Props) => {
     return <div>
-        <h1>This is the my group page.</h1>
+        <h1>My Group.</h1>
         <p>View your group.</p>
         <p>Your group id is: {props.authStore.userGroupID}</p>
     </div>

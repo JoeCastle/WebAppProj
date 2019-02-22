@@ -25,8 +25,7 @@ export class CreateQuiz extends React.Component<Props> {
 
     public render() {
         return <div className="page">
-            <h1>This is the create quiz page.</h1>
-            <p>Create a quiz.</p>
+            <h1>Create a Quiz.</h1>
 
             <form onSubmit={this.formSubmit}>
                 <label htmlFor='quizname'>Quiz name: </label>
@@ -47,7 +46,7 @@ export class CreateQuiz extends React.Component<Props> {
                     onClick={
                         this.createQuiz
                     }
-                > Create group
+                > Create quiz
                 </button>
             </form>
         </div>;
@@ -95,7 +94,7 @@ const QuestionComponent = (props: any) => {
 
     return <div className="question-component">
         <div className='question-text-container'>
-        <label htmlFor='questiontext'>{props.questionID + 1} Question text: </label>
+        <label htmlFor='questiontext'>{props.questionID + 1}. Question text: </label>
         <input
             className="textbox"
             id='questiontext'
@@ -126,7 +125,7 @@ const ChoiceComponent = (props: any) => {
 
     return <div className='choice-component' id={'group' + props.questionID}>
         <div className='choice-container'>
-            <label htmlFor='choicetext'>{props.questionID + 1} {props.choiceID + 1} Choice text: </label>
+            <label htmlFor='choicetext'>{props.questionID + 1}.{props.choiceID + 1}. Choice text: </label>
             <input
                 className='textbox'
                 id='choicetext'

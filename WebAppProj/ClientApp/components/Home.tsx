@@ -16,6 +16,7 @@ export class Home extends React.Component<Props> {
 
     public render() {
         return (<div className="page">
+            <h1>Home</h1>
             {
                 this.props.authStore.userRole == "trainer" &&
                 <TrainerHome {... this.props} />

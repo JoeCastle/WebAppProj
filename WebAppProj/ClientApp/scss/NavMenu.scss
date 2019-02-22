@@ -1,6 +1,8 @@
-﻿div.dropdown {
+﻿@import 'StyleSheet.scss';
+
+div.dropdown {
     /* If a menu item's text is too long, truncate it */
-    padding: 10px 16px;
+    //padding: 10px 16px;
     border-radius: 4px;
     width: 100%;
     white-space: nowrap;
@@ -18,28 +20,36 @@
         box-shadow: none;
 
         a {
-            color: #9d9d9d;
+            color: $nav-link-colour;
+            padding-left: 30px !important;
+
+            @media (max-width: 768px) {
+                margin-bottom: 5px;
+                margin-top: 2px;
+                padding-left: 30px;
+            }
         }
 
         a:hover {
-            color: #fff;
+            color: $nav-link-hover-colour;
             background-color: transparent;
             text-decoration: none;
         }
     }
 
     > .dropdown-toggle {
-        color: #9d9d9d;
+        color: $nav-link-colour;
         background-color: transparent;
         padding: 0px;
         margin: 0px;
         cursor: pointer;
         border: none;
         text-align: left;
+        padding: 10px 16px;
     }
 
     > .dropdown-toggle:hover {
-        color: #fff;
+        color: $nav-link-hover-colour;
         background-color: transparent;
     }
 }
@@ -117,10 +127,18 @@
     }
 }
 
-.main-nav li a.active,
-.main-nav li a.active:hover,
-.main-nav li a.active:focus {
-    background-color: #4189C7;
-    color: white;
+.main-nav li a {
+    //background-color: #4189C7;
+    color: $nav-link-colour !important;
     text-decoration: none;
 }
+
+.main-nav li a.active,
+.main-nav li a:hover,
+.main-nav li a:focus {
+    //background-color: #4189C7;
+    color: $nav-link-hover-colour !important;
+    text-decoration: none;
+}
+
+

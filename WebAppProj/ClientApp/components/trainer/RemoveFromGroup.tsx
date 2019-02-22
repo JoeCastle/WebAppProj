@@ -103,7 +103,7 @@ export class RemoveFromGroup extends React.Component<Props> {
 
 const RemoveFromGroupPage = (props: Props) => {
     return <div>
-        <h1>This is the remove from group page.</h1>
+        <h1>Remove from Group.</h1>
         <p>Here you can remove trainees from your group.</p>
     </div>
 };
