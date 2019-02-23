@@ -47,7 +47,7 @@ export class NavMenu extends React.Component<Props> {
                         <li>
                             {!this.props.authStore.isLoggedIn &&
                                 <NavLink to={'/login'} activeClassName='active'>
-                                    <span className='glyphicon glyphicon-th-list'></span> Login
+                                    <span className='glyphicon glyphicon-log-in'></span> Login
                                 </NavLink>
                             }
                         </li>
@@ -62,27 +62,27 @@ export class NavMenu extends React.Component<Props> {
                             {isTrainer &&
                                 <div className="dropdown">
                                     <button className="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <span className='glyphicon glyphicon-th-list'></span> Group <span className="caret"></span>
+                                    <i className='fa fa-users'></i> Group <span className="caret"></span>
                                     </button>
                                     <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                         {!trainerHasGroup &&
                                             <NavLink to={'/creategroup'} activeClassName='active'>
-                                                <span className='glyphicon glyphicon-th-list'></span> Create group
+                                                 <i className='fa fa-user-edit'></i> Create group
                                             </NavLink>
                                     }
                                     {trainerHasGroup &&
                                         <NavLink to={'/mygroup'} activeClassName='active'>
-                                            <span className='glyphicon glyphicon-th-list'></span> My group
+                                        <i className='fa fa-user-friends'></i> My group
                                             </NavLink>
                                     }
                                         {trainerHasGroup &&
                                             <NavLink to={'/addtogroup'} activeClassName='active'>
-                                                <span className='glyphicon glyphicon-th-list'></span> Add trainee
+                                        <i className='fa fa-user-plus'></i> Add trainee
                                             </NavLink>
                                         }
                                         {trainerHasGroup &&
                                             <NavLink to={'/removefromgroup'} activeClassName='active'>
-                                                <span className='glyphicon glyphicon-th-list'></span> Remove trainee
+                                        <i className='fa fa-user-minus'></i> Remove trainee
                                             </NavLink>
                                         }
                                     </div>
@@ -112,17 +112,17 @@ export class NavMenu extends React.Component<Props> {
                         </li>
                         <li>
                             <NavLink to={'/about'} exact activeClassName='active'>
-                                <span className='glyphicon glyphicon-home'></span> About
+                                <i className='fa fa-question-circle'></i> About
                             </NavLink>
                         </li>
                         <li>
                             <NavLink to={'/settings'} exact activeClassName='active'>
-                                <span className='glyphicon glyphicon-cog'></span> Settings
+                                <i className="fa fa-wheelchair"></i> Settings
                             </NavLink>
                         </li>
                         <li>
                             {this.props.authStore.isLoggedIn &&
-                                <a href='#' className='nav-a-placeholder' onClick={this.handleLogout}><span className='glyphicon glyphicon-off'></span> Logout</a>
+                                <a href='#' className='nav-a-placeholder' onClick={this.handleLogout}><span className='glyphicon glyphicon-log-out'></span> Logout</a>
                             }
                         </li>
                     </ul>

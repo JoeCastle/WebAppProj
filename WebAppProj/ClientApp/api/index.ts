@@ -144,6 +144,12 @@ let createQuiz = (createQuizDetails: CreateQuizDetails): Promise<Response> => {
     return postJsonBearer(url, createQuizDetails);
 }
 
+let getAllQuizzesforGroup = (groupID: number): Promise<CreateQuizDetails[]> => {
+    let url = "api/Quiz/GetAllQuizzesforGroup";
+
+    return postJsonBearer(url, groupID);
+}
+
 let getCurrentGroupDetails = (groupID: number): Promise<Response> => {
     let url = "api/Group/GetCurrentGroupDetails";
 
@@ -190,6 +196,7 @@ export const api = {
     addUsersToGroup,
     createGroup,
     createQuiz,
+    getAllQuizzesforGroup,
     getCurrentGroupDetails,
     getCurrentGroupUsers,
     getUsersNotInGroup,

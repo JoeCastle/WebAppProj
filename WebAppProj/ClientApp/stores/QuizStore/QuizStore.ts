@@ -12,6 +12,8 @@ class QuizStore {
     @observable questions: string[];
     @observable choicesText: string[];
 
+    @observable quizzesDetails: CreateQuizDetails[];
+
     private choicesCorrect: boolean[];
     private quizName: string;
 
@@ -36,7 +38,7 @@ class QuizStore {
         if (trainerHasGroup) {
             let response: Response = await api.createQuiz(this.quiz);
 
-            debugger;
+            //debugger;
 
             if (response) {
 
@@ -48,6 +50,36 @@ class QuizStore {
             }
         } else {
             return false;
+        }
+    }
+
+    @action
+    public getAllQuizzesforGroup = async (): Promise<boolean> => {
+        let isLoggedIn = authStore.isLoggedIn;
+        let userHasGroup = authStore.userGroupID != 1 && authStore.userGroupID != -1 && isLoggedIn;
+
+        if (userHasGroup) {
+            let quizzesDetails: CreateQuizDetails[] = await api.getAllQuizzesforGroup(authStore.userGroupID);
+
+            debugger;
+
+            if (quizzesDetails) {
+
+                this.setQuizzesDetails(quizzesDetails)
+                return true;
+
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    @action
+    private setQuizzesDetails = (quizzesDetails: CreateQuizDetails[]): void => {
+        for (let quiz in quizzesDetails) {
+            this.quizzesDetails[quiz] = quizzesDetails[quiz];
         }
     }
 

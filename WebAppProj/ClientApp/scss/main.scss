@@ -21,12 +21,12 @@ body {
         color: $main-text-colour;
     }
 
-    p, label, div {
-        color: $main-text-colour;
+    #react-app {
+        p, label, div {
+            color: $main-text-colour;
+        }
     }
-
     .btn, .btn-primary {
-        //background-color: $main-btn-background-colour;
         color: $main-btn-text-colour !important;
     }
     

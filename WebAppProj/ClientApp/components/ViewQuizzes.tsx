@@ -1,7 +1,7 @@
 ﻿import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import { inject, observer } from 'mobx-react';
-import { QuizStore } from '../../stores/QuizStore/QuizStore';
+import quizStore, { QuizStore } from '../stores/QuizStore/QuizStore';
 
 interface Props extends RouteComponentProps<any>, React.Props<any> {
     quizStore: QuizStore
@@ -9,9 +9,10 @@ interface Props extends RouteComponentProps<any>, React.Props<any> {
 
 @inject('quizStore')
 @observer
-export class CreateQuiz extends React.Component<Props> {
+export class ViewQuizzes extends React.Component<Props> {
     componentWillMount() {
         this.createQuestions();
+        //quizStore.getAllQuizzesforGroup();
     }
 
     questions: JSX.Element[] = [];
@@ -93,17 +94,17 @@ const QuestionComponent = (props: any) => {
 
     return <div className="question-component">
         <div className='question-text-container'>
-        <label htmlFor='questiontext'>{props.questionID + 1}. Question text: </label>
-        <input
-            className="textbox"
-            id='questiontext'
-            type='text'
-            placeholder='Question text'
-            autoComplete='off'
-            required
-            onChange={onQuestionTextChange}
-        />
-            </div>
+            <label htmlFor='questiontext'>{props.questionID + 1}. Question text: </label>
+            <input
+                className="textbox"
+                id='questiontext'
+                type='text'
+                placeholder='Question text'
+                autoComplete='off'
+                required
+                onChange={onQuestionTextChange}
+            />
+        </div>
         <div className='choices-container'>{createChoices()}</div>
     </div>
 };
