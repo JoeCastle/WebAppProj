@@ -14,27 +14,31 @@ interface Props extends RouteComponentProps<any>, React.Props<any> {
 export class CreateGroup extends React.Component<Props> {
     public render() {
         return <div className="page">
-            <h1>This is the create group page.</h1>
-            <p>Create a group.</p>
-            <form onSubmit={this.formSubmit}>
-                <label htmlFor='groupname'>Group name: </label>
-                <input
-                    className="textbox"
-                    id='groupname'
-                    type='text'
-                    placeholder='Group name'
-                    autoComplete='off'
-                    required
-                    onChange={this.onGroupNameChange}
+            <div className='page-header'>
+                <h1>This is the create group page.</h1>
+            </div>
+            <div className='page-content'>
+                <p>Create a group.</p>
+                <form onSubmit={this.formSubmit}>
+                    <label htmlFor='groupname'>Group name: </label>
+                    <input
+                        className="textbox"
+                        id='groupname'
+                        type='text'
+                        placeholder='Group name'
+                        autoComplete='off'
+                        required
+                        onChange={this.onGroupNameChange}
 
-                />
-                <button className='btn btn-primary strd-btn create-group-button'
-                    onClick={
-                        this.createGroup
-                    }
-                > Create group
+                    />
+                    <button className='btn btn-primary strd-btn create-group-button'
+                        onClick={
+                            this.createGroup
+                        }
+                    > Create group
                 </button>
-            </form>
+                </form>
+            </div>
         </div>;
     }
 

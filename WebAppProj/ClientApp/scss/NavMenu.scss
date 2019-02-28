@@ -1,4 +1,4 @@
-﻿@import 'StyleSheet.scss';
+﻿@import 'Variables.scss';
 
 div.dropdown {
     /* If a menu item's text is too long, truncate it */
@@ -141,4 +141,19 @@ div.dropdown {
     text-decoration: none;
 }
 
+.navbar {
+    background-color: $main-nav-background-colour;
+}
 
+.navbar-header {
+    @media (min-width: 768px) {
+        padding-top: 20px !important;
+        padding-bottom: 20px !important;
+    }
+}
+
+.navbar-nav {
+    @media (min-width: 768px) {
+        padding-top: 10px !important;
+    }
+}

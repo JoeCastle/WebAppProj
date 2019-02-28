@@ -12,37 +12,41 @@ interface Props extends RouteComponentProps<any>, React.Props<any> {
 export class Login extends React.Component<Props> {
     public render() {
         return <div className="page login-page">
-            <h1>This is the login page</h1>
-            <p>Please login with your details below</p>
-            <form onSubmit={this.formSubmit}>
-                <label htmlFor='username'>Username (email):</label>
-                <input
-                    className="textbox"
-                    id='username'
-                    type='email'
-                    placeholder='Username (email)'
-                    autoComplete='off'
-                    required
-                    onChange={this.onUsernameChange}
+            <div className='page-header'>
+                <h1>Login</h1>
+            </div>
+            <div className='page-content'>
+                <p>Please login with your details below</p>
+                <form onSubmit={this.formSubmit}>
+                    <label htmlFor='username'>Username (email):</label>
+                    <input
+                        className="textbox"
+                        id='username'
+                        type='email'
+                        placeholder='Username (email)'
+                        autoComplete='off'
+                        required
+                        onChange={this.onUsernameChange}
 
-                />
-                <label htmlFor='password'>Password:</label>
-                <input
-                    className="textbox"
-                    id='password'
-                    type='password'
-                    placeholder='Password'
-                    autoComplete='off'
-                    required
-                    onChange={this.onPasswordChange}
-                />
-                <button className='btn btn-primary strd-btn login-button'
-                    onClick={
-                        this.login
-                    }
+                    />
+                    <label htmlFor='password'>Password:</label>
+                    <input
+                        className="textbox"
+                        id='password'
+                        type='password'
+                        placeholder='Password'
+                        autoComplete='off'
+                        required
+                        onChange={this.onPasswordChange}
+                    />
+                    <button className='btn btn-primary strd-btn login-button'
+                        onClick={
+                            this.login
+                        }
                     > Login
                 </button>
-            </form>
+                </form>
+            </div>
         </div>;
     }
 

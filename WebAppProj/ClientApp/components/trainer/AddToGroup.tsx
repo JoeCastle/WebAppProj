@@ -28,46 +28,53 @@ export class AddToGroup extends React.Component<Props> {
 
         let loading = <div>Loading...</div>; //TODO: Create dedicated loading component, also a default my group page for undefined group, asking if they would like to create one
         return (<div className="page">
-            {trainerHasGroup ? <AddToGroupPage {... this.props} /> : loading}
-            <div className="addToGroupListsContainer">
-                <div className="noGroupUsersList">
-                    {
-                        this.users.map(
-                            user => <div
-                                key={user.userID}
-                                onClick={() => this.selectUser(user)}
-                            >
-                                {user.userID} - {user.firstname} {user.surname}
-                            </div>
-                        )
-                    }
-
-                    {!this.users && <div>No users</div>}
-                </div>
-
-                <div className="selectedUsersList">
-                    {
-                        this.selectedUsers.map(
-                            user => <div
-                                key={user.userID}
-                                onClick={() => this.unSelectUser(user)}
-                            >
-                                {user.userID} - {user.firstname} {user.surname}
-                            </div>
-                        )
-                    }
-
-                    {!this.users && <div>No users</div>}
-                </div>
+            {/*{trainerHasGroup ? <AddToGroupPage {... this.props} /> : loading}*/}
+            <div className='page-header'>
+                <h1>Add to Group.</h1>
             </div>
 
-            <button className="btn btn-primary strd-btn"
-                onClick={
-                    this.addTrainees
-                }
-            >
-                Add trainees to group
+            <div className='page-content'>
+                <p>Here you can add new trainees to your existing group.</p>
+                <div className="addToGroupListsContainer">
+                    <div className="noGroupUsersList">
+                        {
+                            this.users.map(
+                                user => <div
+                                    key={user.userID}
+                                    onClick={() => this.selectUser(user)}
+                                >
+                                    {user.userID} - {user.firstname} {user.surname}
+                                </div>
+                            )
+                        }
+
+                        {!this.users && <div>No users</div>}
+                    </div>
+
+                    <div className="selectedUsersList">
+                        {
+                            this.selectedUsers.map(
+                                user => <div
+                                    key={user.userID}
+                                    onClick={() => this.unSelectUser(user)}
+                                >
+                                    {user.userID} - {user.firstname} {user.surname}
+                                </div>
+                            )
+                        }
+
+                        {!this.users && <div>No users</div>}
+                    </div>
+                </div>
+
+                <button className="btn btn-primary strd-btn"
+                    onClick={
+                        this.addTrainees
+                    }
+                >
+                    Add trainees to group
             </button>
+            </div>
         </div>)
     }
 
@@ -88,7 +95,7 @@ export class AddToGroup extends React.Component<Props> {
     private addTrainees = async (e: any) => {
         this.props.groupStore.setSelectedUsers(this.selectedUsers);
 
-        let completed =  await this.props.groupStore.addUsersToGroup();
+        let completed = await this.props.groupStore.addUsersToGroup();
 
         if (completed) {
             this.props.history.push('/');
@@ -99,19 +106,3 @@ export class AddToGroup extends React.Component<Props> {
         }
     }
 }
-
-const AddToGroupPage = (props: Props) => {
-    //let users = props.groupStore.nonGroupUsers;
-    return <div>
-        <h1>Add to Group.</h1>
-        <p>Here you can add new trainees to your existing group.</p>
-
-        {/*<div>
-            {
-                users.map(
-                    user => <div>{user.user.firstname}, {user.user.surname}</div>
-                )
-            }
-        </div>*/}
-    </div>
-};

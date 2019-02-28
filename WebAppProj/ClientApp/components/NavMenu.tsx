@@ -34,7 +34,7 @@ export class NavMenu extends React.Component<Props> {
                         <span className='icon-bar'></span>
                         <span className='icon-bar'></span>
                     </button>
-                    <Link className='navbar-brand' to={'/'}>WebAppProj</Link>
+                    <Link className='navbar-brand' to={'/'}>Training App</Link>
                 </div>
                 <div className='clearfix'></div>
                 <div className='navbar-collapse collapse'>
@@ -112,7 +112,7 @@ export class NavMenu extends React.Component<Props> {
                         </li>
                         <li>
                             <NavLink to={'/about'} exact activeClassName='active'>
-                                <i className='fa fa-question-circle'></i> About
+                                <i className='fa fa-question-circle'></i> About website
                             </NavLink>
                         </li>
                         <li>

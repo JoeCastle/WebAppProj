@@ -29,46 +29,52 @@ export class RemoveFromGroup extends React.Component<Props> {
         let loading = <div>Loading...</div>; //TODO: Create dedicated loading component, also a default my group page for undefined group, asking if they would like to create one
 
         return (<div className="page">
-            {trainerHasGroup ? <RemoveFromGroupPage {... this.props} /> : loading}
-            <div className="removeFromGroupListsContainer">
-                <div className="noGroupUsersList">
-                    {
-                        this.users.map(
-                            user => <div
-                                key={user.userID}
-                                onClick={() => this.selectUser(user)}
-                            >
-                                {user.userID} - {user.firstname} {user.surname}
-                            </div>
-                        )
-                    }
-
-                    {!this.users && <div>No users</div>}
-                </div>
-
-                <div className="selectedUsersList">
-                    {
-                        this.selectedUsers.map(
-                            user => <div
-                                key={user.userID}
-                                onClick={() => this.unSelectUser(user)}
-                            >
-                                {user.userID} - {user.firstname} {user.surname}
-                            </div>
-                        )
-                    }
-
-                    {!this.users && <div>No users</div>}
-                </div>
+            {/*{trainerHasGroup ? <RemoveFromGroupPage {... this.props} /> : loading}*/}
+            <div className='page-header'>
+                <h1>Remove from Group.</h1>
             </div>
+            <div className='page-content'>
+                <p>Here you can remove trainees from your group.</p>
+                <div className="removeFromGroupListsContainer">
+                    <div className="noGroupUsersList">
+                        {
+                            this.users.map(
+                                user => <div
+                                    key={user.userID}
+                                    onClick={() => this.selectUser(user)}
+                                >
+                                    {user.userID} - {user.firstname} {user.surname}
+                                </div>
+                            )
+                        }
 
-            <button className="btn btn-primary strd-btn"
-                onClick={
-                    this.removeTrainees
-                }
-            >
-                Remove trainees from group
+                        {!this.users && <div>No users</div>}
+                    </div>
+
+                    <div className="selectedUsersList">
+                        {
+                            this.selectedUsers.map(
+                                user => <div
+                                    key={user.userID}
+                                    onClick={() => this.unSelectUser(user)}
+                                >
+                                    {user.userID} - {user.firstname} {user.surname}
+                                </div>
+                            )
+                        }
+
+                        {!this.users && <div>No users</div>}
+                    </div>
+                </div>
+
+                <button className="btn btn-primary strd-btn"
+                    onClick={
+                        this.removeTrainees
+                    }
+                >
+                    Remove trainees from group
             </button>
+            </div>
         </div>)
     }
 
@@ -103,7 +109,6 @@ export class RemoveFromGroup extends React.Component<Props> {
 
 const RemoveFromGroupPage = (props: Props) => {
     return <div>
-        <h1>Remove from Group.</h1>
-        <p>Here you can remove trainees from your group.</p>
+
     </div>
 };

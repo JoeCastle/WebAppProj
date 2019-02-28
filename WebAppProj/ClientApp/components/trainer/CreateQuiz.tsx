@@ -24,30 +24,34 @@ export class CreateQuiz extends React.Component<Props> {
 
     public render() {
         return <div className="page">
-            <h1>Create a Quiz.</h1>
+            <div className='page-header'>
+                <h1>Create a Quiz.</h1>
+            </div>
 
-            <form onSubmit={this.formSubmit}>
-                <label htmlFor='quizname'>Quiz name: </label>
-                <input
-                    className="textbox"
-                    id='quizname'
-                    type='text'
-                    placeholder='Quiz name'
-                    autoComplete='off'
-                    required
-                    onChange={this.onQuizNameChange}
+            <div className='page-content'>
+                <form onSubmit={this.formSubmit}>
+                    <label htmlFor='quizname'>Quiz name: </label>
+                    <input
+                        className="textbox"
+                        id='quizname'
+                        type='text'
+                        placeholder='Quiz name'
+                        autoComplete='off'
+                        required
+                        onChange={this.onQuizNameChange}
 
-                />
+                    />
 
-                <div className='questions-container'>{this.questions}</div>
+                    <div className='questions-container'>{this.questions}</div>
 
-                <button className='btn btn-primary strd-btn create-group-button'
-                    onClick={
-                        this.createQuiz
-                    }
-                > Create quiz
+                    <button className='btn btn-primary strd-btn create-group-button'
+                        onClick={
+                            this.createQuiz
+                        }
+                    > Create quiz
                 </button>
-            </form>
+                </form>
+            </div>
         </div>;
     }
 
@@ -93,17 +97,17 @@ const QuestionComponent = (props: any) => {
 
     return <div className="question-component">
         <div className='question-text-container'>
-        <label htmlFor='questiontext'>{props.questionID + 1}. Question text: </label>
-        <input
-            className="textbox"
-            id='questiontext'
-            type='text'
-            placeholder='Question text'
-            autoComplete='off'
-            required
-            onChange={onQuestionTextChange}
-        />
-            </div>
+            <label htmlFor='questiontext'>{props.questionID + 1}. Question text: </label>
+            <input
+                className="textbox"
+                id='questiontext'
+                type='text'
+                placeholder='Question text'
+                autoComplete='off'
+                required
+                onChange={onQuestionTextChange}
+            />
+        </div>
         <div className='choices-container'>{createChoices()}</div>
     </div>
 };

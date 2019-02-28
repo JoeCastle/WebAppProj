@@ -25,8 +25,11 @@ export class ViewQuizzes extends React.Component<Props> {
 
     public render() {
         return <div className="page">
-            <h1>Create a Quiz.</h1>
+            <div className='page-header'>
+                <h1>Create a Quiz.</h1>
+            </div>
 
+            <div className='page-content'>
             <form onSubmit={this.formSubmit}>
                 <label htmlFor='quizname'>Quiz name: </label>
                 <input
@@ -48,7 +51,8 @@ export class ViewQuizzes extends React.Component<Props> {
                     }
                 > Create quiz
                 </button>
-            </form>
+                </form>
+            </div>
         </div>;
     }
 
