@@ -42,6 +42,7 @@ export class AddToGroup extends React.Component<Props> {
                                 user => <div
                                     key={user.userID}
                                     onClick={() => this.selectUser(user)}
+                                    tabIndex={0}
                                 >
                                     {user.userID} - {user.firstname} {user.surname}
                                 </div>
@@ -57,6 +58,7 @@ export class AddToGroup extends React.Component<Props> {
                                 user => <div
                                     key={user.userID}
                                     onClick={() => this.unSelectUser(user)}
+                                    tabIndex={0}
                                 >
                                     {user.userID} - {user.firstname} {user.surname}
                                 </div>

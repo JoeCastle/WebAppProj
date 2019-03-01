@@ -34,27 +34,27 @@ export class NavMenu extends React.Component<Props> {
                         <span className='icon-bar'></span>
                         <span className='icon-bar'></span>
                     </button>
-                    <Link className='navbar-brand' to={'/'}>Training App</Link>
+                    <Link className='navbar-brand' to={'/'}><img src="TrainingAppLogo.png" alt="Training App logo" /></Link>
                 </div>
                 <div className='clearfix'></div>
                 <div className='navbar-collapse collapse'>
                     <ul className='nav navbar-nav'>
                         <li>
                             <NavLink to={'/'} exact activeClassName='active'>
-                                <span className='glyphicon glyphicon-home'></span> Home
+                                <i className='fa fa-home fa-fw' aria-hidden='true'></i> Home
                             </NavLink>
                         </li>
                         <li>
                             {!this.props.authStore.isLoggedIn &&
                                 <NavLink to={'/login'} activeClassName='active'>
-                                    <span className='glyphicon glyphicon-log-in'></span> Login
+                                <i className='fa fa-sign-in-alt fa-fw' aria-hidden='true'></i> Login
                                 </NavLink>
                             }
                         </li>
                         <li>
                             {!this.props.authStore.isLoggedIn &&
                                 <NavLink to={'/register'} activeClassName='active'>
-                                    <span className='glyphicon glyphicon-th-list'></span> Register
+                                <i className='fa fa-plus-circle fa-fw' aria-hidden='true'></i> Register
                             </NavLink>
                             }
                         </li>
@@ -62,27 +62,27 @@ export class NavMenu extends React.Component<Props> {
                             {isTrainer &&
                                 <div className="dropdown">
                                     <button className="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i className='fa fa-users'></i> Group <span className="caret"></span>
+                                    <i className='fa fa-users fa-fw' aria-hidden='true'></i> Group <span className="caret"></span>
                                     </button>
                                     <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                         {!trainerHasGroup &&
                                             <NavLink to={'/creategroup'} activeClassName='active'>
-                                                 <i className='fa fa-user-edit'></i> Create group
+                                        <i className='fa fa-user-edit fa-fw' aria-hidden='true'></i> Create group
                                             </NavLink>
-                                    }
-                                    {trainerHasGroup &&
-                                        <NavLink to={'/mygroup'} activeClassName='active'>
-                                        <i className='fa fa-user-friends'></i> My group
+                                        }
+                                        {trainerHasGroup &&
+                                            <NavLink to={'/mygroup'} activeClassName='active'>
+                                        <i className='fa fa-user-friends fa-fw' aria-hidden='true'></i> My group
                                             </NavLink>
-                                    }
+                                        }
                                         {trainerHasGroup &&
                                             <NavLink to={'/addtogroup'} activeClassName='active'>
-                                        <i className='fa fa-user-plus'></i> Add trainee
+                                        <i className='fa fa-user-plus fa-fw' aria-hidden='true'></i> Add trainee
                                             </NavLink>
                                         }
                                         {trainerHasGroup &&
                                             <NavLink to={'/removefromgroup'} activeClassName='active'>
-                                        <i className='fa fa-user-minus'></i> Remove trainee
+                                        <i className='fa fa-user-minus fa-fw' aria-hidden='true'></i> Remove trainee
                                             </NavLink>
                                         }
                                     </div>
@@ -91,19 +91,19 @@ export class NavMenu extends React.Component<Props> {
                         </li>
                         <li>
                             {isTrainer &&
-                                <div className="dropdown">
-                                    <button className="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <span className='glyphicon glyphicon-th-list'></span> Quizzes <span className="caret"></span>
+                                <div className='dropdown'>
+                                    <button className='dropdown-toggle' type='button' id='dropdownMenuButton' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
+                                    <i className='fa fa-pencil-ruler fa-fw' aria-hidden='true'></i> Quizzes <span className="caret"></span>
                                     </button>
                                     <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                         {trainerHasGroup &&
                                             <NavLink to={'/viewquizzes'} activeClassName='active'>
-                                                <span className='glyphicon glyphicon-th-list'></span> View quizzes
+                                        <i className='fa fa-list fa-fw' aria-hidden='true'></i> View quizzes
                                             </NavLink>
                                         }
                                         {trainerHasGroup &&
                                             <NavLink to={'/createquiz'} activeClassName='active'>
-                                        <span className='glyphicon glyphicon-pencil'></span> Create quiz
+                                        <i className='fa fa-pen fa-fw' aria-hidden='true'></i> Create quiz
                                             </NavLink>
                                         }
                                     </div>
@@ -112,17 +112,17 @@ export class NavMenu extends React.Component<Props> {
                         </li>
                         <li>
                             <NavLink to={'/about'} exact activeClassName='active'>
-                                <i className='fa fa-question-circle'></i> About website
+                                <i className='fa fa-question-circle fa-fw' aria-hidden='true'></i> About website
                             </NavLink>
                         </li>
                         <li>
                             <NavLink to={'/settings'} exact activeClassName='active'>
-                                <i className="fa fa-wheelchair"></i> Settings
+                                <i className='fa fa-wheelchair fa-fw' aria-hidden='true'></i> Settings
                             </NavLink>
                         </li>
                         <li>
                             {this.props.authStore.isLoggedIn &&
-                                <a href='#' className='nav-a-placeholder' onClick={this.handleLogout}><span className='glyphicon glyphicon-log-out'></span> Logout</a>
+                                <a href='#' className='nav-a-placeholder' onClick={this.handleLogout}><i className='fa fa-sign-out-alt fa-fw' aria-hidden='true'></i> Logout</a>
                             }
                         </li>
                     </ul>

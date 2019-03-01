@@ -157,3 +157,23 @@ div.dropdown {
         padding-top: 10px !important;
     }
 }
+
+.navbar-brand {
+    img {
+        margin-top: -90px;
+
+        @media (max-width: 768px) {
+            width: 150px;
+            margin-top: -65px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        padding-left: 10px;
+    }
+}
+
+i.fa {
+    margin-right: 10px;
+    font-size: 18px;
+}

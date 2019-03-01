@@ -63,7 +63,8 @@ export class Login extends React.Component<Props> {
         if (authenticated) {
             this.props.history.push('/');
         } else {
-            return false;
+            alert("Unable to login");
+            return false;            
         }
     }
 
