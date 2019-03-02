@@ -13,7 +13,7 @@ class QuizStore {
     @observable questions: string[];
     @observable choicesText: string[];
 
-    @observable quizzesDetails: QuizDetails[];
+    @observable quizzesDetails: QuizDetails[] = [];
 
     private choicesCorrect: boolean[];
     private quizName: string;
@@ -55,9 +55,11 @@ class QuizStore {
     }
 
     @action
-    public getAllQuizzesforGroup = async (): Promise<boolean> => {
+    public getAllQuizzesforGroup = async (): Promise<void> => {
         let isLoggedIn = authStore.isLoggedIn;
         let userHasGroup = authStore.userGroupID != 1 && authStore.userGroupID != -1 && isLoggedIn;
+
+        debugger;
 
         if (userHasGroup) {
             let quizzesDetails: QuizDetails[] = await api.getAllQuizzesforGroup(authStore.userGroupID);
@@ -66,14 +68,12 @@ class QuizStore {
 
             if (quizzesDetails) {
 
-                this.setQuizzesDetails(quizzesDetails)
-                return true;
-
+                this.setQuizzesDetails(quizzesDetails);
             } else {
-                return false;
+
             }
         } else {
-            return false;
+
         }
     }
 

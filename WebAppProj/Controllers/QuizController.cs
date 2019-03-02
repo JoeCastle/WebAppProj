@@ -188,6 +188,7 @@ namespace WebAppProj.Controllers
                 foreach (QuizDetails quiz in quizzes)
                 {
                     //Set the parameters for the command.
+                    command.Parameters.Clear();
                     command.Parameters.AddWithValue("@quizID", quiz.QuizID);
 
                     //Execute the query and store the result
@@ -225,6 +226,7 @@ namespace WebAppProj.Controllers
                 foreach (QuizDetails quiz in quizzes)
                 {
                     //Set the parameters for the command.
+                    command.Parameters.Clear();
                     command.Parameters.AddWithValue("@quizID", quiz.QuizID);
 
                     //Execute the query and store the result
@@ -287,7 +289,7 @@ namespace WebAppProj.Controllers
                 connection.Close();
             }
 
-            //Return OK result with user
+            //Return OK result with quizzes
             return Ok(
                 quizzes
             );
