@@ -13,6 +13,7 @@ import CreateGroupDetails from '../models/createGroupDetails';
 import UserDetails from '../models/userDetails';
 import UsersToAddToGroup from '../models/usersToAddToGroup';
 import CreateQuizDetails from '../models/CreateQuiz/createQuizDetails';
+import QuizDetails from '../models/GetQuiz/quizDetails';
 
 /*let getJson = async (url: string) => {
     let responseJson = await fetch(url, {
@@ -144,7 +145,7 @@ let createQuiz = (createQuizDetails: CreateQuizDetails): Promise<Response> => {
     return postJsonBearer(url, createQuizDetails);
 }
 
-let getAllQuizzesforGroup = (groupID: number): Promise<CreateQuizDetails[]> => {
+let getAllQuizzesforGroup = (groupID: number): Promise<QuizDetails[]> => {
     let url = "api/Quiz/GetAllQuizzesforGroup";
 
     return postJsonBearer(url, groupID);

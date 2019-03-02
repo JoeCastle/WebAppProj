@@ -45,6 +45,9 @@
     <None Remove="ClientApp\models\CreateQuiz\createChoiceDetails.ts" />
     <None Remove="ClientApp\models\CreateQuiz\createQuestionDetails.ts" />
     <None Remove="ClientApp\models\currentUserDetails.ts" />
+    <None Remove="ClientApp\models\GetQuiz\choiceDetails.ts" />
+    <None Remove="ClientApp\models\GetQuiz\questionDetails.ts" />
+    <None Remove="ClientApp\models\GetQuiz\quizDetails.ts" />
     <None Remove="ClientApp\models\userDetails.ts" />
     <None Remove="ClientApp\models\userRegisterDetails.ts" />
     <None Remove="ClientApp\models\usersToAddToGroup.ts" />
@@ -82,6 +85,9 @@
     <TypeScriptCompile Include="ClientApp\models\CreateQuiz\createQuestionDetails.ts" />
     <TypeScriptCompile Include="ClientApp\models\CreateQuiz\createQuizDetails.ts" />
     <TypeScriptCompile Include="ClientApp\models\currentUserDetails.ts" />
+    <TypeScriptCompile Include="ClientApp\models\GetQuiz\choiceDetails.ts" />
+    <TypeScriptCompile Include="ClientApp\models\GetQuiz\questionDetails.ts" />
+    <TypeScriptCompile Include="ClientApp\models\GetQuiz\quizDetails.ts" />
     <TypeScriptCompile Include="ClientApp\models\userDetails.ts" />
     <TypeScriptCompile Include="ClientApp\models\userRegisterDetails.ts" />
     <TypeScriptCompile Include="ClientApp\models\usersToAddToGroup.ts" />

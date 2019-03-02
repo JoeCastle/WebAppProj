@@ -6,13 +6,14 @@ import CreateQuizDetails from '../../models/CreateQuiz/createQuizDetails';
 import CreateQuestionDetails from '../../models/CreateQuiz/createQuestionDetails';
 import CreateChoiceDetails from '../../models/CreateQuiz/createChoiceDetails';
 import { CreateQuiz } from '../../components/trainer/CreateQuiz';
+import QuizDetails from '../../models/GetQuiz/quizDetails';
 
 class QuizStore {
     @observable quiz: CreateQuizDetails;
     @observable questions: string[];
     @observable choicesText: string[];
 
-    @observable quizzesDetails: CreateQuizDetails[];
+    @observable quizzesDetails: QuizDetails[];
 
     private choicesCorrect: boolean[];
     private quizName: string;
@@ -59,7 +60,7 @@ class QuizStore {
         let userHasGroup = authStore.userGroupID != 1 && authStore.userGroupID != -1 && isLoggedIn;
 
         if (userHasGroup) {
-            let quizzesDetails: CreateQuizDetails[] = await api.getAllQuizzesforGroup(authStore.userGroupID);
+            let quizzesDetails: QuizDetails[] = await api.getAllQuizzesforGroup(authStore.userGroupID);
 
             debugger;
 
@@ -77,7 +78,7 @@ class QuizStore {
     }
 
     @action
-    private setQuizzesDetails = (quizzesDetails: CreateQuizDetails[]): void => {
+    private setQuizzesDetails = (quizzesDetails: QuizDetails[]): void => {
         for (let quiz in quizzesDetails) {
             this.quizzesDetails[quiz] = quizzesDetails[quiz];
         }

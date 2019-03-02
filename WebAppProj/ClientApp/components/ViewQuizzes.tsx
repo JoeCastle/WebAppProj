@@ -12,7 +12,7 @@ interface Props extends RouteComponentProps<any>, React.Props<any> {
 export class ViewQuizzes extends React.Component<Props> {
     componentWillMount() {
         this.createQuestions();
-        //quizStore.getAllQuizzesforGroup();
+        quizStore.getAllQuizzesforGroup();
     }
 
     questions: JSX.Element[] = [];

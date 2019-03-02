@@ -128,13 +128,18 @@ namespace WebAppProj.Controllers
             }
         }
 
+        /// <summary>
+        /// Gets an array of all quizzes matching a groupID.
+        /// </summary>
+        /// <param name="groupID">The groupID of the current user.</param>
+        /// <returns></returns>
         [Authorize(Roles = "trainer, trainee")]
         [HttpPost("[action]")]
         public IActionResult GetAllQuizzesforGroup([FromBody] int groupID)
         {
             string connectionString = Configuration["ConnectionStrings:DefaultConnectionString"];
 
-            //Create quiz
+            //Create list of all quizzes
             var quizzes = new List<QuizDetails>();
 
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -148,7 +153,8 @@ namespace WebAppProj.Controllers
 
                 connection.Open();
 
-                //Execute the query and store the result
+                //Execute the query and store the result.
+                //Get all quizzes that belong to a group.
                 using (SqlDataReader reader = command.ExecuteReader())
                 {
                     if (reader.HasRows)
@@ -160,7 +166,9 @@ namespace WebAppProj.Controllers
                                 GroupID = reader.GetInt32(reader.GetOrdinal("GroupID")),
                                 QuizID = reader.GetInt32(reader.GetOrdinal("QuizID")),
                                 QuizName = reader.GetString(reader.GetOrdinal("QuizName"))
-                            };
+                        };
+
+                            quizzes.Add(quiz);
                         }
                         reader.Close();
                     }
@@ -170,7 +178,7 @@ namespace WebAppProj.Controllers
                     }
                 }
 
-                //Create quiz
+                //Create list of all questions
                 var questions = new List<QuestionDetails>();
 
                 command = new SqlCommand("Questions_GetByQuizID", connection);
@@ -195,6 +203,8 @@ namespace WebAppProj.Controllers
                                     QuizID = reader.GetInt32(reader.GetOrdinal("QuizID")),
                                     QuestionText = reader.GetString(reader.GetOrdinal("QuestionText"))
                                 };
+
+                                questions.Add(question);
                             }
                             reader.Close();
                         }
@@ -205,7 +215,7 @@ namespace WebAppProj.Controllers
                     }
                 }
 
-                //Create quiz
+                //Create list of all choices
                 var choices = new List<ChoiceDetails>();
 
                 command = new SqlCommand("Choices_GetByQuizID", connection);
@@ -229,17 +239,49 @@ namespace WebAppProj.Controllers
                                     ChoiceID = reader.GetInt32(reader.GetOrdinal("ChoiceID")),
                                     QuizID = reader.GetInt32(reader.GetOrdinal("QuizID")),
                                     QuestionID = reader.GetInt32(reader.GetOrdinal("QuestionID")),
-                                    ChoiceText = reader.GetString(reader.GetOrdinal("QuizName")),
+                                    ChoiceText = reader.GetString(reader.GetOrdinal("ChoiceText")),
                                     isCorrect = reader.GetBoolean(reader.GetOrdinal("IsCorrect"))
                                 };
+
+                                choices.Add(choice);
                             }
                             reader.Close();
                         }
                         else
                         {
-                            return BadRequest("Could not find matching questions.");
+                            return BadRequest("Could not find matching choices.");
                         }
                     }
+                }
+                
+                //Add the choices to the matching question item.
+                foreach (QuestionDetails question in questions)
+                {
+                    var temp = new List<ChoiceDetails>();
+
+                    foreach (ChoiceDetails choice in choices)
+                    {
+                        if (choice.QuestionID == question.QuestionID)
+                        {
+                            temp.Add(choice);
+                        }
+                    }
+                    question.Choices = temp.ToArray();
+                }
+
+                //Add the questions to the matching quiz item.
+                foreach (QuizDetails quiz in quizzes)
+                {
+                    var temp = new List<QuestionDetails>();
+
+                    foreach (QuestionDetails question in questions)
+                    {
+                        if (question.QuizID == quiz.QuizID)
+                        {
+                            temp.Add(question);
+                        }
+                    }
+                    quiz.Questions = temp.ToArray();
                 }
 
                 connection.Close();

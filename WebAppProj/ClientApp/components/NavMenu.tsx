@@ -45,20 +45,6 @@ export class NavMenu extends React.Component<Props> {
                             </NavLink>
                         </li>
                         <li>
-                            {!this.props.authStore.isLoggedIn &&
-                                <NavLink to={'/login'} activeClassName='active'>
-                                <i className='fa fa-sign-in-alt fa-fw' aria-hidden='true'></i> Login
-                                </NavLink>
-                            }
-                        </li>
-                        <li>
-                            {!this.props.authStore.isLoggedIn &&
-                                <NavLink to={'/register'} activeClassName='active'>
-                                <i className='fa fa-plus-circle fa-fw' aria-hidden='true'></i> Register
-                            </NavLink>
-                            }
-                        </li>
-                        <li>
                             {isTrainer &&
                                 <div className="dropdown">
                                     <button className="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -119,6 +105,20 @@ export class NavMenu extends React.Component<Props> {
                             <NavLink to={'/settings'} exact activeClassName='active'>
                                 <i className='fa fa-wheelchair fa-fw' aria-hidden='true'></i> Settings
                             </NavLink>
+                        </li>
+                        <li>
+                            {!this.props.authStore.isLoggedIn &&
+                                <NavLink to={'/login'} activeClassName='active'>
+                                    <i className='fa fa-sign-in-alt fa-fw' aria-hidden='true'></i> Login
+                                </NavLink>
+                            }
+                        </li>
+                        <li>
+                            {!this.props.authStore.isLoggedIn &&
+                                <NavLink to={'/register'} activeClassName='active'>
+                                    <i className='fa fa-plus-circle fa-fw' aria-hidden='true'></i> Register
+                            </NavLink>
+                            }
                         </li>
                         <li>
                             {this.props.authStore.isLoggedIn &&
