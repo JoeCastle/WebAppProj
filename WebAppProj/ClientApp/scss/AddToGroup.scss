@@ -1,4 +1,6 @@
-﻿.noGroupUsersList, .selectedUsersList, .groupUsersList {
+﻿@import 'Variables.scss';
+
+.noGroupUsersList, .selectedUsersList, .groupUsersList, .quiz-list {
     max-height: 500px;
     overflow-y: auto;
     width: 100%;
@@ -8,13 +10,14 @@
     margin-left: 20px;
     margin-right: 20px;
 
-    > div {
+    > div, a {
         padding: 5px;
         border: 1px solid darkslategrey;
         margin-bottom: 5px;
         border-radius: 3px;
         background-color: #F6E6CA;
         cursor: pointer;
+        color: $main-text-colour;
     }
 
     > div:hover, div:focus, div:active {
@@ -29,9 +32,16 @@
         -webkit-box-shadow: 0px 0px 100px 100px rgba(255, 255, 255, 0.5) inset;
         -moz-box-shadow: 0px 0px 100px 100px rgba(255, 255, 255, 0.5) inset;
     }
+
+    > a:hover, a:focus, a:active {
+        box-shadow: 0px 0px 100px 100px rgba(255, 255, 255, 0.5) inset;
+        -webkit-box-shadow: 0px 0px 100px 100px rgba(255, 255, 255, 0.5) inset;
+        -moz-box-shadow: 0px 0px 100px 100px rgba(255, 255, 255, 0.5) inset;
+        text-decoration: none;
+    }
 }
 
-.addToGroupListsContainer, .removeFromGroupListsContainer {
+.addToGroupListsContainer, .removeFromGroupListsContainer, .quiz-list-container {
     display: flex;
     flex-direction: row;
 }

@@ -120,6 +120,7 @@ let postJsonBearerNoBody = async (url: string) => {
         }
     });
 
+    //Move to store, just return response from here
     if (responseJson.status === 200) {
         return responseJson.json();
     } else {
@@ -169,6 +170,12 @@ let getUsersNotInGroup = (): Promise<UserDetails[]> => {
     return postJsonBearerNoBody(url);
 }
 
+let getQuizByQuizID = (quizID: number): Promise<QuizDetails> => {
+    let url = "api/Quiz/GetQuizByQuizID";
+
+    return postJsonBearer(url, quizID);
+}
+
 let loginUser = (userLoginDetails: UserLoginDetails): Promise<CurrentUserDetails> => {
     let url = "api/Auth/UserLogin";
 
@@ -201,6 +208,7 @@ export const api = {
     getCurrentGroupDetails,
     getCurrentGroupUsers,
     getUsersNotInGroup,
+    getQuizByQuizID,
     loginUser,
     registerUser,
     removeUsersFromGroup,

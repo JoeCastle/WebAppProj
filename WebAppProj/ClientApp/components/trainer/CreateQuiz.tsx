@@ -2,16 +2,19 @@
 import { RouteComponentProps } from 'react-router';
 import { inject, observer } from 'mobx-react';
 import { QuizStore } from '../../stores/QuizStore/QuizStore';
+import { AuthStore } from '../../stores/AuthStore/AuthStore';
 
 interface Props extends RouteComponentProps<any>, React.Props<any> {
-    quizStore: QuizStore
+    quizStore: QuizStore,
+    authStore: AuthStore
 }
 
-@inject('quizStore')
+@inject('quizStore', 'authStore')
 @observer
 export class CreateQuiz extends React.Component<Props> {
-    componentWillMount() {
+    async componentWillMount() {
         this.createQuestions();
+        await this.props.authStore.validateJWT();
     }
 
     questions: JSX.Element[] = [];

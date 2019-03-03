@@ -107,3 +107,12 @@ html, body, #react-app, .container-fluid {
 .page-content {
 
 }
+
+input:disabled {
+    cursor: not-allowed !important;
+}
+
+input[type="radio"] {
+    border: none !important;
+    box-shadow: none !important;
+}

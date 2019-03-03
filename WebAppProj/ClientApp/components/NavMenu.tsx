@@ -48,27 +48,27 @@ export class NavMenu extends React.Component<Props> {
                             {isTrainer &&
                                 <div className="dropdown">
                                     <button className="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i className='fa fa-users fa-fw' aria-hidden='true'></i> Group <span className="caret"></span>
+                                        <i className='fa fa-users fa-fw' aria-hidden='true'></i> Group <span className="caret"></span>
                                     </button>
                                     <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                         {!trainerHasGroup &&
                                             <NavLink to={'/creategroup'} activeClassName='active'>
-                                        <i className='fa fa-user-edit fa-fw' aria-hidden='true'></i> Create group
+                                                <i className='fa fa-user-edit fa-fw' aria-hidden='true'></i> Create group
                                             </NavLink>
                                         }
                                         {trainerHasGroup &&
                                             <NavLink to={'/mygroup'} activeClassName='active'>
-                                        <i className='fa fa-user-friends fa-fw' aria-hidden='true'></i> My group
+                                                <i className='fa fa-user-friends fa-fw' aria-hidden='true'></i> My group
                                             </NavLink>
                                         }
                                         {trainerHasGroup &&
                                             <NavLink to={'/addtogroup'} activeClassName='active'>
-                                        <i className='fa fa-user-plus fa-fw' aria-hidden='true'></i> Add trainee
+                                                <i className='fa fa-user-plus fa-fw' aria-hidden='true'></i> Add trainee
                                             </NavLink>
                                         }
                                         {trainerHasGroup &&
                                             <NavLink to={'/removefromgroup'} activeClassName='active'>
-                                        <i className='fa fa-user-minus fa-fw' aria-hidden='true'></i> Remove trainee
+                                                <i className='fa fa-user-minus fa-fw' aria-hidden='true'></i> Remove trainee
                                             </NavLink>
                                         }
                                     </div>
@@ -79,17 +79,17 @@ export class NavMenu extends React.Component<Props> {
                             {isTrainer &&
                                 <div className='dropdown'>
                                     <button className='dropdown-toggle' type='button' id='dropdownMenuButton' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
-                                    <i className='fa fa-pencil-ruler fa-fw' aria-hidden='true'></i> Quizzes <span className="caret"></span>
+                                        <i className='fa fa-pencil-ruler fa-fw' aria-hidden='true'></i> Quizzes <span className="caret"></span>
                                     </button>
                                     <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                         {trainerHasGroup &&
                                             <NavLink to={'/viewquizzes'} activeClassName='active'>
-                                        <i className='fa fa-list fa-fw' aria-hidden='true'></i> View quizzes
+                                                <i className='fa fa-list fa-fw' aria-hidden='true'></i> View quizzes
                                             </NavLink>
                                         }
                                         {trainerHasGroup &&
                                             <NavLink to={'/createquiz'} activeClassName='active'>
-                                        <i className='fa fa-pen fa-fw' aria-hidden='true'></i> Create quiz
+                                                <i className='fa fa-pen fa-fw' aria-hidden='true'></i> Create quiz
                                             </NavLink>
                                         }
                                     </div>

@@ -5,6 +5,7 @@ import quizStore, { QuizStore } from '../stores/QuizStore/QuizStore';
 import { action } from 'mobx';
 import QuizDetails from '../models/GetQuiz/quizDetails';
 import { AuthStore } from '../stores/AuthStore/AuthStore';
+import { Link } from 'react-router-dom';
 
 interface Props extends RouteComponentProps<any>, React.Props<any> {
     quizStore: QuizStore,
@@ -29,31 +30,25 @@ export class ViewQuizzes extends React.Component<Props> {
 
             <div className='page-content'>
                 <p>Here you can view a list of quizzes that belong to your group.</p>
-                <div className="addToGroupListsContainer">
-                    <div className="noGroupUsersList">
+                <div className="quiz-list-container">
+                    <div className="quiz-list">
                         {
                             this.quizzes.map(
-                                quiz => <div
-                                    key={quiz.quizID}
-                                    //onClick={() => this.selectQuiz(quiz)}
-                                    tabIndex={0}
-                                >
-                                    {quiz.quizID} - {quiz.quizName}
-                                </div>
+                                quiz => <Link
+                                        className="quiz"
+                                        to={`/viewquiz/${quiz.quizID}`}
+                                        key={quiz.quizID}
+                                        tabIndex={0}
+                                    >
+                                        {quiz.quizName}
+                                    </Link>
                             )
                         }
 
-                        {!this.quizzes && <div>No users</div>}
+                        {!this.quizzes && <div>No quizzes</div>}
                     </div>
                 </div>
             </div>
         </div>;
     }
-
-    //@action
-    //private selectUser = async (quiz: QuizDetails) => {
-    //    this.selectedUsers.push(user);
-    //    let index = this.users.indexOf(user);
-    //    this.users.splice(index, 1);
-    //}
 };

@@ -14,6 +14,7 @@ class QuizStore {
     @observable choicesText: string[];
 
     @observable quizzesDetails: QuizDetails[] = [];
+    @observable quizDetails: QuizDetails;
 
     private choicesCorrect: boolean[];
     private quizName: string;
@@ -25,6 +26,7 @@ class QuizStore {
         this.questions = new Array(5).fill("");
         this.choicesText = new Array(20).fill("");
         this.choicesCorrect = new Array(20).fill(false);
+        this.quizDetails = {} as QuizDetails;
     }
 
     @action
@@ -33,8 +35,6 @@ class QuizStore {
         let trainerHasGroup = authStore.userGroupID != 1 && authStore.userGroupID != -1 && isTrainer;
 
         await this.buildQuizDTO();
-
-        debugger;
 
         if (trainerHasGroup) {
             let response: Response = await api.createQuiz(this.quiz);
@@ -59,12 +59,8 @@ class QuizStore {
         let isLoggedIn = authStore.isLoggedIn;
         let userHasGroup = authStore.userGroupID != 1 && authStore.userGroupID != -1 && isLoggedIn;
 
-        debugger;
-
         if (userHasGroup) {
             let quizzesDetails: QuizDetails[] = await api.getAllQuizzesforGroup(authStore.userGroupID);
-
-            debugger;
 
             if (quizzesDetails) {
 
@@ -78,6 +74,30 @@ class QuizStore {
     }
 
     @action
+    public getQuizByQuizID = async (quizID: number): Promise<void> => {
+        let isLoggedIn = authStore.isLoggedIn;
+        let userHasGroup = authStore.userGroupID != 1 && authStore.userGroupID != -1 && isLoggedIn;
+
+        if (userHasGroup) {
+            let quizDetails: QuizDetails = await api.getQuizByQuizID(quizID);
+
+            if (quizDetails) {
+                this.setQuizDetails(quizDetails);
+                //debugger;
+            } else {
+
+            }
+        } else {
+
+        }
+    }
+
+    @action
+    private setQuizDetails = (quizDetails: QuizDetails): void => {
+        this.quizDetails = quizDetails;
+    }
+
+    @action
     private setQuizzesDetails = (quizzesDetails: QuizDetails[]): void => {
         for (let quiz in quizzesDetails) {
             this.quizzesDetails[quiz] = quizzesDetails[quiz];
@@ -87,8 +107,6 @@ class QuizStore {
     //TODO: Fix the iscorrect value being incorrect. Sometimes multiple radio options are true in one group.
     @action
     private buildQuizDTO = async(): Promise<void> => {
-        debugger;
-
         let createdQuiz: CreateQuizDetails = {
             groupID: authStore.userGroupID,
             quizName: this.quizName,

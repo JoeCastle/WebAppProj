@@ -19,6 +19,7 @@ import { AddToGroup } from './trainer/AddToGroup';
 import { RemoveFromGroup } from './trainer/RemoveFromGroup';
 import { CreateQuiz } from './trainer/CreateQuiz';
 import { ViewQuizzes } from './ViewQuizzes';
+import { ViewQuiz } from './ViewQuiz';
 
 interface Props extends RouteComponentProps<any>, React.Props<any> {
     authStore: AuthStore
@@ -168,6 +169,17 @@ export class RouteContainer extends React.Component<Props> {
                 <Route exact path={`${match.url}viewquizzes`} render={(props: any) => {
                     if (isloggedIn) {
                         return <ViewQuizzes {...props} />
+                    } else {
+                        return <Redirect to={{
+                            pathname: '/login',
+                            state: { from: props.location }
+                        }} />
+                    }
+                }} />
+
+                <Route exact path={`${match.url}viewquiz/:quizID`} render={(props: any) => {
+                    if (isloggedIn) {
+                        return <ViewQuiz {...props} />
                     } else {
                         return <Redirect to={{
                             pathname: '/login',

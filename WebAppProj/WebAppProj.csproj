@@ -38,6 +38,7 @@
     <None Remove="ClientApp\components\trainer\CreateQuiz.tsx" />
     <None Remove="ClientApp\components\trainer\MyGroup.tsx" />
     <None Remove="ClientApp\components\trainer\RemoveFromGroup.tsx" />
+    <None Remove="ClientApp\components\ViewQuiz.tsx" />
     <None Remove="ClientApp\components\ViewQuizzes.tsx" />
     <None Remove="ClientApp\history.ts" />
     <None Remove="ClientApp\models\createGroupDetails.ts" />
@@ -78,6 +79,7 @@
     <TypeScriptCompile Include="ClientApp\components\trainer\CreateQuiz.tsx" />
     <TypeScriptCompile Include="ClientApp\components\trainer\MyGroup.tsx" />
     <TypeScriptCompile Include="ClientApp\components\trainer\RemoveFromGroup.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\ViewQuiz.tsx" />
     <TypeScriptCompile Include="ClientApp\components\ViewQuizzes.tsx" />
     <TypeScriptCompile Include="ClientApp\history.ts" />
     <TypeScriptCompile Include="ClientApp\models\createGroupDetails.ts" />
