@@ -20,6 +20,8 @@ import { RemoveFromGroup } from './trainer/RemoveFromGroup';
 import { CreateQuiz } from './trainer/CreateQuiz';
 import { ViewQuizzes } from './ViewQuizzes';
 import { ViewQuiz } from './ViewQuiz';
+import { ViewUncompleteQuizzes } from './ViewUncompletedQuizzes';
+import { ViewCompleteQuizzes } from './ViewCompletedQuizzes';
 
 interface Props extends RouteComponentProps<any>, React.Props<any> {
     authStore: AuthStore
@@ -180,6 +182,28 @@ export class RouteContainer extends React.Component<Props> {
                 <Route exact path={`${match.url}viewquiz/:quizID`} render={(props: any) => {
                     if (isloggedIn) {
                         return <ViewQuiz {...props} />
+                    } else {
+                        return <Redirect to={{
+                            pathname: '/login',
+                            state: { from: props.location }
+                        }} />
+                    }
+                }} />
+
+                <Route exact path={`${match.url}viewuncompletedquizzes`} render={(props: any) => {
+                    if (isloggedIn) {
+                        return <ViewUncompleteQuizzes {...props} />
+                    } else {
+                        return <Redirect to={{
+                            pathname: '/login',
+                            state: { from: props.location }
+                        }} />
+                    }
+                }} />
+
+                <Route exact path={`${match.url}viewcompletedquizzes`} render={(props: any) => {
+                    if (isloggedIn) {
+                        return <ViewCompleteQuizzes {...props} />
                     } else {
                         return <Redirect to={{
                             pathname: '/login',

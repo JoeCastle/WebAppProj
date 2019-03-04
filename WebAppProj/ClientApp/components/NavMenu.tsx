@@ -97,6 +97,23 @@ export class NavMenu extends React.Component<Props> {
                             }
                         </li>
                         <li>
+                            {traineeHasGroup &&
+                                <div className='dropdown'>
+                                    <button className='dropdown-toggle' type='button' id='dropdownMenuButton' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
+                                        <i className='fa fa-pencil-ruler fa-fw' aria-hidden='true'></i> Quizzes <span className="caret"></span>
+                                    </button>
+                                    <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <NavLink to={'/viewuncompletedquizzes'} activeClassName='active'>
+                                            <i className='fa fa-pen fa-fw' aria-hidden='true'></i> Uncompleted quizzes
+                                            </NavLink>
+                                        <NavLink to={'/viewcompletedquizzes'} activeClassName='active'>
+                                            <i className='fa fa-list fa-fw ' aria-hidden='true'></i> Completed quizzes
+                                            </NavLink>
+                                    </div>
+                                </div>
+                            }
+                        </li>
+                        <li>
                             <NavLink to={'/about'} exact activeClassName='active'>
                                 <i className='fa fa-question-circle fa-fw' aria-hidden='true'></i> About website
                             </NavLink>

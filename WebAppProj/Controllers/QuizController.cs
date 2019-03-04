@@ -440,5 +440,393 @@ namespace WebAppProj.Controllers
                 quiz
             );
         }
+
+        /// <summary>
+        /// Returns an array of all of the uncompleted quizzes for a trainee
+        /// </summary>
+        /// <param name="groupID"></param>
+        /// <returns></returns>
+        [Authorize(Roles = "trainee")]
+        [HttpPost("[action]")]
+        public IActionResult GetUncompletedQuizzesForTrainee([FromBody] TraineeGetQuizzes userAndGroupIDDTO)
+        {
+            var queryResult = -1; //Set query result to fail.
+            string connectionString = Configuration["ConnectionStrings:DefaultConnectionString"];
+            int result = -1;
+
+            //Create list of all quizzes
+            var quizzes = new List<QuizDetails>();
+            var uncompletedQuizzes = new List<QuizDetails>();
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                //Create the SQL command and set type to stored procedure.
+                SqlCommand command = new SqlCommand("Quizzes_GetByGroupID", connection);
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                //Set the parameters for the command.
+                command.Parameters.AddWithValue("@groupID", userAndGroupIDDTO.GroupID);
+
+                connection.Open();
+
+                //Execute the query and store the result.
+                //Get all quizzes that belong to a group.
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            var quiz = new QuizDetails
+                            {
+                                GroupID = reader.GetInt32(reader.GetOrdinal("GroupID")),
+                                QuizID = reader.GetInt32(reader.GetOrdinal("QuizID")),
+                                QuizName = reader.GetString(reader.GetOrdinal("QuizName"))
+                            };
+
+                            quizzes.Add(quiz);
+                        }
+                        reader.Close();
+                    }
+                    else
+                    {
+                        return BadRequest("Could not find matching quiz.");
+                    }
+                }
+
+                //Create list of all questions
+                var questions = new List<QuestionDetails>();
+
+                command = new SqlCommand("Questions_GetByQuizID", connection);
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                //Get all questions for each quiz.
+                foreach (QuizDetails quiz in quizzes)
+                {
+                    //Set the parameters for the command.
+                    command.Parameters.Clear();
+                    command.Parameters.AddWithValue("@quizID", quiz.QuizID);
+
+                    //Execute the query and store the result
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.HasRows)
+                        {
+                            while (reader.Read())
+                            {
+                                var question = new QuestionDetails
+                                {
+                                    QuestionID = reader.GetInt32(reader.GetOrdinal("QuestionID")),
+                                    QuizID = reader.GetInt32(reader.GetOrdinal("QuizID")),
+                                    QuestionText = reader.GetString(reader.GetOrdinal("QuestionText"))
+                                };
+
+                                questions.Add(question);
+                            }
+                            reader.Close();
+                        }
+                        else
+                        {
+                            return BadRequest("Could not find matching questions.");
+                        }
+                    }
+                }
+
+                //Create list of all choices
+                var choices = new List<ChoiceDetails>();
+
+                command = new SqlCommand("Choices_GetByQuizID", connection);
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                //Get all choices for each quiz.
+                foreach (QuizDetails quiz in quizzes)
+                {
+                    //Set the parameters for the command.
+                    command.Parameters.Clear();
+                    command.Parameters.AddWithValue("@quizID", quiz.QuizID);
+
+                    //Execute the query and store the result
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.HasRows)
+                        {
+                            while (reader.Read())
+                            {
+                                var choice = new ChoiceDetails
+                                {
+                                    ChoiceID = reader.GetInt32(reader.GetOrdinal("ChoiceID")),
+                                    QuizID = reader.GetInt32(reader.GetOrdinal("QuizID")),
+                                    QuestionID = reader.GetInt32(reader.GetOrdinal("QuestionID")),
+                                    ChoiceText = reader.GetString(reader.GetOrdinal("ChoiceText")),
+                                    isCorrect = reader.GetBoolean(reader.GetOrdinal("IsCorrect"))
+                                };
+
+                                choices.Add(choice);
+                            }
+                            reader.Close();
+                        }
+                        else
+                        {
+                            return BadRequest("Could not find matching choices.");
+                        }
+                    }
+                }
+
+                //Add the choices to the matching question item.
+                foreach (QuestionDetails question in questions)
+                {
+                    var temp = new List<ChoiceDetails>();
+
+                    foreach (ChoiceDetails choice in choices)
+                    {
+                        if (choice.QuestionID == question.QuestionID)
+                        {
+                            temp.Add(choice);
+                        }
+                    }
+                    question.Choices = temp.ToArray();
+                }
+
+                //Add the questions to the matching quiz item.
+                foreach (QuizDetails quiz in quizzes)
+                {
+                    var temp = new List<QuestionDetails>();
+
+                    foreach (QuestionDetails question in questions)
+                    {
+                        if (question.QuizID == quiz.QuizID)
+                        {
+                            temp.Add(question);
+                        }
+                    }
+                    quiz.Questions = temp.ToArray();
+                }
+
+                //Create the SQL command and set type to stored procedure.
+                command = new SqlCommand("Results_CheckIfQuizCompleted", connection);
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                foreach (QuizDetails quiz in quizzes)
+                {
+                    //Set the parameters for the command.
+                    command.Parameters.Clear();
+                    command.Parameters.AddWithValue("@quizID", quiz.QuizID);
+                    command.Parameters.AddWithValue("@userID", userAndGroupIDDTO.UserID);
+                    command.Parameters.Add("@result", System.Data.SqlDbType.Int).Direction = System.Data.ParameterDirection.Output;
+
+                    //Execute the query and store the result.
+                    queryResult = command.ExecuteNonQuery();
+
+                    //Get the id for the quiz previously created.
+                    result = (int)command.Parameters["@result"].Value;
+
+                    if (result == 0)
+                    {
+                        uncompletedQuizzes.Add(quiz);
+                    }
+                }
+
+                connection.Close();
+            }
+
+            //Return OK result with uncompleted quizzes
+            return Ok(
+                uncompletedQuizzes
+            );
+        }
+
+        /// <summary>
+        /// Returns an array of all of the uncompleted quizzes for a trainee
+        /// </summary>
+        /// <param name="groupID"></param>
+        /// <returns></returns>
+        [Authorize(Roles = "trainee")]
+        [HttpPost("[action]")]
+        public IActionResult GetCompletedQuizzesForTrainee([FromBody] TraineeGetQuizzes userAndGroupIDDTO)
+        {
+            var queryResult = -1; //Set query result to fail.
+            string connectionString = Configuration["ConnectionStrings:DefaultConnectionString"];
+            int result = -1;
+
+            //Create list of all quizzes
+            var quizzes = new List<QuizDetails>();
+            var completedQuizzes = new List<QuizDetails>();
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                //Create the SQL command and set type to stored procedure.
+                SqlCommand command = new SqlCommand("Quizzes_GetByGroupID", connection);
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                //Set the parameters for the command.
+                command.Parameters.AddWithValue("@groupID", userAndGroupIDDTO.GroupID);
+
+                connection.Open();
+
+                //Execute the query and store the result.
+                //Get all quizzes that belong to a group.
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            var quiz = new QuizDetails
+                            {
+                                GroupID = reader.GetInt32(reader.GetOrdinal("GroupID")),
+                                QuizID = reader.GetInt32(reader.GetOrdinal("QuizID")),
+                                QuizName = reader.GetString(reader.GetOrdinal("QuizName"))
+                            };
+
+                            quizzes.Add(quiz);
+                        }
+                        reader.Close();
+                    }
+                    else
+                    {
+                        return BadRequest("Could not find matching quiz.");
+                    }
+                }
+
+                //Create list of all questions
+                var questions = new List<QuestionDetails>();
+
+                command = new SqlCommand("Questions_GetByQuizID", connection);
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                //Get all questions for each quiz.
+                foreach (QuizDetails quiz in quizzes)
+                {
+                    //Set the parameters for the command.
+                    command.Parameters.Clear();
+                    command.Parameters.AddWithValue("@quizID", quiz.QuizID);
+
+                    //Execute the query and store the result
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.HasRows)
+                        {
+                            while (reader.Read())
+                            {
+                                var question = new QuestionDetails
+                                {
+                                    QuestionID = reader.GetInt32(reader.GetOrdinal("QuestionID")),
+                                    QuizID = reader.GetInt32(reader.GetOrdinal("QuizID")),
+                                    QuestionText = reader.GetString(reader.GetOrdinal("QuestionText"))
+                                };
+
+                                questions.Add(question);
+                            }
+                            reader.Close();
+                        }
+                        else
+                        {
+                            return BadRequest("Could not find matching questions.");
+                        }
+                    }
+                }
+
+                //Create list of all choices
+                var choices = new List<ChoiceDetails>();
+
+                command = new SqlCommand("Choices_GetByQuizID", connection);
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                //Get all choices for each quiz.
+                foreach (QuizDetails quiz in quizzes)
+                {
+                    //Set the parameters for the command.
+                    command.Parameters.Clear();
+                    command.Parameters.AddWithValue("@quizID", quiz.QuizID);
+
+                    //Execute the query and store the result
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.HasRows)
+                        {
+                            while (reader.Read())
+                            {
+                                var choice = new ChoiceDetails
+                                {
+                                    ChoiceID = reader.GetInt32(reader.GetOrdinal("ChoiceID")),
+                                    QuizID = reader.GetInt32(reader.GetOrdinal("QuizID")),
+                                    QuestionID = reader.GetInt32(reader.GetOrdinal("QuestionID")),
+                                    ChoiceText = reader.GetString(reader.GetOrdinal("ChoiceText")),
+                                    isCorrect = reader.GetBoolean(reader.GetOrdinal("IsCorrect"))
+                                };
+
+                                choices.Add(choice);
+                            }
+                            reader.Close();
+                        }
+                        else
+                        {
+                            return BadRequest("Could not find matching choices.");
+                        }
+                    }
+                }
+
+                //Add the choices to the matching question item.
+                foreach (QuestionDetails question in questions)
+                {
+                    var temp = new List<ChoiceDetails>();
+
+                    foreach (ChoiceDetails choice in choices)
+                    {
+                        if (choice.QuestionID == question.QuestionID)
+                        {
+                            temp.Add(choice);
+                        }
+                    }
+                    question.Choices = temp.ToArray();
+                }
+
+                //Add the questions to the matching quiz item.
+                foreach (QuizDetails quiz in quizzes)
+                {
+                    var temp = new List<QuestionDetails>();
+
+                    foreach (QuestionDetails question in questions)
+                    {
+                        if (question.QuizID == quiz.QuizID)
+                        {
+                            temp.Add(question);
+                        }
+                    }
+                    quiz.Questions = temp.ToArray();
+                }
+
+                //Create the SQL command and set type to stored procedure.
+                command = new SqlCommand("Results_CheckIfQuizCompleted", connection);
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                foreach (QuizDetails quiz in quizzes)
+                {
+                    //Set the parameters for the command.
+                    command.Parameters.Clear();
+                    command.Parameters.AddWithValue("@quizID", quiz.QuizID);
+                    command.Parameters.AddWithValue("@userID", userAndGroupIDDTO.UserID);
+                    command.Parameters.Add("@result", System.Data.SqlDbType.Int).Direction = System.Data.ParameterDirection.Output;
+
+                    //Execute the query and store the result.
+                    queryResult = command.ExecuteNonQuery();
+
+                    //Get the id for the quiz previously created.
+                    result = (int)command.Parameters["@result"].Value;
+
+                    if (result == 1)
+                    {
+                        completedQuizzes.Add(quiz);
+                    }
+                }
+
+                connection.Close();
+            }
+
+            //Return OK result with uncompleted quizzes
+            return Ok(
+                completedQuizzes
+            );
+        }
     }
 }

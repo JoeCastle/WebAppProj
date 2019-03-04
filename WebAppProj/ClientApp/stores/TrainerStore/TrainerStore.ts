@@ -6,6 +6,7 @@ import { api } from '../../api';
 class TrainerStore {
     @observable groupName = "";
 
+    //TODO: Move to group store.
     @action
     public createGroup = async (): Promise<boolean> => {
         if (this.groupName != "") {

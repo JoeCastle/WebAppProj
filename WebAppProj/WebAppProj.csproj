@@ -38,8 +38,10 @@
     <None Remove="ClientApp\components\trainer\CreateQuiz.tsx" />
     <None Remove="ClientApp\components\trainer\MyGroup.tsx" />
     <None Remove="ClientApp\components\trainer\RemoveFromGroup.tsx" />
+    <None Remove="ClientApp\components\ViewCompletedQuizzes.tsx" />
     <None Remove="ClientApp\components\ViewQuiz.tsx" />
     <None Remove="ClientApp\components\ViewQuizzes.tsx" />
+    <None Remove="ClientApp\components\ViewUncompletedQuizzes.tsx" />
     <None Remove="ClientApp\history.ts" />
     <None Remove="ClientApp\models\createGroupDetails.ts" />
     <None Remove="ClientApp\models\createQuizDetails.ts" />
@@ -49,6 +51,7 @@
     <None Remove="ClientApp\models\GetQuiz\choiceDetails.ts" />
     <None Remove="ClientApp\models\GetQuiz\questionDetails.ts" />
     <None Remove="ClientApp\models\GetQuiz\quizDetails.ts" />
+    <None Remove="ClientApp\models\traineeGetQuizzes.ts" />
     <None Remove="ClientApp\models\userDetails.ts" />
     <None Remove="ClientApp\models\userRegisterDetails.ts" />
     <None Remove="ClientApp\models\usersToAddToGroup.ts" />
@@ -79,8 +82,10 @@
     <TypeScriptCompile Include="ClientApp\components\trainer\CreateQuiz.tsx" />
     <TypeScriptCompile Include="ClientApp\components\trainer\MyGroup.tsx" />
     <TypeScriptCompile Include="ClientApp\components\trainer\RemoveFromGroup.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\ViewCompletedQuizzes.tsx" />
     <TypeScriptCompile Include="ClientApp\components\ViewQuiz.tsx" />
     <TypeScriptCompile Include="ClientApp\components\ViewQuizzes.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\ViewUncompletedQuizzes.tsx" />
     <TypeScriptCompile Include="ClientApp\history.ts" />
     <TypeScriptCompile Include="ClientApp\models\createGroupDetails.ts" />
     <TypeScriptCompile Include="ClientApp\models\CreateQuiz\createChoiceDetails.ts" />
@@ -90,6 +95,7 @@
     <TypeScriptCompile Include="ClientApp\models\GetQuiz\choiceDetails.ts" />
     <TypeScriptCompile Include="ClientApp\models\GetQuiz\questionDetails.ts" />
     <TypeScriptCompile Include="ClientApp\models\GetQuiz\quizDetails.ts" />
+    <TypeScriptCompile Include="ClientApp\models\traineeGetQuizzes.ts" />
     <TypeScriptCompile Include="ClientApp\models\userDetails.ts" />
     <TypeScriptCompile Include="ClientApp\models\userRegisterDetails.ts" />
     <TypeScriptCompile Include="ClientApp\models\usersToAddToGroup.ts" />
