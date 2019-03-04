@@ -44,81 +44,91 @@ export class Register extends React.Component<Props> {
             <div className='page-content'>
                 <p>Please register with your details below</p>
                 <form onSubmit={this.formSubmit}>
-                    <label htmlFor='username'>Username (email):</label>
-                    <input
-                        className="textbox"
-                        id='username'
-                        type='email'
-                        placeholder='Username (email)'
-                        autoComplete='off'
-                        required
-                        onChange={this.onUsernameChange}
-                        maxLength={20}
-                    />
-                    <label htmlFor='password'>Password:</label>
-                    <input
-                        className="textbox"
-                        id='password'
-                        type='password'
-                        placeholder='Password'
-                        autoComplete='off'
-                        required
-                        onChange={this.onPasswordChange}
-                        maxLength={25}
-                        pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)"
-                        title="Password must contain atlease: 1 uppercase letter, 1 lowercase letter and a number."
-                    />
-                    <label htmlFor='confirmpassword'>Confirm password:</label>
-                    <input
-                        className="textbox"
-                        id='confirmpassword'
-                        type='password'
-                        placeholder='Confirm password'
-                        autoComplete='off'
-                        onChange={this.onConfirmPasswordChange}
-                        required
-                        maxLength={25}
-                        pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)"
-                        title="Password must contain atlease: 1 uppercase letter, 1 lowercase letter and a number."
-                    />
-
-                    <label htmlFor='role'>Role:</label>
-                    <select
-                        id='role'
-                        value={this.props.authStore.userRole}
-                        onChange={(e) => {
-                            this.onUserRoleChange(e);
-                        }}
-                        required
-                    >
-                        <option value="">Please select...</option>
-                        <option value="trainer">Trainer</option>
-                        <option value="trainee">Trainee</option>
-                    </select>
-
-                    <label htmlFor='firstname'>Firstname:</label>
-                    <input
-                        className="textbox"
-                        id='firstname'
-                        type='text'
-                        placeholder='Firstname'
-                        autoComplete='off'
-                        required
-                        onChange={this.onFirstnameChange}
-                        maxLength={25}
-                    />
-                    <label htmlFor='surname'>Surname:</label>
-                    <input
-                        className="textbox"
-                        id='surname'
-                        type='text'
-                        placeholder='Surname'
-                        autoComplete='off'
-                        required
-                        onChange={this.onSurnameChange}
-                        maxLength={25}
-                    />
-
+                    <div className='form-group'>
+                        <label htmlFor='username'>Username (email):</label>
+                        <input
+                            className='textbox form-control'
+                            id='username'
+                            type='email'
+                            placeholder='Username (email)'
+                            autoComplete='off'
+                            required
+                            onChange={this.onUsernameChange}
+                            maxLength={20}
+                        />
+                    </div>
+                    <div className='form-group'>
+                        <label htmlFor='password'>Password:</label>
+                        <input
+                            className='textbox form-control'
+                            id='password'
+                            type='password'
+                            placeholder='Password'
+                            autoComplete='off'
+                            required
+                            onChange={this.onPasswordChange}
+                            maxLength={25}
+                            pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)"
+                            title="Password must contain atlease: 1 uppercase letter, 1 lowercase letter and a number."
+                        />
+                    </div>
+                    <div className='form-group'>
+                        <label htmlFor='confirmpassword'>Confirm password:</label>
+                        <input
+                            className='textbox form-control'
+                            id='confirmpassword'
+                            type='password'
+                            placeholder='Confirm password'
+                            autoComplete='off'
+                            onChange={this.onConfirmPasswordChange}
+                            required
+                            maxLength={25}
+                            pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)"
+                            title="Password must contain atlease: 1 uppercase letter, 1 lowercase letter and a number."
+                        />
+                    </div>
+                    <div className='form-group'>
+                        <label htmlFor='role'>Role:</label>
+                        <select
+                            id='role'
+                            className='form-control'
+                            value={this.props.authStore.userRole}
+                            onChange={(e) => {
+                                this.onUserRoleChange(e);
+                            }}
+                            required
+                        >
+                            <option value="">Please select...</option>
+                            <option value="trainer">Trainer</option>
+                            <option value="trainee">Trainee</option>
+                        </select>
+                    </div>
+                    <div className='form-group'>
+                        <label htmlFor='firstname'>Firstname:</label>
+                        <input
+                            className='textbox form-control'
+                            id='firstname'
+                            type='text'
+                            placeholder='Firstname'
+                            autoComplete='off'
+                            required
+                            onChange={this.onFirstnameChange}
+                            maxLength={25}
+                        />
+                    </div>
+                    <div className='form-group'>
+                        <label htmlFor='surname'>Surname:</label>
+                        <input
+                            className='textbox form-control'
+                            id='surname'
+                            type='text'
+                            placeholder='Surname'
+                            autoComplete='off'
+                            required
+                            onChange={this.onSurnameChange}
+                            maxLength={25}
+                        />
+                    </div>
                     <button className='btn btn-primary strd-btn register-button'
                         onClick={
                             this.register

@@ -1,11 +1,37 @@
-﻿.choice-component {
-    display: flex;
-}
-
-.question-component {
+﻿.question-component {
     margin-bottom: 20px;
+    padding: 10px;
+    //box-shadow: 0px 0px 10px 0px rgba(138,138,138,1);
+    box-shadow: 0px 0px 4px 0px #8a8a8a;
+    //background-color: #e0ccb0;
 }
 
 .iscorrect-container {
     margin-left: 15px;
+}
+
+.quiz-name-container {
+    padding: 10px;
+    box-shadow: 0px 0px 4px 0px #8a8a8a;
+    //background-color: #e0ccb0;
+}
+
+.choices-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    .choice-component {
+        display: flex;
+        width: 50%;
+
+        > div {
+            width: 50%;
+            min-width: 200px;
+
+            input[type="radio"] {
+                max-width: 130px;
+            }
+        }
+    }
 }

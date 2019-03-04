@@ -34,7 +34,7 @@ export class ViewQuiz extends React.Component<Props> {
 
             <div className='page-content'>
                 <form onSubmit={this.formSubmit}>
-                    <div className='form-group'>
+                    <div className='form-group quiz-name-container'>
                         <label htmlFor='quizname'>Quiz name: </label>
                         <input
                             className="textbox form-control"
@@ -69,10 +69,10 @@ const QuestionComponent = (props: any) => {
     return <div className="question-component">
         <div className='question-text-container'>
             <div className='form-group'>
-                <label htmlFor='questiontext'>{props.questionID + 1}. Question text: </label>
+                <label htmlFor={`questiontext${props.questionID}`}>{props.questionID + 1}. Question text: </label>
                 <input
-                    className="textbox form-control"
-                    id='questiontext'
+                    className='textbox form-control'
+                    id={`questiontext${props.questionID}`}
                     type='text'
                     placeholder='Question text'
                     autoComplete='off'
@@ -90,10 +90,10 @@ const ChoiceComponent = (props: any) => {
     return <div className='choice-component' id={'group' + props.questionID}>
         <div className='choice-container'>
             <div className='form-group'>
-                <label htmlFor='choicetext'>{props.questionID + 1}.{props.choiceID + 1}. Choice text: </label>
+                <label htmlFor={`choicetext${props.questionID}${props.choiceID}`}>{props.questionID + 1}.{props.choiceID + 1}. Choice text: </label>
                 <input
                     className='textbox form-control'
-                    id='choicetext'
+                    id={`choicetext${props.questionID}${props.choiceID}`}
                     type='text'
                     placeholder='Question text'
                     autoComplete='off'
@@ -104,12 +104,12 @@ const ChoiceComponent = (props: any) => {
         </div>
         <div className='iscorrect-container'>
             <div className='form-group'>
-                <label htmlFor='ischoicecorrect'>Is correct answer?: </label>
+                <label htmlFor={`ischoicecorrect${props.questionID}${props.choiceID}`}>Is correct answer?: </label>
                 <input
-                    id='ischoicecorrect'
+                    id={`ischoicecorrect${props.questionID}${props.choiceID}`}
                     className='form-control'
                     type='radio'
-                    name={'group' + props.questionID}
+                    name={`group${props.questionID}`}
                     disabled
                     checked={props.quizStore.quizDetails.questions[props.questionID].choices[props.choiceID].isCorrect}
                 />

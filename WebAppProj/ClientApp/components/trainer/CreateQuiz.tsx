@@ -33,18 +33,19 @@ export class CreateQuiz extends React.Component<Props> {
 
             <div className='page-content'>
                 <form onSubmit={this.formSubmit}>
-                    <label htmlFor='quizname'>Quiz name: </label>
-                    <input
-                        className="textbox"
-                        id='quizname'
-                        type='text'
-                        placeholder='Quiz name'
-                        autoComplete='off'
-                        required
-                        onChange={this.onQuizNameChange}
+                    <div className='form-group quiz-name-container'>
+                        <label htmlFor='quizname'>Quiz name: </label>
+                        <input
+                            className='textbox form-control'
+                            id='quizname'
+                            type='text'
+                            placeholder='Quiz name'
+                            autoComplete='off'
+                            required
+                            onChange={this.onQuizNameChange}
 
-                    />
-
+                        />
+                    </div>
                     <div className='questions-container'>{this.questions}</div>
 
                     <button className='btn btn-primary strd-btn create-group-button'
@@ -100,16 +101,18 @@ const QuestionComponent = (props: any) => {
 
     return <div className="question-component">
         <div className='question-text-container'>
-            <label htmlFor='questiontext'>{props.questionID + 1}. Question text: </label>
-            <input
-                className="textbox"
-                id='questiontext'
-                type='text'
-                placeholder='Question text'
-                autoComplete='off'
-                required
-                onChange={onQuestionTextChange}
-            />
+            <div className='form-group'>
+                <label htmlFor={`questiontext${props.questionID}`}>{props.questionID + 1}. Question text: </label>
+                <input
+                    className='textbox form-control'
+                    id={`questiontext${props.questionID}`}
+                    type='text'
+                    placeholder='Question text'
+                    autoComplete='off'
+                    required
+                    onChange={onQuestionTextChange}
+                />
+            </div>
         </div>
         <div className='choices-container'>{createChoices()}</div>
     </div>
@@ -131,26 +134,31 @@ const ChoiceComponent = (props: any) => {
 
     return <div className='choice-component' id={'group' + props.questionID}>
         <div className='choice-container'>
-            <label htmlFor='choicetext'>{props.questionID + 1}.{props.choiceID + 1}. Choice text: </label>
-            <input
-                className='textbox'
-                id='choicetext'
-                type='text'
-                placeholder='Question text'
-                autoComplete='off'
-                required
-                onChange={onChoiceTextChange}
-            />
+            <div className='form-group'>
+                <label htmlFor={`choicetext${props.questionID}${props.choiceID}`}>{props.questionID + 1}.{props.choiceID + 1}. Choice text: </label>
+                <input
+                    className='textbox form-control'
+                    id={`choicetext${props.questionID}${props.choiceID}`}
+                    type='text'
+                    placeholder='Question text'
+                    autoComplete='off'
+                    required
+                    onChange={onChoiceTextChange}
+                />
+            </div>
         </div>
         <div className='iscorrect-container'>
-            <label htmlFor='ischoicecorrect'>Is correct answer?: </label>
-            <input
-                id='ischoicecorrect'
-                type='radio'
-                name={'group' + props.questionID}
-                onChange={onChoiceIsCorrectChange}
-                required
-            />
+            <div className='form-group'>
+                <label htmlFor={`ischoicecorrect${props.questionID}${props.choiceID}`}>Is correct answer?: </label>
+                <input
+                    id={`ischoicecorrect${props.questionID}${props.choiceID}`}
+                    className='form-control'
+                    type='radio'
+                    name={`group${props.questionID}`}
+                    onChange={onChoiceIsCorrectChange}
+                    required
+                />
+            </div>
         </div>
     </div>
 };

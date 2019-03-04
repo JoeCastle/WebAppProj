@@ -115,4 +115,23 @@ input:disabled {
 input[type="radio"] {
     border: none !important;
     box-shadow: none !important;
+    cursor: pointer;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    > div {
+        width: 100%;
+    }
+}
+
+.btn-primary {
+    background-color: #1a6eb7 !important;
+}
+
+.btn-primary:hover {
+    background-color: #286090 !important;
 }
