@@ -20,8 +20,8 @@ import { RemoveFromGroup } from './trainer/RemoveFromGroup';
 import { CreateQuiz } from './trainer/CreateQuiz';
 import { ViewQuizzes } from './ViewQuizzes';
 import { ViewQuiz } from './ViewQuiz';
-import { ViewUncompleteQuizzes } from './ViewUncompletedQuizzes';
-import { ViewCompleteQuizzes } from './ViewCompletedQuizzes';
+import { ViewUncompleteQuizzes } from './trainee/ViewUncompletedQuizzes';
+import { ViewCompleteQuizzes } from './trainee/ViewCompletedQuizzes';
 
 interface Props extends RouteComponentProps<any>, React.Props<any> {
     authStore: AuthStore

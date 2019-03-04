@@ -82,10 +82,10 @@
     <TypeScriptCompile Include="ClientApp\components\trainer\CreateQuiz.tsx" />
     <TypeScriptCompile Include="ClientApp\components\trainer\MyGroup.tsx" />
     <TypeScriptCompile Include="ClientApp\components\trainer\RemoveFromGroup.tsx" />
-    <TypeScriptCompile Include="ClientApp\components\ViewCompletedQuizzes.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\trainee\ViewCompletedQuizzes.tsx" />
     <TypeScriptCompile Include="ClientApp\components\ViewQuiz.tsx" />
     <TypeScriptCompile Include="ClientApp\components\ViewQuizzes.tsx" />
-    <TypeScriptCompile Include="ClientApp\components\ViewUncompletedQuizzes.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\trainee\ViewUncompletedQuizzes.tsx" />
     <TypeScriptCompile Include="ClientApp\history.ts" />
     <TypeScriptCompile Include="ClientApp\models\createGroupDetails.ts" />
     <TypeScriptCompile Include="ClientApp\models\CreateQuiz\createChoiceDetails.ts" />
