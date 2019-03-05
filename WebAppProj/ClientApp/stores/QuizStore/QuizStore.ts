@@ -8,6 +8,7 @@ import CreateChoiceDetails from '../../models/CreateQuiz/createChoiceDetails';
 import { CreateQuiz } from '../../components/trainer/CreateQuiz';
 import QuizDetails from '../../models/GetQuiz/quizDetails';
 import TraineeGetQuizzes from '../../models/traineeGetQuizzes';
+import QuestionDetails from '../../models/GetQuiz/questionDetails';
 
 class QuizStore {
     @observable quiz: CreateQuizDetails;
@@ -20,7 +21,15 @@ class QuizStore {
     private choicesCorrect: boolean[];
     private quizName: string;
 
-    //private choicesText2: string[];
+    @observable userChoicesForm: boolean[];
+    private userChoices: boolean[];
+    private questionResults: number[];
+
+    @observable activeRadioIndexes: number[];
+    //@observable question2RadioState: boolean[];
+    //@observable question3RadioState: boolean[];
+    //@observable question4RadioState: boolean[];
+    //@observable question5RadioState: boolean[];
 
     constructor() {
         this.quiz = {} as CreateQuizDetails;
@@ -28,6 +37,11 @@ class QuizStore {
         this.choicesText = new Array(20).fill("");
         this.choicesCorrect = new Array(20).fill(false);
         this.quizDetails = {} as QuizDetails;
+        this.userChoices = new Array(20).fill(false);
+        this.userChoicesForm = new Array(20).fill(false);
+        this.questionResults = new Array(5).fill(0);
+        this.activeRadioIndexes = new Array(5).fill(0);
+
     }
 
     @action
@@ -53,6 +67,74 @@ class QuizStore {
         } else {
             return false;
         }
+    }
+
+    @action
+    public submitQuiz = async (): Promise<boolean> => {
+        //let isTrainer = authStore.isLoggedIn && authStore.userRole == "trainer";
+        //let trainerHasGroup = authStore.userGroupID != 1 && authStore.userGroupID != -1 && isTrainer;
+
+        //await this.buildQuizDTO();
+
+        //if (trainerHasGroup) {
+        //    let response: Response = await api.createQuiz(this.quiz);
+
+        //    //debugger;
+
+        //    if (response) {
+
+        //        //this.setNonGroupUsers(nonGroupUsers)
+        //        return true;
+
+        //    } else {
+        //        return false;
+        //    }
+        //} else {
+        //    return false;
+        //}
+        this.markQuiz();
+
+        return true;
+    }
+
+    @action
+    private markQuiz = (): void => {
+        let quizDetails: QuizDetails = this.quizDetails;
+
+        //for (let question: QuestionDetails of quizDetails) {
+        //    for (let choice of question) {
+
+        //    }
+        //}
+
+        this.questionResults = new Array(5).fill(0);
+        console.log("questionResults: " + this.questionResults);
+        let counter: number = 0;
+        for (let i = 0; i < quizDetails.questions.length; i++) {
+            let isAnswerCorrect = true;
+            for (let j = 0; j < quizDetails.questions[i].choices.length; j++) {
+                //debugger;
+                if (quizDetails.questions[i].choices[j].isCorrect != this.userChoicesForm[counter]) {
+                    //debugger;
+                    let index = j + (i * 4);
+                    //console.log("iscorrect: " + index + " " + quizDetails.questions[i].choices[j].isCorrect);
+                    isAnswerCorrect = false;
+
+                    console.log("isCorrect: " + quizDetails.questions[i].choices[j].isCorrect + " - " + "userChoices: " + this.userChoicesForm[counter]);
+                }
+                counter++;
+            }
+            if (isAnswerCorrect) {
+                this.questionResults[i] = 1;
+            } else {
+                this.questionResults[i] = 0;
+            }
+        }
+
+        this.userChoices = this.userChoicesForm;
+        console.log("userChoices: " + this.userChoices);
+        //this.userChoicesForm = new Array(20).fill(false);;
+        console.log("questionResults: " + this.questionResults);
     }
 
     @action
@@ -213,6 +295,8 @@ class QuizStore {
         //Learned from CUDA on the HPC module.
         let index = choiceID + (questionID * 4);
 
+        this.activeRadioIndexes[questionID] = index;
+
         //TODO: Get boolean value
         if (isCorrect == "on") {
             this.choicesCorrect[index] = true;
@@ -227,6 +311,31 @@ class QuizStore {
             }
         } else {
             this.choicesCorrect[index] = false;
+        }
+    }
+
+    @action
+    public onUserChoiceChange = (choice: string, questionID: number, choiceID: number): void => {
+        //Get the total index for the current choice. (Converts 0-3 to 0-19)
+        //Learned from CUDA on the HPC module.
+        let index = choiceID + (questionID * 4);
+        //debugger;
+        //TODO: Get boolean value
+        if (choice == "on") {
+            this.userChoicesForm[index] = true;
+
+            //Reset other grouped value to false
+            for (let i: number = 0; i < 4; i++) {
+                
+                let j = i + (questionID * 4);
+
+                if (index != j) {
+                    this.userChoicesForm[j] = false;
+                }
+            }
+        } else {
+            //debugger;
+            this.userChoicesForm[index] = false;
         }
     }
 }

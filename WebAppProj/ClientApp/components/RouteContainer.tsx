@@ -22,6 +22,7 @@ import { ViewQuizzes } from './ViewQuizzes';
 import { ViewQuiz } from './ViewQuiz';
 import { ViewUncompleteQuizzes } from './trainee/ViewUncompletedQuizzes';
 import { ViewCompleteQuizzes } from './trainee/ViewCompletedQuizzes';
+import { StartQuiz } from './trainee/StartQuiz';
 
 interface Props extends RouteComponentProps<any>, React.Props<any> {
     authStore: AuthStore
@@ -170,7 +171,14 @@ export class RouteContainer extends React.Component<Props> {
 
                 <Route exact path={`${match.url}viewquizzes`} render={(props: any) => {
                     if (isloggedIn) {
-                        return <ViewQuizzes {...props} />
+                        if (isTrainer) {
+                            return <ViewQuizzes {...props} />
+                        } else {
+                            return <Redirect to={{
+                                pathname: '/',
+                                state: { from: props.location }
+                            }} />
+                        }
                     } else {
                         return <Redirect to={{
                             pathname: '/login',
@@ -181,7 +189,14 @@ export class RouteContainer extends React.Component<Props> {
 
                 <Route exact path={`${match.url}viewquiz/:quizID`} render={(props: any) => {
                     if (isloggedIn) {
-                        return <ViewQuiz {...props} />
+                        if (isTrainer) {
+                            return <ViewQuiz {...props} />
+                        } else {
+                            return <Redirect to={{
+                                pathname: '/',
+                                state: { from: props.location }
+                            }} />
+                        }
                     } else {
                         return <Redirect to={{
                             pathname: '/login',
@@ -192,7 +207,32 @@ export class RouteContainer extends React.Component<Props> {
 
                 <Route exact path={`${match.url}viewuncompletedquizzes`} render={(props: any) => {
                     if (isloggedIn) {
-                        return <ViewUncompleteQuizzes {...props} />
+                        if (isTrainee) {
+                            return <ViewUncompleteQuizzes {...props} />
+                        } else {
+                            return <Redirect to={{
+                                pathname: '/',
+                                state: { from: props.location }
+                            }} />
+                        }
+                    } else {
+                        return <Redirect to={{
+                            pathname: '/login',
+                            state: { from: props.location }
+                        }} />
+                    }
+                }} />
+
+                <Route exact path={`${match.url}startquiz/:quizID`} render={(props: any) => {
+                    if (isloggedIn) {
+                        if (isTrainee) {
+                            return <StartQuiz {...props} />
+                        } else {
+                            return <Redirect to={{
+                                pathname: '/',
+                                state: { from: props.location }
+                            }} />
+                        }
                     } else {
                         return <Redirect to={{
                             pathname: '/login',
@@ -203,7 +243,14 @@ export class RouteContainer extends React.Component<Props> {
 
                 <Route exact path={`${match.url}viewcompletedquizzes`} render={(props: any) => {
                     if (isloggedIn) {
-                        return <ViewCompleteQuizzes {...props} />
+                        if (isTrainee) {
+                            return <ViewCompleteQuizzes {...props} />
+                        } else {
+                            return <Redirect to={{
+                                pathname: '/',
+                                state: { from: props.location }
+                            }} />
+                        }
                     } else {
                         return <Redirect to={{
                             pathname: '/login',

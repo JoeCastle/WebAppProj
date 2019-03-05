@@ -1,10 +1,10 @@
 ﻿import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import { inject, observer } from 'mobx-react';
-import quizStore, { QuizStore } from '../stores/QuizStore/QuizStore';
+import quizStore, { QuizStore } from '../../stores/QuizStore/QuizStore';
 import { action } from 'mobx';
-import QuizDetails from '../models/GetQuiz/quizDetails';
-import { AuthStore } from '../stores/AuthStore/AuthStore';
+import QuizDetails from '../../models/GetQuiz/quizDetails';
+import { AuthStore } from '../../stores/AuthStore/AuthStore';
 import { Link } from 'react-router-dom';
 
 interface Props extends RouteComponentProps<any>, React.Props<any> {

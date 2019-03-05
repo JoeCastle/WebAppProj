@@ -300,7 +300,7 @@ namespace WebAppProj.Controllers
         /// </summary>
         /// <param name="groupID"></param>
         /// <returns></returns>
-        [Authorize(Roles = "trainer")]
+        [Authorize(Roles = "trainer, trainee")]
         [HttpPost("[action]")]
         public IActionResult GetQuizByQuizID([FromBody] int quizID)
         {
