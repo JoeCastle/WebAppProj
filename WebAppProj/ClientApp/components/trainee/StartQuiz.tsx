@@ -3,6 +3,7 @@ import { RouteComponentProps } from 'react-router';
 import { inject, observer } from 'mobx-react';
 import quizStore, { QuizStore } from '../../stores/QuizStore/QuizStore';
 import { AuthStore } from '../../stores/AuthStore/AuthStore';
+import { Component } from 'react';
 
 interface Props extends RouteComponentProps<any>, React.Props<any> {
     quizStore: QuizStore,
@@ -61,9 +62,10 @@ export class StartQuiz extends React.Component<Props> {
 
         if (quizSubmitted) {
             //this.props.history.push('/mygroup');
-            alert("Successfully created quiz.");
+            alert("Successfully submitted quiz.");
+            this.props.history.push('/viewcompletedquizzes');
         } else {
-            alert("Failed to create quiz.");
+            alert("Failed to submit quiz.");
         }
     }
 }
@@ -72,7 +74,7 @@ const QuestionComponent = (props: any) => {
     let createChoices = () => {
         let choices = [];
         for (let i = 0; i < 4; i++) {
-            choices.push(<ChoiceComponent key={i} choiceID={i} {...props} />)
+            choices.push(<ChoiceComponent key={i} choiceID={i} questionID={props.questionID} {...props} />)
         }
         return choices;
     }
@@ -86,59 +88,49 @@ const QuestionComponent = (props: any) => {
 };
 
 
-const ChoiceComponent = (props: any) => {
-    let onUserChoiceChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-        let userChoice = e.target.value;
-        //debugger;
-        isChecked();
-        props.quizStore.onUserChoiceChange(userChoice, props.questionID, props.choiceID);
-    }
+export interface IChoiceProps {
+    questionID: number;
+    choiceID: number;
+}
 
-    let isChecked = () => {
-        let index = props.choiceID + (props.questionID * 4);
+@inject('quizStore')
+@observer
+export class ChoiceComponent extends React.Component<IChoiceProps, IChoiceProps> {
+    constructor(props: IChoiceProps) {
+        super(props);
 
-        //debugger;
-
-        //for (let activeIndex in quizStore.activeRadioIndexes) {
-        //    if (activeIndex == index) {
-        //        active = true;
-        //        break;
-        //    }
-        //}
-
-        //var test = quizStore.activeRadioIndexes;
-
-        //The old active value needs to be removed.
-        if (quizStore.activeRadioIndexes.indexOf(index)) {
-            console.log(quizStore.activeRadioIndexes.indexOf(index))
-            active = true;
-            debugger;
-        } else {
-            active = false;
-            debugger;
+        this.state = {
+            questionID: props.questionID,
+            choiceID: props.choiceID,
         }
     }
 
-    let active;
+    private onUserChoiceChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        let userChoice = e.target.value;
 
-    let index = props.choiceID + (props.questionID * 4);
+        quizStore.onUserChoiceChange(userChoice, this.props.questionID, this.props.choiceID);
+    }
 
-    return <div className='choice-component' id={'group' + props.questionID}>
-        <div className='choice-container'>
-        </div>
-        <div className='iscorrect-container'>
-            <div className='form-group'>
-                <label htmlFor={`ischoicecorrect${props.questionID}${props.choiceID}`}>{props.questionID + 1}.{props.choiceID + 1}. {props.quizStore.quizDetails.questions[props.questionID].choices[props.choiceID].choiceText} </label>
-                <input
-                    id={`ischoicecorrect${props.questionID}${props.choiceID}`}
-                    className='form-control'
-                    type='radio'
-                    name={`group${props.questionID}`}
-                    onChange={onUserChoiceChange}
-                    checked={active}
-                    required
-                />
+    public render() {
+        return (
+            <div className='choice-component' id={'group' + this.props.questionID}>
+                <div className='choice-container'>
+                </div>
+                <div className='iscorrect-container'>
+                    <div className='form-group'>
+                        <label htmlFor={`userchoice${this.props.questionID}${this.props.choiceID}`}>{this.props.questionID + 1}.{this.props.choiceID + 1}. {quizStore.quizDetails.questions[this.props.questionID].choices[this.props.choiceID].choiceText} </label>
+                        <input
+                            id={`userchoice${this.props.questionID}${this.props.choiceID}`}
+                            className='form-control'
+                            type='radio'
+                            name={`group${this.props.questionID}`}
+                            onChange={(e) => this.onUserChoiceChange(e)}
+                            checked={quizStore.userChoicesForm[this.props.choiceID + (this.props.questionID * 4)]}
+                            required
+                        />
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-};
+        );
+    }
+}

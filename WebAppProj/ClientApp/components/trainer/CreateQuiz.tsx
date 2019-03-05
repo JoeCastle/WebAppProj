@@ -1,7 +1,7 @@
 ﻿import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import { inject, observer } from 'mobx-react';
-import { QuizStore } from '../../stores/QuizStore/QuizStore';
+import quizStore, { QuizStore } from '../../stores/QuizStore/QuizStore';
 import { AuthStore } from '../../stores/AuthStore/AuthStore';
 
 interface Props extends RouteComponentProps<any>, React.Props<any> {
@@ -72,6 +72,7 @@ export class CreateQuiz extends React.Component<Props> {
         if (quizCreated) {
             //this.props.history.push('/mygroup');
             alert("Successfully created quiz.");
+            this.props.history.push('/viewquizzes');
         } else {
             alert("Failed to create quiz.");
         }
@@ -88,7 +89,7 @@ const QuestionComponent = (props: any) => {
     let createChoices = () => {
         let choices = [];
         for (let i = 0; i < 4; i++) {
-            choices.push(<ChoiceComponent key={i} choiceID={i} {...props} />)
+            choices.push(<ChoiceComponent key={i} choiceID={i} questionID={props.questionID} {...props} />)
         }
         return choices;
     }
@@ -118,47 +119,67 @@ const QuestionComponent = (props: any) => {
     </div>
 };
 
+export interface IChoiceProps {
+    questionID: number;
+    choiceID: number;
+}
 
-const ChoiceComponent = (props: any) => {
-    let onChoiceTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+@inject('quizStore')
+@observer
+export class ChoiceComponent extends React.Component<IChoiceProps, IChoiceProps> {
+    constructor(props: IChoiceProps) {
+        super(props);
+
+        this.state = {
+            questionID: props.questionID,
+            choiceID: props.choiceID,
+        }
+    }
+
+    private onChoiceTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         let choiceText = e.target.value;
 
-        props.quizStore.onChoiceTextChange(choiceText, props.questionID, props.choiceID);
+        quizStore.onChoiceTextChange(choiceText, this.props.questionID, this.props.choiceID);
     }
 
-    let onChoiceIsCorrectChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    private onChoiceIsCorrectChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
         let isChoiceCorrect = e.target.value;
 
-        await props.quizStore.onChoiceIsCorrectChange(isChoiceCorrect, props.questionID, props.choiceID);
+        await quizStore.onChoiceIsCorrectChange(isChoiceCorrect, this.props.questionID, this.props.choiceID);
     }
 
-    return <div className='choice-component' id={'group' + props.questionID}>
-        <div className='choice-container'>
-            <div className='form-group'>
-                <label htmlFor={`choicetext${props.questionID}${props.choiceID}`}>{props.questionID + 1}.{props.choiceID + 1}. Choice text: </label>
-                <input
-                    className='textbox form-control'
-                    id={`choicetext${props.questionID}${props.choiceID}`}
-                    type='text'
-                    placeholder='Question text'
-                    autoComplete='off'
-                    required
-                    onChange={onChoiceTextChange}
-                />
+    public render() {
+        return (
+            <div className='choice-component' id={'group' + this.props.questionID}>
+                <div className='choice-container'>
+                    <div className='form-group'>
+                        <label htmlFor={`choicetext${this.props.questionID}${this.props.choiceID}`}>{this.props.questionID + 1}.{this.props.choiceID + 1}. Choice text: </label>
+                        <input
+                            className='textbox form-control'
+                            id={`choicetext${this.props.questionID}${this.props.choiceID}`}
+                            type='text'
+                            placeholder='Question text'
+                            autoComplete='off'
+                            required
+                            onChange={this.onChoiceTextChange}
+                        />
+                    </div>
+                </div>
+                <div className='iscorrect-container'>
+                    <div className='form-group'>
+                        <label htmlFor={`ischoicecorrect${this.props.questionID}${this.props.choiceID}`}>Is correct answer?: </label>
+                        <input
+                            id={`ischoicecorrect${this.props.questionID}${this.props.choiceID}`}
+                            className='form-control'
+                            type='radio'
+                            name={`group${this.props.questionID}`}
+                            onChange={(e) => this.onChoiceIsCorrectChange(e)}
+                            checked={quizStore.choicesCorrect[this.props.choiceID + (this.props.questionID * 4)]}
+                            required
+                        />
+                    </div>
+                </div>
             </div>
-        </div>
-        <div className='iscorrect-container'>
-            <div className='form-group'>
-                <label htmlFor={`ischoicecorrect${props.questionID}${props.choiceID}`}>Is correct answer?: </label>
-                <input
-                    id={`ischoicecorrect${props.questionID}${props.choiceID}`}
-                    className='form-control'
-                    type='radio'
-                    name={`group${props.questionID}`}
-                    onChange={onChoiceIsCorrectChange}
-                    required
-                />
-            </div>
-        </div>
-    </div>
-};
+        );
+    }
+}

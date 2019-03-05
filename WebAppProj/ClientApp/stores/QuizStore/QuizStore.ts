@@ -18,7 +18,7 @@ class QuizStore {
     @observable quizzesDetails: QuizDetails[] = [];
     @observable quizDetails: QuizDetails;
 
-    private choicesCorrect: boolean[];
+    @observable choicesCorrect: boolean[];
     private quizName: string;
 
     @observable userChoicesForm: boolean[];
@@ -26,10 +26,6 @@ class QuizStore {
     private questionResults: number[];
 
     @observable activeRadioIndexes: number[];
-    //@observable question2RadioState: boolean[];
-    //@observable question3RadioState: boolean[];
-    //@observable question4RadioState: boolean[];
-    //@observable question5RadioState: boolean[];
 
     constructor() {
         this.quiz = {} as CreateQuizDetails;
@@ -101,26 +97,14 @@ class QuizStore {
     private markQuiz = (): void => {
         let quizDetails: QuizDetails = this.quizDetails;
 
-        //for (let question: QuestionDetails of quizDetails) {
-        //    for (let choice of question) {
-
-        //    }
-        //}
-
         this.questionResults = new Array(5).fill(0);
-        console.log("questionResults: " + this.questionResults);
+
         let counter: number = 0;
         for (let i = 0; i < quizDetails.questions.length; i++) {
             let isAnswerCorrect = true;
             for (let j = 0; j < quizDetails.questions[i].choices.length; j++) {
-                //debugger;
                 if (quizDetails.questions[i].choices[j].isCorrect != this.userChoicesForm[counter]) {
-                    //debugger;
-                    let index = j + (i * 4);
-                    //console.log("iscorrect: " + index + " " + quizDetails.questions[i].choices[j].isCorrect);
                     isAnswerCorrect = false;
-
-                    console.log("isCorrect: " + quizDetails.questions[i].choices[j].isCorrect + " - " + "userChoices: " + this.userChoicesForm[counter]);
                 }
                 counter++;
             }
@@ -132,9 +116,6 @@ class QuizStore {
         }
 
         this.userChoices = this.userChoicesForm;
-        console.log("userChoices: " + this.userChoices);
-        //this.userChoicesForm = new Array(20).fill(false);;
-        console.log("questionResults: " + this.questionResults);
     }
 
     @action
@@ -315,7 +296,7 @@ class QuizStore {
     }
 
     @action
-    public onUserChoiceChange = (choice: string, questionID: number, choiceID: number): void => {
+    public onUserChoiceChange = async (choice: string, questionID: number, choiceID: number): Promise<void> => {
         //Get the total index for the current choice. (Converts 0-3 to 0-19)
         //Learned from CUDA on the HPC module.
         let index = choiceID + (questionID * 4);
