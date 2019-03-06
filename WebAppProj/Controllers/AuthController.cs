@@ -184,7 +184,15 @@ namespace WebAppProj.Controllers
 
             //Generate claims principal.
             SecurityToken securityToken;
-            ClaimsPrincipal claimsPrincipal = new JwtSecurityTokenHandler().ValidateToken(jsonWebTokenString, tokenValidationParameters, out securityToken);
+            ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal();
+            try {
+                claimsPrincipal = new JwtSecurityTokenHandler().ValidateToken(jsonWebTokenString, tokenValidationParameters, out securityToken);
+            }
+            catch
+            {
+                return BadRequest("Invalid JWT");
+            }
+            
 
             if (claimsPrincipal == null)
             {

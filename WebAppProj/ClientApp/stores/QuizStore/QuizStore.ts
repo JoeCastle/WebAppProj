@@ -9,6 +9,7 @@ import { CreateQuiz } from '../../components/trainer/CreateQuiz';
 import QuizDetails from '../../models/GetQuiz/quizDetails';
 import TraineeGetQuizzes from '../../models/traineeGetQuizzes';
 import QuestionDetails from '../../models/GetQuiz/questionDetails';
+import SubmitQuizResultsDetails from '../../models/submitQuizResultsDetails';
 
 class QuizStore {
     @observable quiz: CreateQuizDetails;
@@ -26,6 +27,8 @@ class QuizStore {
     private questionResults: number[];
 
     @observable activeRadioIndexes: number[];
+
+    @observable submitQuizResultsDetails: SubmitQuizResultsDetails[] = [];
 
     constructor() {
         this.quiz = {} as CreateQuizDetails;
@@ -67,30 +70,38 @@ class QuizStore {
 
     @action
     public submitQuiz = async (): Promise<boolean> => {
-        //let isTrainer = authStore.isLoggedIn && authStore.userRole == "trainer";
-        //let trainerHasGroup = authStore.userGroupID != 1 && authStore.userGroupID != -1 && isTrainer;
+        let isTrainee = authStore.isLoggedIn && authStore.userRole == "trainee";
+        let traineeHasGroup = authStore.userGroupID != 1 && authStore.userGroupID != -1 && isTrainee;
 
-        //await this.buildQuizDTO();
+        if (traineeHasGroup) {
+            this.markQuiz();
 
-        //if (trainerHasGroup) {
-        //    let response: Response = await api.createQuiz(this.quiz);
+            console.log(this.questionResults);
 
-        //    //debugger;
+            for (let i = 0; i < this.questionResults.length; i++) {
 
-        //    if (response) {
+                let submitQuizResultsDetails: SubmitQuizResultsDetails = {
+                    userID: authStore.userID,
+                    quizID: this.quizDetails.quizID,
+                    questionID: this.quizDetails.questions[i].questionID,
+                    resultValue: this.questionResults[i]
+                };
 
-        //        //this.setNonGroupUsers(nonGroupUsers)
-        //        return true;
+                this.submitQuizResultsDetails.push(submitQuizResultsDetails);
+            }
 
-        //    } else {
-        //        return false;
-        //    }
-        //} else {
-        //    return false;
-        //}
-        this.markQuiz();
+            let response: Response = await api.submitQuizResults(this.submitQuizResultsDetails);
 
-        return true;
+            if (response) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+
+        }
+        //return true;
     }
 
     @action
@@ -100,14 +111,19 @@ class QuizStore {
         this.questionResults = new Array(5).fill(0);
 
         let counter: number = 0;
+
         for (let i = 0; i < quizDetails.questions.length; i++) {
+
             let isAnswerCorrect = true;
+
             for (let j = 0; j < quizDetails.questions[i].choices.length; j++) {
+
                 if (quizDetails.questions[i].choices[j].isCorrect != this.userChoicesForm[counter]) {
                     isAnswerCorrect = false;
                 }
                 counter++;
             }
+
             if (isAnswerCorrect) {
                 this.questionResults[i] = 1;
             } else {

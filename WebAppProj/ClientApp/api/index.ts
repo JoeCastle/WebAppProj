@@ -15,6 +15,7 @@ import UsersToAddToGroup from '../models/usersToAddToGroup';
 import CreateQuizDetails from '../models/CreateQuiz/createQuizDetails';
 import QuizDetails from '../models/GetQuiz/quizDetails';
 import TraineeGetQuizzes from '../models/traineeGetQuizzes';
+import SubmitQuizResultsDetails from '../models/submitQuizResultsDetails';
 
 /*let getJson = async (url: string) => {
     let responseJson = await fetch(url, {
@@ -207,6 +208,12 @@ let removeUsersFromGroup = (removeUsersFromGroup: any): Promise<Response> => {
     return postJsonBearer(url, removeUsersFromGroup);
 }
 
+let submitQuizResults = (submitQuizResultsDetails: SubmitQuizResultsDetails[]): Promise<Response> => {
+    let url = "api/Quiz/SubmitQuizResults";
+
+    return postJsonBearer(url, submitQuizResultsDetails);
+}
+
 let verifyJWT = (jsonWebToken: string): Promise<CurrentUserDetails> => {
     let url = "api/Auth/VerifyJWT";
 
@@ -227,5 +234,6 @@ export const api = {
     loginUser,
     registerUser,
     removeUsersFromGroup,
+    submitQuizResults,
     verifyJWT,
 }

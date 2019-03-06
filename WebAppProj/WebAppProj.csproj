@@ -52,6 +52,7 @@
     <None Remove="ClientApp\models\GetQuiz\choiceDetails.ts" />
     <None Remove="ClientApp\models\GetQuiz\questionDetails.ts" />
     <None Remove="ClientApp\models\GetQuiz\quizDetails.ts" />
+    <None Remove="ClientApp\models\submitQuizResultsDetails.ts" />
     <None Remove="ClientApp\models\traineeGetQuizzes.ts" />
     <None Remove="ClientApp\models\userDetails.ts" />
     <None Remove="ClientApp\models\userRegisterDetails.ts" />
@@ -97,6 +98,7 @@
     <TypeScriptCompile Include="ClientApp\models\GetQuiz\choiceDetails.ts" />
     <TypeScriptCompile Include="ClientApp\models\GetQuiz\questionDetails.ts" />
     <TypeScriptCompile Include="ClientApp\models\GetQuiz\quizDetails.ts" />
+    <TypeScriptCompile Include="ClientApp\models\submitQuizResultsDetails.ts" />
     <TypeScriptCompile Include="ClientApp\models\traineeGetQuizzes.ts" />
     <TypeScriptCompile Include="ClientApp\models\userDetails.ts" />
     <TypeScriptCompile Include="ClientApp\models\userRegisterDetails.ts" />

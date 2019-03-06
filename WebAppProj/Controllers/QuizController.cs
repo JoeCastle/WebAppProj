@@ -828,5 +828,68 @@ namespace WebAppProj.Controllers
                 completedQuizzes
             );
         }
+
+        [Authorize(Roles = "trainee")]
+        [HttpPost("[action]")]
+        public IActionResult SubmitQuizResults([FromBody] SubmitQuizResultsDetails[] submitQuizResultsDetailsDTO)
+        {
+            var queryResult = -1; //Set query result to fail.
+            string connectionString = Configuration["ConnectionStrings:DefaultConnectionString"];
+            int result = -1;
+
+            DataTable tableResults = new DataTable("Results");
+            tableResults.Columns.Add("QuestionID", typeof(int));
+            tableResults.Columns.Add("ResultValue", typeof(int));
+            tableResults.Columns.Add("UserID", typeof(int));
+            tableResults.Columns.Add("QuizID", typeof(int));
+
+            foreach (SubmitQuizResultsDetails Result in submitQuizResultsDetailsDTO)
+            {
+                DataRow row = tableResults.NewRow();
+                row["QuestionID"] = Result.QuestionID;
+                row["ResultValue"] = Result.ResultValue;
+                row["UserID"] = Result.UserID;
+                row["QuizID"] = Result.QuizID;
+
+                tableResults.Rows.Add(row);
+            }
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                //Create the SQL command and set type to stored procedure.
+                SqlCommand command = new SqlCommand("Results_AddByQuestion", connection);
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                //Parameter declaration    
+                SqlParameter Parameter = new SqlParameter();
+                Parameter.ParameterName = "@userResults";
+                Parameter.SqlDbType = SqlDbType.Structured;
+                Parameter.Value = tableResults;
+
+                command.Parameters.Add(Parameter);
+
+                command.Parameters.Add("@result", System.Data.SqlDbType.Int).Direction = System.Data.ParameterDirection.Output;
+
+                connection.Open();
+
+                //Execute the query and store the result
+                queryResult = command.ExecuteNonQuery();
+
+                result = (int)command.Parameters["@result"].Value;
+
+                connection.Close();
+            }
+
+            if (result == 1)
+            {
+                //SUCCESS
+                return Ok("Results successfully added.");
+            }
+            else
+            {
+                //FAIL
+                return BadRequest("Failed to add results.");
+            }
+        }
     }
 }

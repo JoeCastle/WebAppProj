@@ -12,6 +12,7 @@ import { api } from '../../api';
 import UserLoginDetails from '../../models/userLoginDetails';
 import UserRegisterDetails from '../../models/userRegisterDetails';
 import CurrentUserDetails from '../../models/currentUserDetails';
+import { RouteComponentProps } from 'react-router';
 //import browserHistory from '../../history';
 
 class AuthStore {
