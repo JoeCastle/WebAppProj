@@ -10,6 +10,8 @@ import QuizDetails from '../../models/GetQuiz/quizDetails';
 import TraineeGetQuizzes from '../../models/traineeGetQuizzes';
 import QuestionDetails from '../../models/GetQuiz/questionDetails';
 import SubmitQuizResultsDetails from '../../models/submitQuizResultsDetails';
+import QuizResults from '../../models/GetQuizResults/quizResults';
+import TraineeGetQuizResults from '../../models/traineeGetQuizResults';
 
 class QuizStore {
     @observable quiz: CreateQuizDetails;
@@ -30,6 +32,8 @@ class QuizStore {
 
     @observable submitQuizResultsDetails: SubmitQuizResultsDetails[] = [];
 
+    @observable quizResults: QuizResults;
+
     constructor() {
         this.quiz = {} as CreateQuizDetails;
         this.questions = new Array(5).fill("");
@@ -40,7 +44,7 @@ class QuizStore {
         this.userChoicesForm = new Array(20).fill(false);
         this.questionResults = new Array(5).fill(0);
         this.activeRadioIndexes = new Array(5).fill(0);
-
+        this.quizResults = {} as QuizResults;
     }
 
     @action
@@ -221,6 +225,30 @@ class QuizStore {
     }
 
     @action
+    public getQuizResults = async (quizID: number): Promise<void> => {
+        let isLoggedIn = authStore.isLoggedIn;
+        let userHasGroup = authStore.userGroupID != 1 && authStore.userGroupID != -1 && isLoggedIn;
+
+        var DTO: TraineeGetQuizResults = {
+            quizID: quizID,
+            userID: authStore.userID
+        }
+
+        if (userHasGroup) {
+            let quizResults: QuizResults = await api.getQuizResults(DTO);
+
+            if (quizResults) {
+                this.setQuizResults(quizResults);
+                //debugger;
+            } else {
+
+            }
+        } else {
+
+        }
+    }
+
+    @action
     public resetStore = async (): Promise<void> => {
         this.quizDetails = {} as QuizDetails;
         this.quizzesDetails = [];
@@ -229,6 +257,12 @@ class QuizStore {
     @action
     private setQuizDetails = (quizDetails: QuizDetails): void => {
         this.quizDetails = quizDetails;
+    }
+
+    @action
+    private setQuizResults = (quizResults: QuizResults): void => {
+        this.quizResults = quizResults;
+        debugger;
     }
 
     @action

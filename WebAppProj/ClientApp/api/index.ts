@@ -16,6 +16,8 @@ import CreateQuizDetails from '../models/CreateQuiz/createQuizDetails';
 import QuizDetails from '../models/GetQuiz/quizDetails';
 import TraineeGetQuizzes from '../models/traineeGetQuizzes';
 import SubmitQuizResultsDetails from '../models/submitQuizResultsDetails';
+import TraineeGetQuizResults from '../models/traineeGetQuizResults';
+import QuizResults from '../models/GetQuizResults/quizResults';
 
 /*let getJson = async (url: string) => {
     let responseJson = await fetch(url, {
@@ -190,6 +192,12 @@ let getQuizByQuizID = (quizID: number): Promise<QuizDetails> => {
     return postJsonBearer(url, quizID);
 }
 
+let getQuizResults = (traineeGetQuizResultsDDTO: TraineeGetQuizResults): Promise<QuizResults> => {
+    let url = "api/Quiz/GetQuizResults";
+
+    return postJsonBearer(url, traineeGetQuizResultsDDTO);
+}
+
 let loginUser = (userLoginDetails: UserLoginDetails): Promise<CurrentUserDetails> => {
     let url = "api/Auth/UserLogin";
 
@@ -231,6 +239,7 @@ export const api = {
     getCompletedQuizzesForTrainee,
     getUsersNotInGroup,
     getQuizByQuizID,
+    getQuizResults,
     loginUser,
     registerUser,
     removeUsersFromGroup,
