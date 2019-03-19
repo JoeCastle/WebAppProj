@@ -38,73 +38,35 @@ export class ViewQuizResult extends React.Component<Props> {
                         <p>{this.props.quizStore.quizResults.quizName}</p>
                     </div>
                     <div className='questions-container'>{this.questions}</div>
+                    <div className='single-quiz-result'><b>Total: {this.props.quizStore.quizTotal}/5</b></div>
+                    <div className='single-quiz-result'><b>Score: {this.props.quizStore.quizTotal / 5 * 100}%</b></div>
                 </form>
             </div>
         </div>;
     }
 }
 
-const QuestionComponent = (props: any) => {
-    let createChoices = () => {
-        let choices = [];
-        for (let i = 0; i < 4; i++) {
-            choices.push(<ChoiceComponent key={i} choiceID={i} questionID={props.questionID} {...props} />)
-        }
-        return choices;
-    }
-
-    return <div className="question-component">
-        <div className='question-text-container'>
-            <p>{props.questionID + 1}. {props.quizStore.quizResults.questions[props.questionID].questionText}</p>
-        </div>
-        <div className='choices-container'>{createChoices()}</div>
-    </div>
-};
-
-
-export interface IChoiceProps {
+export interface IQuestionProps {
     questionID: number;
-    choiceID: number;
 }
 
 @inject('quizStore')
 @observer
-export class ChoiceComponent extends React.Component<IChoiceProps, IChoiceProps> {
-    constructor(props: IChoiceProps) {
+export class QuestionComponent extends React.Component<IQuestionProps, IQuestionProps> {
+    constructor(props: IQuestionProps) {
         super(props);
 
         this.state = {
-            questionID: props.questionID,
-            choiceID: props.choiceID,
+            questionID: props.questionID
         }
     }
 
-    private onUserChoiceChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-        let userChoice = e.target.value;
-
-        quizStore.onUserChoiceChange(userChoice, this.props.questionID, this.props.choiceID);
-    }
-
     public render() {
-        return (
-            <div className='choice-component' id={'group' + this.props.questionID}>
-                <div className='choice-container'>
-                </div>
-                <div className='iscorrect-container'>
-                    <div className='form-group'>
-                        <label htmlFor={`userchoice${this.props.questionID}${this.props.choiceID}`}>{this.props.questionID + 1}.{this.props.choiceID + 1}. {quizStore.quizResults.questions[this.props.questionID].choices[this.props.choiceID].choiceText} </label>
-                        <input
-                            id={`userchoice${this.props.questionID}${this.props.choiceID}`}
-                            className='form-control'
-                            type='radio'
-                            name={`group${this.props.questionID}`}
-                            onChange={(e) => this.onUserChoiceChange(e)}
-                            checked={quizStore.userChoicesForm[this.props.choiceID + (this.props.questionID * 4)]}
-                            required
-                        />
-                    </div>
-                </div>
+        return <div className="question-component">
+            <div className='question-text-container'>
+                <p>{this.props.questionID + 1}. {quizStore.quizResults.questions[this.props.questionID].questionText}</p>
+                <p>Result: <b>{quizStore.quizResults.questions[this.props.questionID].result == 1 ? 'Correct' : 'Incorrect'}</b></p>
             </div>
-        );
+        </div>;
     }
 }

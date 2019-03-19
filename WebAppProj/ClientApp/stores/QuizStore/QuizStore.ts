@@ -33,6 +33,7 @@ class QuizStore {
     @observable submitQuizResultsDetails: SubmitQuizResultsDetails[] = [];
 
     @observable quizResults: QuizResults;
+    @observable quizTotal: number;
 
     constructor() {
         this.quiz = {} as CreateQuizDetails;
@@ -45,6 +46,7 @@ class QuizStore {
         this.questionResults = new Array(5).fill(0);
         this.activeRadioIndexes = new Array(5).fill(0);
         this.quizResults = {} as QuizResults;
+        this.quizTotal = 0;
     }
 
     @action
@@ -239,6 +241,7 @@ class QuizStore {
 
             if (quizResults) {
                 this.setQuizResults(quizResults);
+                this.setQuizTotal();
                 //debugger;
             } else {
 
@@ -252,6 +255,8 @@ class QuizStore {
     public resetStore = async (): Promise<void> => {
         this.quizDetails = {} as QuizDetails;
         this.quizzesDetails = [];
+        this.quizTotal = 0;
+        this.quizResults = {} as QuizResults;
     }
 
     @action
@@ -262,7 +267,13 @@ class QuizStore {
     @action
     private setQuizResults = (quizResults: QuizResults): void => {
         this.quizResults = quizResults;
-        debugger;
+    }
+
+    @action
+    private setQuizTotal = (): void => {
+        for (let i: number = 0; i < this.quizResults.questions.length; i++) {
+            this.quizTotal = this.quizTotal + this.quizResults.questions[i].result;
+        }
     }
 
     @action
