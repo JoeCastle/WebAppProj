@@ -51,7 +51,8 @@ export class RouteContainer extends React.Component<Props> {
         }
 
         return <div className="page-parent">
-            <Route path={`${match.url}`} render={(props: any) => <NavMenu {...props} />} />
+            {/*<Route path={`${match.url}`} render={(props: any) => <NavMenu {...props} />} />*/}
+            <NavMenu {...this.props} />
 
             <Switch>
                 <Route exact path={`${match.url}`} render={(props: any) => <Home {...props} />} />
