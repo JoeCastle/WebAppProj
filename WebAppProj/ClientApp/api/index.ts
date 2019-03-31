@@ -18,6 +18,7 @@ import TraineeGetQuizzes from '../models/traineeGetQuizzes';
 import SubmitQuizResultsDetails from '../models/submitQuizResultsDetails';
 import TraineeGetQuizResults from '../models/traineeGetQuizResults';
 import QuizResults from '../models/GetQuizResults/quizResults';
+import TraineeByQuizDetails from '../models/TraineeByQuizDetails';
 
 /*let getJson = async (url: string) => {
     let responseJson = await fetch(url, {
@@ -198,6 +199,12 @@ let getQuizResults = (traineeGetQuizResultsDDTO: TraineeGetQuizResults): Promise
     return postJsonBearer(url, traineeGetQuizResultsDDTO);
 }
 
+let getTraineesResultsByQuizID = (quizID: number): Promise<TraineeByQuizDetails[]> => {
+    let url = "api/Result/GetTraineesResultsByQuizID";
+
+    return postJsonBearer(url, quizID);
+}
+
 let loginUser = (userLoginDetails: UserLoginDetails): Promise<CurrentUserDetails> => {
     let url = "api/Auth/UserLogin";
 
@@ -240,6 +247,7 @@ export const api = {
     getUsersNotInGroup,
     getQuizByQuizID,
     getQuizResults,
+    getTraineesResultsByQuizID,
     loginUser,
     registerUser,
     removeUsersFromGroup,

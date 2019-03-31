@@ -39,7 +39,9 @@
     <None Remove="ClientApp\components\trainer\CreateGroup.tsx" />
     <None Remove="ClientApp\components\trainer\CreateQuiz.tsx" />
     <None Remove="ClientApp\components\trainer\MyGroup.tsx" />
+    <None Remove="ClientApp\components\trainer\QuizResultsList.tsx" />
     <None Remove="ClientApp\components\trainer\RemoveFromGroup.tsx" />
+    <None Remove="ClientApp\components\trainer\TraineesByQuizResults.tsx" />
     <None Remove="ClientApp\components\ViewCompletedQuizzes.tsx" />
     <None Remove="ClientApp\components\ViewQuiz.tsx" />
     <None Remove="ClientApp\components\ViewQuizzes.tsx" />
@@ -57,6 +59,7 @@
     <None Remove="ClientApp\models\GetQuiz\questionDetails.ts" />
     <None Remove="ClientApp\models\GetQuiz\quizDetails.ts" />
     <None Remove="ClientApp\models\submitQuizResultsDetails.ts" />
+    <None Remove="ClientApp\models\TraineeByQuizDetails.ts" />
     <None Remove="ClientApp\models\traineeGetQuizResults.ts" />
     <None Remove="ClientApp\models\traineeGetQuizzes.ts" />
     <None Remove="ClientApp\models\userDetails.ts" />
@@ -68,6 +71,7 @@
     <None Remove="ClientApp\stores\GroupStore\GroupStore.ts" />
     <None Remove="ClientApp\stores\index.ts" />
     <None Remove="ClientApp\stores\QuizStore\QuizStore.ts" />
+    <None Remove="ClientApp\stores\ResultsStore\ResultsStore.ts" />
     <None Remove="ClientApp\stores\TraineeStore\TraineeStore.ts" />
     <None Remove="ClientApp\stores\TrainerStore\TrainerStore.ts" />
     <None Remove="ClientApp\userLoginDetails.ts" />
@@ -91,8 +95,10 @@
     <TypeScriptCompile Include="ClientApp\components\trainer\CreateGroup.tsx" />
     <TypeScriptCompile Include="ClientApp\components\trainer\CreateQuiz.tsx" />
     <TypeScriptCompile Include="ClientApp\components\trainer\MyGroup.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\trainer\QuizResultsList.tsx" />
     <TypeScriptCompile Include="ClientApp\components\trainer\RemoveFromGroup.tsx" />
     <TypeScriptCompile Include="ClientApp\components\trainee\ViewCompletedQuizzes.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\trainer\TraineesByQuizResults.tsx" />
     <TypeScriptCompile Include="ClientApp\components\ViewQuiz.tsx" />
     <TypeScriptCompile Include="ClientApp\components\ViewQuizzes.tsx" />
     <TypeScriptCompile Include="ClientApp\components\trainee\ViewUncompletedQuizzes.tsx" />
@@ -109,6 +115,7 @@
     <TypeScriptCompile Include="ClientApp\models\GetQuiz\questionDetails.ts" />
     <TypeScriptCompile Include="ClientApp\models\GetQuiz\quizDetails.ts" />
     <TypeScriptCompile Include="ClientApp\models\submitQuizResultsDetails.ts" />
+    <TypeScriptCompile Include="ClientApp\models\TraineeByQuizDetails.ts" />
     <TypeScriptCompile Include="ClientApp\models\traineeGetQuizResults.ts" />
     <TypeScriptCompile Include="ClientApp\models\traineeGetQuizzes.ts" />
     <TypeScriptCompile Include="ClientApp\models\userDetails.ts" />
@@ -120,6 +127,7 @@
     <TypeScriptCompile Include="ClientApp\stores\index.ts" />
     <TypeScriptCompile Include="ClientApp\models\userLoginDetails.ts" />
     <TypeScriptCompile Include="ClientApp\stores\QuizStore\QuizStore.ts" />
+    <TypeScriptCompile Include="ClientApp\stores\ResultsStore\ResultsStore.ts" />
     <TypeScriptCompile Include="ClientApp\stores\TraineeStore\TraineeStore.ts" />
     <TypeScriptCompile Include="ClientApp\stores\TrainerStore\TrainerStore.ts" />
   </ItemGroup>

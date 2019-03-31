@@ -24,6 +24,8 @@ import { ViewUncompleteQuizzes } from './trainee/ViewUncompletedQuizzes';
 import { ViewCompleteQuizzes } from './trainee/ViewCompletedQuizzes';
 import { StartQuiz } from './trainee/StartQuiz';
 import { ViewQuizResult } from './trainee/ViewQuizResult';
+import { QuizResultList } from './trainer/QuizResultsList';
+import { TraineesByQuizResults } from './trainer/TraineesByQuizResults';
 
 interface Props extends RouteComponentProps<any>, React.Props<any> {
     authStore: AuthStore
@@ -265,6 +267,60 @@ export class RouteContainer extends React.Component<Props> {
                     if (isloggedIn) {
                         if (isTrainee) {
                             return <ViewQuizResult {...props} />
+                        } else {
+                            return <Redirect to={{
+                                pathname: '/',
+                                state: { from: props.location }
+                            }} />
+                        }
+                    } else {
+                        return <Redirect to={{
+                            pathname: '/login',
+                            state: { from: props.location }
+                        }} />
+                    }
+                }} />
+
+                <Route exact path={`${match.url}resultsbytrainee`} render={(props: any) => {
+                    if (isloggedIn) {
+                        if (isTrainer) {
+                           // return <TraineeResultsList {...props} />
+                        } else {
+                            return <Redirect to={{
+                                pathname: '/',
+                                state: { from: props.location }
+                            }} />
+                        }
+                    } else {
+                        return <Redirect to={{
+                            pathname: '/login',
+                            state: { from: props.location }
+                        }} />
+                    }
+                }} />
+
+                <Route exact path={`${match.url}resultsbyquiz`} render={(props: any) => {
+                    if (isloggedIn) {
+                        if (isTrainer) {
+                            return <QuizResultList {...props} />
+                        } else {
+                            return <Redirect to={{
+                                pathname: '/',
+                                state: { from: props.location }
+                            }} />
+                        }
+                    } else {
+                        return <Redirect to={{
+                            pathname: '/login',
+                            state: { from: props.location }
+                        }} />
+                    }
+                }} />
+
+                <Route exact path={`${match.url}traineesbyquizresults/:quizID`} render={(props: any) => {
+                    if (isloggedIn) {
+                        if (isTrainer) {
+                            return <TraineesByQuizResults {...props} />
                         } else {
                             return <Redirect to={{
                                 pathname: '/',

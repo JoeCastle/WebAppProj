@@ -13,7 +13,8 @@ import UserLoginDetails from '../../models/userLoginDetails';
 import UserRegisterDetails from '../../models/userRegisterDetails';
 import CurrentUserDetails from '../../models/currentUserDetails';
 import { RouteComponentProps } from 'react-router';
-//import browserHistory from '../../history';
+import { Redirect } from 'react-router-dom';
+import browserHistory from '../../history';
 
 class AuthStore {
     @observable userID = -1;
@@ -27,6 +28,8 @@ class AuthStore {
     @observable firstname = "";
     @observable surname = "";
     @observable registerError = "";
+
+    @observable validating = false;
 
     /*@observable user = ({
         username: "",
@@ -107,6 +110,10 @@ class AuthStore {
         this.isRegistered = false;
         localStorage.clear();
         sessionStorage.clear();
+        //location.href = '/login';
+        //location.replace('/login');
+        //history.pushState('', '', '/login');
+        //browserHistory.push('/login');
     }
 
     @action
