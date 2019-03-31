@@ -298,7 +298,7 @@ namespace WebAppProj.Controllers
         /// <summary>
         /// Gets a quiz by a quizID
         /// </summary>
-        /// <param name="groupID"></param>
+        /// <param name="quizID"></param>
         /// <returns></returns>
         [Authorize(Roles = "trainer, trainee")]
         [HttpPost("[action]")]
@@ -444,7 +444,7 @@ namespace WebAppProj.Controllers
         /// <summary>
         /// Returns an array of all of the uncompleted quizzes for a trainee
         /// </summary>
-        /// <param name="groupID"></param>
+        /// <param name="userAndGroupIDDTO"></param>
         /// <returns></returns>
         [Authorize(Roles = "trainee")]
         [HttpPost("[action]")]
@@ -638,7 +638,7 @@ namespace WebAppProj.Controllers
         /// <summary>
         /// Returns an array of all of the uncompleted quizzes for a trainee
         /// </summary>
-        /// <param name="groupID"></param>
+        /// <param name="userAndGroupIDDTO"></param>
         /// <returns></returns>
         [Authorize(Roles = "trainee")]
         [HttpPost("[action]")]

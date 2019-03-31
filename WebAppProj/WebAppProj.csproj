@@ -115,7 +115,7 @@
     <TypeScriptCompile Include="ClientApp\models\GetQuiz\questionDetails.ts" />
     <TypeScriptCompile Include="ClientApp\models\GetQuiz\quizDetails.ts" />
     <TypeScriptCompile Include="ClientApp\models\submitQuizResultsDetails.ts" />
-    <TypeScriptCompile Include="ClientApp\models\TraineeByQuizDetails.ts" />
+    <TypeScriptCompile Include="ClientApp\models\traineeByQuizDetails.ts" />
     <TypeScriptCompile Include="ClientApp\models\traineeGetQuizResults.ts" />
     <TypeScriptCompile Include="ClientApp\models\traineeGetQuizzes.ts" />
     <TypeScriptCompile Include="ClientApp\models\userDetails.ts" />

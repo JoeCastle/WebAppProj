@@ -10,8 +10,29 @@ class ResultStore {
 
     @observable traineesByQuiz: TraineeByQuizDetails[] = [];
 
+    @observable headersExport = [
+        { label: "Username", key: "traineeusername" },
+        { label: "First Name", key: "firsrname" },
+        { label: "Surname", key: "surname" },
+        { label: "Result", key: "result" }
+    ];
+
+    @observable dataExport = [
+        { traineeusername: "Yezzi", firsrname: "Min l3b", surname: "ymin@cocococo.com", result: "test" }
+    ];
+
+//    headers = observable([
+//        { label: "Username", key: "traineeusername" },
+//        { label: "First Name", key: "firsrname" },
+//        { label: "Surname", key: "surname" },
+//        { label: "Result", key: "result" }
+//]);
+
+    //@observable dataExport: string[];
+
     constructor() {
-        
+        //this.data = new Array(5).fill("");
+        this.dataExport = [];
     }
 
     @action
@@ -61,9 +82,15 @@ class ResultStore {
 
     @action
     private setTraineesByQuiz = (traineesByQuiz: TraineeByQuizDetails[]): void => {
+        debugger;
         for (let trainee in traineesByQuiz) {
             this.traineesByQuiz[trainee] = traineesByQuiz[trainee];
+            //let item = `{ traineeusername: ${this.traineesByQuiz[trainee].username || "N/A"}, firstname: ${this.traineesByQuiz[trainee].firstname}, surname: ${this.traineesByQuiz[trainee].surname}, result: ${this.traineesByQuiz[trainee].result} }`
+            let item = { traineeusername: this.traineesByQuiz[trainee].username || "N/A", firstname: this.traineesByQuiz[trainee].firstname, surname: this.traineesByQuiz[trainee].surname, result: this.traineesByQuiz[trainee].result }
+            this.dataExport.push(item);
         }
+
+        debugger;
     }
 
     @action
