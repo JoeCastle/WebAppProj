@@ -14,6 +14,13 @@ interface Props extends RouteComponentProps<any>, React.Props<any> {
     resultStore: ResultStore
 }
 
+interface bar {
+    traineeusername: string;
+    firstname: string;
+    surname: string;
+    result: string;
+}
+
 @inject('quizStore', 'authStore', 'resultStore')
 @observer
 export class TraineesByQuizResults extends React.Component<Props> {
@@ -26,12 +33,12 @@ export class TraineesByQuizResults extends React.Component<Props> {
 
     trainees = this.props.resultStore.traineesByQuiz;
 
-    //headers = [
-    //    { label: "Username", key: "traineeusername" },
-    //    { label: "First Name", key: "firsrname" },
-    //    { label: "Surname", key: "surname" },
-    //    { label: "Result", key: "result" },
-    //];
+    headers = [
+        { label: "Username", key: "traineeusername" },
+        { label: "First Name", key: "firstname" },
+        { label: "Surname", key: "surname" },
+        { label: "Result", key: "result" },
+    ];
 
     //data = [] as any;
 
@@ -42,9 +49,9 @@ export class TraineesByQuizResults extends React.Component<Props> {
     //    }
     //}
 
-    dataExport = this.props.resultStore.dataExport;
+    dataExport: bar[] = this.props.resultStore.dataExport.slice()
     headersExport = this.props.resultStore.headersExport;
-
+   
     public render() {
         return <div className="page">
             <div className='page-header'>
@@ -54,18 +61,41 @@ export class TraineesByQuizResults extends React.Component<Props> {
             <div className='page-content'>
                 <p>Here you can view a list of quizzes that belong to your group. Click on one of the quizzes below to view the results for trainees that have completed that quiz.</p>
 
+                {/*{this.props.resultStore.dataExport.length > 0 &&
+                    <button onClick={() => {
+                        const element = document.getElementById('csvlink')!;
+                        element.click();
+                    }
+
+                    }>Download CSV</button>
+                }*/}
+                {/*https://stackoverflow.com/questions/53327674/passing-api-data-through-react-csv
+                 */}
+                {/*{this.dataExport.length == 5 &&
+                    <CSVLink
+                        data={this.dataExport}
+                        headers={this.headers}
+                        filename={`Group${authStore.userGroupID}Quiz${this.props.match.params.quizID}Results.csv`}
+                        className='btn btn-primary export-btn'
+                        id='csvlink'
+
+                        onClick={() => {
+                            //this.addData();
+                        }}
+                    >
+                        Export quiz results
+                </CSVLink>
+                }*/}
+
                 <CSVLink
-                    data={this.dataExport}
-                    headers={this.headersExport}
+                    data={this.props.resultStore.dataExport.slice()} //.slice() added as the initial data type is "observable array" not "array"
+                    headers={this.headers}
                     filename={`Group${authStore.userGroupID}Quiz${this.props.match.params.quizID}Results.csv`}
                     className='btn btn-primary export-btn'
-                    onClick={() => {
-                        //this.addData();
-                    }}
+                    id='csvlink'
                 >
                     Export quiz results
                 </CSVLink>
-
                 <div className="addToGroupListsContainer">
                     <div className="noGroupUsersList">
                         {

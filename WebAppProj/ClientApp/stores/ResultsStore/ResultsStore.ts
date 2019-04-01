@@ -4,7 +4,16 @@ import { api } from '../../api';
 import QuizDetails from '../../models/GetQuiz/quizDetails';
 import TraineeByQuizDetails from '../../models/TraineeByQuizDetails';
 
+interface bar {
+    traineeusername: string;
+    firstname: string;
+    surname: string;
+    result: string;
+}
+
 class ResultStore {
+
+
 
     @observable quizzesDetails: QuizDetails[] = [];
 
@@ -12,14 +21,16 @@ class ResultStore {
 
     @observable headersExport = [
         { label: "Username", key: "traineeusername" },
-        { label: "First Name", key: "firsrname" },
+        { label: "First Name", key: "firstname" },
         { label: "Surname", key: "surname" },
         { label: "Result", key: "result" }
     ];
 
-    @observable dataExport = [
-        { traineeusername: "Yezzi", firsrname: "Min l3b", surname: "ymin@cocococo.com", result: "test" }
-    ];
+    //@observable dataExport = [
+    //    { traineeusername: "Yezzi", firstname: "Min l3b", surname: "ymin@cocococo.com", result: "test" }
+    //];
+
+    @observable dataExport: bar[];
 
 //    headers = observable([
 //        { label: "Username", key: "traineeusername" },
@@ -32,7 +43,8 @@ class ResultStore {
 
     constructor() {
         //this.data = new Array(5).fill("");
-        this.dataExport = [];
+        //this.dataExport = new Array();
+        this.dataExport = new Array();
     }
 
     @action
@@ -59,12 +71,20 @@ class ResultStore {
         let isLoggedIn = authStore.isLoggedIn;
         let userHasGroup = authStore.userGroupID != 1 && authStore.userGroupID != -1 && isLoggedIn;
 
+        let dataExportTemp: bar[] = [];
+
+        for (let i = 0; i < 5; i++) {
+            let item: bar = { traineeusername: "username1", firstname: "firstname1", surname: "surname1", result: "1" }
+            dataExportTemp.push(item);
+        }
+
+        this.dataExport.push(...dataExportTemp);
+
         if (userHasGroup) {
             let traineesByQuiz: TraineeByQuizDetails[] = await api.getTraineesResultsByQuizID(quizID);
 
             if (traineesByQuiz) {
                 this.setTraineesByQuiz(traineesByQuiz);
-                //debugger;
             } else {
 
             }
@@ -82,15 +102,19 @@ class ResultStore {
 
     @action
     private setTraineesByQuiz = (traineesByQuiz: TraineeByQuizDetails[]): void => {
-        debugger;
+        //debugger;
         for (let trainee in traineesByQuiz) {
             this.traineesByQuiz[trainee] = traineesByQuiz[trainee];
             //let item = `{ traineeusername: ${this.traineesByQuiz[trainee].username || "N/A"}, firstname: ${this.traineesByQuiz[trainee].firstname}, surname: ${this.traineesByQuiz[trainee].surname}, result: ${this.traineesByQuiz[trainee].result} }`
-            let item = { traineeusername: this.traineesByQuiz[trainee].username || "N/A", firstname: this.traineesByQuiz[trainee].firstname, surname: this.traineesByQuiz[trainee].surname, result: this.traineesByQuiz[trainee].result }
-            this.dataExport.push(item);
+            //let item = `{ "traineeusername": ${this.traineesByQuiz[trainee].username || "N/A"}, "firstname": ${this.traineesByQuiz[trainee].firstname}, "surname": ${this.traineesByQuiz[trainee].surname}, "result": ${this.traineesByQuiz[trainee].result} }`
+            //let item = { traineeusername: this.traineesByQuiz[trainee].username || "N/A", firstname: this.traineesByQuiz[trainee].firstname, surname: this.traineesByQuiz[trainee].surname, result: this.traineesByQuiz[trainee].result }
+            //let item: bar = traineeusername: this.traineesByQuiz[trainee].username, this.traineesByQuiz[trainee].firstname, this.traineesByQuiz[trainee].surname, this.traineesByQuiz[trainee].result;
+            //let item: bar = { traineeusername: this.traineesByQuiz[trainee].username || "N/A", firstname: this.traineesByQuiz[trainee].firstname, surname: this.traineesByQuiz[trainee].surname, result: this.traineesByQuiz[trainee].result }
+            //let item: bar = { traineeusername: "username1", firstname: "firstname1", surname: "surname1", result: 1 }
+            //this.dataExport.push(item);
         }
 
-        debugger;
+        //debugger;
     }
 
     @action
