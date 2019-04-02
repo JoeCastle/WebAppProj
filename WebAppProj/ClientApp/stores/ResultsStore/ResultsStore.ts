@@ -103,7 +103,10 @@ class ResultStore {
 
     @action
     public resetStore = async (): Promise<void> => {
-        
+        this.quizzesDetails = [];
+        this.traineesByQuiz = [];
+        this.traineesByQuizFiltered = [];
+        this.dataExport = [];
     }
 }
 

@@ -29,6 +29,10 @@ export class TraineesByQuizResults extends React.Component<Props> {
         await this.props.resultStore.getTraineesResultsByQuizID(this.props.match.params.quizID);
     }
 
+    componentWillUnmount() {
+        this.props.resultStore.resetStore();
+    }
+
     trainees = this.props.resultStore.traineesByQuiz;
 
     headers = [
@@ -50,6 +54,7 @@ export class TraineesByQuizResults extends React.Component<Props> {
             <div className='page-content'>
                 <p>Here you can view a list of quizzes that belong to your group. Click on one of the quizzes below to view the results for trainees that have completed that quiz.</p>
 
+                {/*Try to move filter code to seperate component. Also move bar interface to seperate file. Also rename bar interface.*/}
                 <div className='filter-container'>
                     <input
                         className='form-control filter-input'
