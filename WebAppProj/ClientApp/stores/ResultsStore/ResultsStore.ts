@@ -8,7 +8,7 @@ interface bar {
     traineeusername: string;
     firstname: string;
     surname: string;
-    result: string;
+    result: number;
 }
 
 class ResultStore {
@@ -71,15 +71,6 @@ class ResultStore {
         let isLoggedIn = authStore.isLoggedIn;
         let userHasGroup = authStore.userGroupID != 1 && authStore.userGroupID != -1 && isLoggedIn;
 
-        let dataExportTemp: bar[] = [];
-
-        for (let i = 0; i < 5; i++) {
-            let item: bar = { traineeusername: "username1", firstname: "firstname1", surname: "surname1", result: "1" }
-            dataExportTemp.push(item);
-        }
-
-        this.dataExport.push(...dataExportTemp);
-
         if (userHasGroup) {
             let traineesByQuiz: TraineeByQuizDetails[] = await api.getTraineesResultsByQuizID(quizID);
 
@@ -103,16 +94,26 @@ class ResultStore {
     @action
     private setTraineesByQuiz = (traineesByQuiz: TraineeByQuizDetails[]): void => {
         //debugger;
+        let dataExportTemp: bar[] = [];
+
         for (let trainee in traineesByQuiz) {
             this.traineesByQuiz[trainee] = traineesByQuiz[trainee];
             //let item = `{ traineeusername: ${this.traineesByQuiz[trainee].username || "N/A"}, firstname: ${this.traineesByQuiz[trainee].firstname}, surname: ${this.traineesByQuiz[trainee].surname}, result: ${this.traineesByQuiz[trainee].result} }`
             //let item = `{ "traineeusername": ${this.traineesByQuiz[trainee].username || "N/A"}, "firstname": ${this.traineesByQuiz[trainee].firstname}, "surname": ${this.traineesByQuiz[trainee].surname}, "result": ${this.traineesByQuiz[trainee].result} }`
             //let item = { traineeusername: this.traineesByQuiz[trainee].username || "N/A", firstname: this.traineesByQuiz[trainee].firstname, surname: this.traineesByQuiz[trainee].surname, result: this.traineesByQuiz[trainee].result }
             //let item: bar = traineeusername: this.traineesByQuiz[trainee].username, this.traineesByQuiz[trainee].firstname, this.traineesByQuiz[trainee].surname, this.traineesByQuiz[trainee].result;
-            //let item: bar = { traineeusername: this.traineesByQuiz[trainee].username || "N/A", firstname: this.traineesByQuiz[trainee].firstname, surname: this.traineesByQuiz[trainee].surname, result: this.traineesByQuiz[trainee].result }
+            let item: bar = { traineeusername: this.traineesByQuiz[trainee].username || "N/A", firstname: this.traineesByQuiz[trainee].firstname, surname: this.traineesByQuiz[trainee].surname, result: this.traineesByQuiz[trainee].result }
             //let item: bar = { traineeusername: "username1", firstname: "firstname1", surname: "surname1", result: 1 }
             //this.dataExport.push(item);
+            dataExportTemp.push(item);
         }
+
+        this.dataExport.push(...dataExportTemp);
+
+        /*for (let i = 0; i < 5; i++) {
+            let item: bar = { traineeusername: "username1", firstname: "firstname1", surname: "surname1", result: "1" }
+            dataExportTemp.push(item);
+        }*/
 
         //debugger;
     }

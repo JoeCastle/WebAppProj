@@ -18,7 +18,7 @@ interface bar {
     traineeusername: string;
     firstname: string;
     surname: string;
-    result: string;
+    result: number;
 }
 
 @inject('quizStore', 'authStore', 'resultStore')
