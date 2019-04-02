@@ -27,8 +27,6 @@ export class TraineesByQuizResults extends React.Component<Props> {
     async componentDidMount() {
         await this.props.authStore.validateJWT();
         await this.props.resultStore.getTraineesResultsByQuizID(this.props.match.params.quizID);
-
-        //this.addData();
     }
 
     trainees = this.props.resultStore.traineesByQuiz;
@@ -40,20 +38,11 @@ export class TraineesByQuizResults extends React.Component<Props> {
         { label: "Result", key: "result" },
     ];
 
-    //data = [] as any;
-
-    //addData() {
-    //    for (let trainee in this.trainees) {
-    //        var item = { traineeusername: this.trainees[trainee].username, firstname: this.trainees[trainee].firstname, surname: this.trainees[trainee].surname, result: this.trainees[trainee].result }
-    //        this.data.push(item);
-    //    }
-    //}
-
     dataExport: bar[] = this.props.resultStore.dataExport.slice()
     headersExport = this.props.resultStore.headersExport;
-   
+
     public render() {
-        return <div className="page">
+        return <div className="page trainer-results-page">
             <div className='page-header'>
                 <h1>List of trainees who have completed this quiz, with their results.</h1>
             </div>
@@ -61,58 +50,79 @@ export class TraineesByQuizResults extends React.Component<Props> {
             <div className='page-content'>
                 <p>Here you can view a list of quizzes that belong to your group. Click on one of the quizzes below to view the results for trainees that have completed that quiz.</p>
 
-                {/*{this.props.resultStore.dataExport.length > 0 &&
-                    <button onClick={() => {
-                        const element = document.getElementById('csvlink')!;
-                        element.click();
+                <div className='filter-container'>
+                    <input
+                        className='form-control filter-input'
+                        placeholder='Search by UserID, Username, Firstname, Surname or Score...'
+                        onChange={this.filterList} />
+
+                    {this.trainees.length > 0 &&
+                        <CSVLink
+                            data={this.props.resultStore.dataExport.slice()} //.slice() added as the initial data type is "observable array" not "array"
+                            headers={this.headers}
+                            filename={`Group${authStore.userGroupID}Quiz${this.props.match.params.quizID}Results.csv`}
+                            className='btn btn-primary export-btn'
+                            id='csvlink'
+                        >
+                            Export quiz results
+                    </CSVLink>
                     }
+                </div>
 
-                    }>Download CSV</button>
-                }*/}
-                {/*https://stackoverflow.com/questions/53327674/passing-api-data-through-react-csv
-                 */}
-                {/*{this.dataExport.length == 5 &&
-                    <CSVLink
-                        data={this.dataExport}
-                        headers={this.headers}
-                        filename={`Group${authStore.userGroupID}Quiz${this.props.match.params.quizID}Results.csv`}
-                        className='btn btn-primary export-btn'
-                        id='csvlink'
-
-                        onClick={() => {
-                            //this.addData();
-                        }}
-                    >
-                        Export quiz results
-                </CSVLink>
-                }*/}
-
-                <CSVLink
-                    data={this.props.resultStore.dataExport.slice()} //.slice() added as the initial data type is "observable array" not "array"
-                    headers={this.headers}
-                    filename={`Group${authStore.userGroupID}Quiz${this.props.match.params.quizID}Results.csv`}
-                    className='btn btn-primary export-btn'
-                    id='csvlink'
-                >
-                    Export quiz results
-                </CSVLink>
                 <div className="addToGroupListsContainer">
                     <div className="noGroupUsersList">
                         {
-                            this.trainees.map(
+                            this.props.resultStore.traineesByQuizFiltered.map(
                                 trainee => <div
                                     key={trainee.userID}
-                                    //onClick={() => this.selectUser(user)}
                                 >
                                     {trainee.userID}: {trainee.firstname} {trainee.surname} - Score {trainee.result}/5
                                 </div>
                             )
                         }
 
-                        {!this.trainees && <div>No trainees have completed this quiz.</div>}
+                        {/*<ul>
+                            {
+                                this.trainees.map(
+                                    trainee => <li
+                                        key={trainee.userID}
+                                    >
+                                        {trainee.userID}: {trainee.firstname} {trainee.surname} - Score {trainee.result}/5
+                                </li>
+                                )
+                            }
+
+                            {
+                                this.props.resultStore.traineesByQuiz.map((trainee) => {
+                                    return <li>{trainee.firstname}</li>
+                                })
+                            }
+                        </ul>*/}
+
+                        {this.props.resultStore.traineesByQuizFiltered.length <= 0 && <div>No matching trainees have completed this quiz.</div>}
                     </div>
                 </div>
             </div>
         </div>;
+    }
+
+    @action
+    private filterList = (e: React.ChangeEvent<HTMLInputElement>) => {
+        let filter = e.target.value;
+
+        this.props.resultStore.traineesByQuizFiltered = this.props.resultStore.traineesByQuiz.filter((trainee) => {
+            let traineeName = trainee.firstname!.toLowerCase() && trainee.surname.toLowerCase();
+            let traineeFirstname = trainee.firstname!.toLowerCase();
+            let traineeSurname = trainee.surname.toLowerCase();
+            let traineeID = trainee.userID.toString().toLowerCase();
+            let traineeResult = trainee.result.toString().toLowerCase();
+            return (
+                traineeName.lastIndexOf(filter.toLowerCase()) !== -1 ||
+                traineeFirstname.lastIndexOf(filter.toLowerCase()) !== -1 ||
+                traineeSurname.lastIndexOf(filter.toLowerCase()) !== -1 ||
+                traineeID.toString().lastIndexOf(filter.toLowerCase()) !== -1 ||
+                traineeResult.toString().lastIndexOf(filter.toLowerCase()) !== -1
+            )
+        })
     }
 };
