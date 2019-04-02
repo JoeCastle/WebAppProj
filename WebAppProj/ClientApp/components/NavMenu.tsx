@@ -101,7 +101,7 @@ export class NavMenu extends React.Component<Props> {
                             {trainerHasGroup &&
                                 <div className='dropdown'>
                                     <button className='dropdown-toggle' type='button' id='dropdownMenuButton' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
-                                        <i className='fa fa-pencil-ruler fa-fw' aria-hidden='true'></i> Results <span className="caret"></span>
+                                        <i className='fa fa-poll fa-fw' aria-hidden='true'></i> Results <span className="caret"></span>
                                     </button>
                                     <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                         {trainerHasGroup &&

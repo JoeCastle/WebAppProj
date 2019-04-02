@@ -121,12 +121,14 @@ export class TraineesByQuizResults extends React.Component<Props> {
             let traineeSurname = trainee.surname.toLowerCase();
             let traineeID = trainee.userID.toString().toLowerCase();
             let traineeResult = trainee.result.toString().toLowerCase();
+            let traineeUsername = trainee.username!.toLowerCase();
             return (
                 traineeName.lastIndexOf(filter.toLowerCase()) !== -1 ||
                 traineeFirstname.lastIndexOf(filter.toLowerCase()) !== -1 ||
                 traineeSurname.lastIndexOf(filter.toLowerCase()) !== -1 ||
                 traineeID.toString().lastIndexOf(filter.toLowerCase()) !== -1 ||
-                traineeResult.toString().lastIndexOf(filter.toLowerCase()) !== -1
+                traineeResult.toString().lastIndexOf(filter.toLowerCase()) !== -1 ||
+                traineeUsername.toString().lastIndexOf(filter.toLowerCase()) !== -1
             )
         })
     }
