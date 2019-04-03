@@ -31,6 +31,8 @@ class AuthStore {
 
     @observable validating = false;
 
+    @observable userTheme = '';
+
     /*@observable user = ({
         username: "",
         password: "",
@@ -108,8 +110,8 @@ class AuthStore {
         this.userRole = "";
         this.userGroupID = -1;
         this.isRegistered = false;
-        localStorage.clear();
-        sessionStorage.clear();
+        localStorage.removeItem('userDetails');
+        sessionStorage.removeItem('userDetails');
 
         if (!manualLogout) {
             //location.href = '/login';
@@ -199,6 +201,28 @@ class AuthStore {
                 this.userLogout();
             }
         }
+    }
+
+    @action
+    public setUserTheme = (): void => {
+        let themeJSON = JSON.parse(localStorage.getItem('theme') || '{}');
+        let themeClass = Object.keys(themeJSON).length != 0 ? 'high-contrast-theme' : '';
+
+        if (themeClass == '') {
+            localStorage.setItem('theme', JSON.stringify('high-contrast-theme'));
+            this.userTheme = 'high-contrast-theme';
+        } else {
+            localStorage.removeItem('theme');
+            this.userTheme = '';
+        }
+    }
+
+    @action
+    public getUserTheme = async (): Promise<void> => {
+        let themeJSON = JSON.parse(localStorage.getItem('theme') || '{}');
+        let themeClass = Object.keys(themeJSON).length != 0 ? 'high-contrast-theme' : '';
+
+        this.userTheme = themeClass;
     }
 
     @action

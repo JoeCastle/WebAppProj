@@ -136,3 +136,23 @@ form {
 .btn-primary:hover {
     background-color: #286090 !important;
 }
+
+//Move all colours to variables, change variables on click.
+//http://colorsafe.co/
+
+:root {
+    .high-contrast-theme {
+        .page {
+            /*background-color: #fefefe;
+            filter: invert(100%);*/
+            background-color: black !important;
+
+            p, li, button, div, h1, h2, h3, h4, h5, h6, a {
+                color: white !important;
+            }
+        }
+        /** {
+        background-color: inherit;
+    }*/
+    }
+}

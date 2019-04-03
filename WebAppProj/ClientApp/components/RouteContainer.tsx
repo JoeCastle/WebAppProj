@@ -38,6 +38,7 @@ interface Props extends RouteComponentProps<any>, React.Props<any> {
 export class RouteContainer extends React.Component<Props> {
     async componentDidMount() {
         await this.props.authStore.validateJWT();
+        await this.props.authStore.getUserTheme();
     }
 
     public render() {
@@ -54,7 +55,7 @@ export class RouteContainer extends React.Component<Props> {
             isTrainee = userJSON.user.userRole == 'trainee' ? true : false;
         }
 
-        return <div className="page-parent">
+        return <div className={`page-parent ${this.props.authStore.userTheme}`}>
             {/*<Route path={`${match.url}`} render={(props: any) => <NavMenu {...props} />} />*/}
             <NavMenu {...this.props} />
 
