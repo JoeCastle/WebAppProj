@@ -18,6 +18,8 @@
 body {
     background-color: rgb(220, 204, 176);
 
+    //background-color: #dcccb0;
+    
     h1, h2, h3, h4, h5, h6 {
         color: $main-text-colour;
     }
@@ -69,6 +71,10 @@ html, body, #react-app, .container-fluid {
 
     @media (min-width: 768px) {
         overflow: auto;
+    }
+
+    @media (max-width: 767px) {
+        height: 100%;
     }
 }
 
@@ -142,17 +148,122 @@ form {
 
 :root {
     .high-contrast-theme {
+        background-color: black;
+
         .page {
             /*background-color: #fefefe;
             filter: invert(100%);*/
             background-color: black !important;
 
-            p, li, button, div, h1, h2, h3, h4, h5, h6, a {
-                color: white !important;
+            p, li, button, div, h1, h2, h3, h4, h5, h6, a, label, span {
+                color: yellow !important;
+            }
+
+            div {
+                //border-color: white; //Find all border colours and box shadows, move colour to variable
+            }
+
+            .noGroupUsersList, .selectedUsersList, .quiz-list {
+                > div, > a {
+                    background-color: black !important;
+                    border-color: yellow !important;
+                }
+
+                > div:hover, > div:active, > div:focus, > a:hover, > a:focus, > a:active {
+                    box-shadow: 0px 0px 100px 100px rgba(255, 255, 255, 0.2) inset !important;
+                    -webkit-box-shadow: 0px 0px 100px 100px rgba(255, 255, 255, 0.2) inset !important;
+                    -moz-box-shadow: 0px 0px 100px 100px rgba(255, 255, 255, 0.2) inset !important;
+                }
+            }
+
+            .btn {
+                background-color: black !important;
+                border: 1px solid yellow !important;
+            }
+
+            .btn:hover, .btn:active, .btn:focus {
+                color: black !important;
+                background-color: yellow !important;
+            }
+
+            .question-component, .quiz-name-container {
+                box-shadow: none !important;
+                border: 1px solid yellow !important;
             }
         }
-        /** {
-        background-color: inherit;
-    }*/
+
+        .trainer-results-page, .my-group-page {
+            .noGroupUsersList {
+                > div:hover, > div:active, > div focus, > a:hover, > a:focus, > a:active {
+                    box-shadow: none !important;
+                }
+            }
+        }
+
+        input {
+            background: black !important;
+            color: yellow !important;
+            border: 1px solid yellow !important;
+        }
+
+        input[type="radio"]:disabled {
+            position: relative;
+        }
+
+        input[type="radio"]:disabled:before {
+            content: '';
+            position: absolute;
+            left: 48px;
+            width: 34px;
+            height: 34px;
+            background: black;
+            border: 1px solid yellow;
+        }
+
+        input[type="radio"]:checked:disabled:before {
+            background: yellow;
+        }
+
+        ::placeholder {
+            color: yellow !important;
+            opacity: 1 !important;
+        }
+
+        :-ms-input-placeholder {
+            color: yellow !important;
+        }
+
+        ::-ms-input-placeholder {
+            color: yellow !important;
+        }
+
+        .main-nav {
+            background-color: black !important;
+
+            a, button {
+                color: yellow !important;
+            }
+
+            .navbar {
+                background-color: black;
+            }
+
+            img {
+                /*-webkit-filter: opacity(.5) drop-shadow(0 0 0 yellow);
+                filter: opacity(.5) drop-shadow(0 0 0 yellow);*/
+            }
+
+            .navbar-collapse {
+                border-top: 1px solid yellow;
+            }
+
+            @media (min-width: 767px) {
+                border-right: 1px solid yellow !important;
+            }
+
+            @media (max-width: 767px) {
+                border-bottom: 1px solid yellow !important;
+            }
+        }
     }
 }

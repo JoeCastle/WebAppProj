@@ -346,7 +346,11 @@ export class RouteContainer extends React.Component<Props> {
 
                 <Route exact path={`${match.url}about`} component={About} />
 
-                <Route exact path={`${match.url}settings`} component={Settings} />
+                {/*<Route exact path={`${match.url}settings`} component={Settings} />*/}
+
+                <Route exact path={`${match.url}settings`} render={(props: any) => {
+                    return <Settings {...props} />
+                }} />
 
                 <Route component={FourZeroFour} />
             </Switch>

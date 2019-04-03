@@ -29,7 +29,7 @@ export class Settings extends React.Component<Props> {
                     onClick={
                         this.toggleTheme
                     }
-                > Switch to high contrast theme
+                > High contrast theme toggle
                 </button>
             </div>
         </div>;

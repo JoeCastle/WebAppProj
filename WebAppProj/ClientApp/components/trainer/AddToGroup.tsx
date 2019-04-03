@@ -30,7 +30,7 @@ export class AddToGroup extends React.Component<Props> {
         return (<div className="page">
             {/*{trainerHasGroup ? <AddToGroupPage {... this.props} /> : loading}*/}
             <div className='page-header'>
-                <h1>Add to Group.</h1>
+                <h1>Add to Group</h1>
             </div>
 
             <div className='page-content'>
@@ -43,6 +43,7 @@ export class AddToGroup extends React.Component<Props> {
                                     key={user.userID}
                                     onClick={() => this.selectUser(user)}
                                     tabIndex={0}
+                                    onKeyPress={(e) => this.handleKeyPressSelect(e, user)}
                                 >
                                     {user.userID} - {user.firstname} {user.surname}
                                 </div>
@@ -59,6 +60,7 @@ export class AddToGroup extends React.Component<Props> {
                                     key={user.userID}
                                     onClick={() => this.unSelectUser(user)}
                                     tabIndex={0}
+                                    onKeyPress={(e) => this.handleKeyPressUnselect(e, user)}
                                 >
                                     {user.userID} - {user.firstname} {user.surname}
                                 </div>
@@ -78,6 +80,18 @@ export class AddToGroup extends React.Component<Props> {
             </button>
             </div>
         </div>)
+    }
+
+    private handleKeyPressUnselect = (e: any, user: UserDetails) => {
+        if (e.key == 'Enter') {
+            this.unSelectUser(user);
+        }
+    }
+
+    private handleKeyPressSelect = (e: any, user: UserDetails) => {
+        if (e.key == 'Enter') {
+            this.selectUser(user);
+        }
     }
 
     @action

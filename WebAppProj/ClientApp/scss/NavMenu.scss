@@ -24,7 +24,7 @@ div.dropdown {
             color: $nav-link-colour;
             padding-left: 30px !important;
 
-            @media (max-width: 768px) {
+            @media (max-width: 767px) {
                 margin-bottom: 5px;
                 margin-top: 2px;
                 padding-left: 30px;
@@ -183,13 +183,13 @@ div.dropdown {
     img {
         margin-top: -90px;
 
-        @media (max-width: 768px) {
+        @media (max-width: 767px) {
             width: 150px;
             margin-top: -65px;
         }
     }
 
-    @media (max-width: 768px) {
+    @media (max-width: 767px) {
         padding-left: 10px;
     }
 }

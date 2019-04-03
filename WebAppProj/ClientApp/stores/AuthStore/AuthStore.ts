@@ -211,9 +211,15 @@ class AuthStore {
         if (themeClass == '') {
             localStorage.setItem('theme', JSON.stringify('high-contrast-theme'));
             this.userTheme = 'high-contrast-theme';
+            document.body.classList.add('high-contrast-theme');
+            let html = document.getElementsByTagName('html')[0];
+            html.classList.add('high-contrast-theme');
         } else {
             localStorage.removeItem('theme');
             this.userTheme = '';
+            document.body.classList.remove('high-contrast-theme');
+            let html = document.getElementsByTagName('html')[0];
+            html.classList.remove('high-contrast-theme');
         }
     }
 
@@ -223,6 +229,11 @@ class AuthStore {
         let themeClass = Object.keys(themeJSON).length != 0 ? 'high-contrast-theme' : '';
 
         this.userTheme = themeClass;
+
+        document.body.classList.add(themeClass);
+
+        let html = document.getElementsByTagName('html')[0];
+        html.classList.add(themeClass);
     }
 
     @action
