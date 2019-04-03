@@ -1,5 +1,6 @@
 ﻿import * as React from 'react';
 import { Route, Redirect, RouteComponentProps, RouteProps } from 'react-router-dom';
+import { Component } from 'react';
 
 ////https://stackoverflow.com/questions/49274143/react-typescript-hoc-passing-component-as-the-prop
 ////https://stackoverflow.com/questions/49379087/how-to-add-typescript-interface-for-a-reactrouters-privateroute
@@ -35,24 +36,114 @@ import { Route, Redirect, RouteComponentProps, RouteProps } from 'react-router-d
 interface Props extends RouteProps {
     //component: new (props: any) => React.Component;
     component: any;
+    roleRequired: string;
+    path: string;
 }
 
 export const PrivateRoute = (props: Props) => {
 
-    let { component: Component, ...rest } = props;
+    let { component: Component, roleRequired: RoleRequired, path: Path, ...rest } = props;
 
     var userJSON = JSON.parse(localStorage.getItem('userDetails') || '{}');
 
+    let isloggedIn = Object.keys(userJSON).length != 0 ? true : false;
+    let isTrainer = false;
+    let isTrainee = false;
+    let isRoleRequired = false;
+
+    if (isloggedIn) {
+        isTrainer = userJSON.user.userRole == 'trainer' ? true : false;
+        isTrainee = userJSON.user.userRole == 'trainee' ? true : false;
+
+        if (RoleRequired == userJSON.user.userRole) {
+            isRoleRequired = true;
+        }
+    }
+
     //debugger;
 
-    if (Object.keys(userJSON).length != 0) {
+    //if (Object.keys(userJSON).length != 0) {
+    //    return <Redirect to={{
+    //        pathname: '/login',
+    //        state: { from: props.location }
+    //    }} />
+    //} else {
+    //    return <Component {...props} />
+    //}
+
+    //<Route {...rest} render={(props) => (
+    //    isRoleRequired === true
+    //        ? <Component {...props} />
+    //        : <Redirect to={{
+    //            pathname: '/login',
+    //            state: { from: props.location }
+    //        }} />
+    //)} />
+
+    //<Route {...rest} path={Path} render={(props: any) => {
+    //    if (isRoleRequired) {
+    //        return <Component {...props} />
+    //    } else {
+    //        return <Redirect to={{
+    //            pathname: '/',
+    //            state: { from: props.location }
+    //        }} />
+    //    }
+    //}} />
+
+    
+
+    if (isloggedIn) {
+        if (isRoleRequired) {
+            return <Component {...props} />
+        } else {
+            return <Redirect to={{
+                pathname: '/',
+                state: { from: props.location }
+            }} />
+        }
+    } else {
         return <Redirect to={{
-            pathname: '/home',
+            pathname: '/login',
             state: { from: props.location }
         }} />
-    } else {
-        return <Component {...props} />
     }
+
 };
 
 
+//export function PrivateRoute({ Component, RoleRequired, ...rest }: { Component: React.ComponentType<any>, RoleRequired: string }) {
+//    var userJSON = JSON.parse(localStorage.getItem('userDetails') || '{}');
+
+//    let isloggedIn = Object.keys(userJSON).length != 0 ? true : false;
+//    let isTrainer = false;
+//    let isTrainee = false;
+//    let isRoleRequired = false;
+
+//    if (isloggedIn) {
+//        isTrainer = userJSON.user.userRole == 'trainer' ? true : false;
+//        isTrainee = userJSON.user.userRole == 'trainee' ? true : false;
+
+//        if (RoleRequired == userJSON.user.userRole) {
+//            isRoleRequired = true;
+//        }
+//    }
+
+//    return (
+//        <Route
+//            {...rest}
+//            render={props =>
+//                isRoleRequired ? (
+//                    <Component {...props} />
+//                ) : (
+//                        <Redirect
+//                            to={{
+//                                pathname: "/login",
+//                                state: { from: props.location }
+//                            }}
+//                        />
+//                    )
+//            }
+//        />
+//    );
+//}

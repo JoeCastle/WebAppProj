@@ -37,7 +37,10 @@ namespace WebAppProj
                         ValidateAudience = true,
                         ValidAudience = Configuration["JWT:ValidAudience"],
                         ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWT:SecretKey"]))
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWT:SecretKey"])),
+                        RequireExpirationTime = true,
+                        ValidateLifetime = true,
+                        ClockSkew = TimeSpan.Zero
                     };
                 });
 

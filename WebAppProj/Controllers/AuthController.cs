@@ -179,8 +179,12 @@ namespace WebAppProj.Controllers
             {
                 IssuerSigningKey = secretKey,
                 ValidAudience = Configuration["JWT:ValidAudience"],
-                ValidIssuer = Configuration["JWT:ValidIssuer"]
+                ValidIssuer = Configuration["JWT:ValidIssuer"],
+                ValidateLifetime = true,
+                ClockSkew = TimeSpan.Zero
             };
+
+            //var tokenValidationParameters = GetValidationParameters();
 
             //Generate claims principal.
             SecurityToken securityToken;
@@ -288,7 +292,7 @@ namespace WebAppProj.Controllers
                 issuer: Configuration["JWT:ValidIssuer"],
                 audience: Configuration["JWT:ValidAudience"],
                 claims: claims,
-                expires: DateTime.Now.AddMinutes(60),
+                expires: DateTime.Now.AddMinutes(300),
                 signingCredentials: credentials);
 
             var jsonWebTokenString = new JwtSecurityTokenHandler().WriteToken(jsonWebToken);

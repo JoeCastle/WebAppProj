@@ -5,7 +5,7 @@ import 'bootstrap';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, Router } from 'react-router-dom';
 import * as RoutesModule from './routes';
 import { useStrict } from 'mobx';
 import * as stores from './stores';
@@ -13,6 +13,7 @@ import { Provider } from 'mobx-react';
 
 import "isomorphic-fetch";
 import "es6-promise/auto";
+import browserHistory from './history';
 
 useStrict(true);
 
@@ -26,7 +27,7 @@ function renderApp() {
     ReactDOM.render(
         <Provider {...stores}>
             <AppContainer>
-                <BrowserRouter children={routes} basename={baseUrl} />
+                <Router history={browserHistory} children={routes} />
             </AppContainer>
         </Provider>,
         document.getElementById('react-app')

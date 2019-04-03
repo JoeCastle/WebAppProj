@@ -100,7 +100,7 @@ class AuthStore {
     }
 
     @action
-    public userLogout = async (): Promise<void> => {
+    public userLogout = async (manualLogout?: boolean): Promise<void> => {
         this.isLoggedIn = false;
         this.username = "";
         this.password = "";
@@ -110,10 +110,15 @@ class AuthStore {
         this.isRegistered = false;
         localStorage.clear();
         sessionStorage.clear();
-        //location.href = '/login';
-        //location.replace('/login');
-        //history.pushState('', '', '/login');
-        //browserHistory.push('/login');
+
+        if (!manualLogout) {
+            //location.href = '/login';
+            //location.replace('/login');
+            //history.pushState(null, '', '/login');
+            //history.replaceState(null, '', '/login');
+            browserHistory.push('/login');
+            //browserHistory.replace('/login');
+        }       
     }
 
     @action
@@ -173,9 +178,11 @@ class AuthStore {
     @action
     public validateJWT = async (): Promise<void> => {
         //this.setIsLoggedIn(true);
-        
+
         //check if local storage/jwt exists
         let userJSON = JSON.parse(localStorage.getItem("userDetails") || '{}');
+        let isLoggedIn = Object.keys(userJSON).length != 0 ? true : false;
+        //debugger;
 
         if (Object.keys(userJSON).length != 0) {
             let responseJson: CurrentUserDetails = await api.verifyJWT(userJSON.user.jwt);
@@ -183,10 +190,14 @@ class AuthStore {
             if (responseJson != null) {
                 this.setUserObservables(responseJson);
             } else { //400 for bad request
-                this.userLogout();
+                if (isLoggedIn) {
+                    this.userLogout();
+                }
             }
         } else {
-            this.userLogout();
+            if (isLoggedIn) {
+                this.userLogout();
+            }
         }
     }
 

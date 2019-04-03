@@ -175,7 +175,7 @@ export class NavMenu extends React.Component<Props> {
         e.preventDefault();
 
         if (confirm('Are you sure you want to logout?')) {
-            await this.props.authStore.userLogout();
+            await this.props.authStore.userLogout(true);
 
             this.props.history.push('/login');
         }
