@@ -7,7 +7,9 @@ import UsersToAddToGroup from '../../models/usersToAddToGroup';
 
 class GroupStore {
     @observable groupUsers: UserDetails[] = [];
+    @observable groupUsersFiltered: UserDetails[] = [];
     @observable nonGroupUsers: UserDetails[] = [];
+    @observable nonGroupUsersFiltered: UserDetails[] = [];
     @observable selectedUsers: UserDetails[] = [];
 
     @action
@@ -135,6 +137,8 @@ class GroupStore {
         for (let user in nonGroupUsers) {
             this.nonGroupUsers[user] = nonGroupUsers[user];
         }
+
+        this.nonGroupUsersFiltered.push(...this.nonGroupUsers);
     }
 
     @action
@@ -142,6 +146,8 @@ class GroupStore {
         for (let user in groupUsers) {
             this.groupUsers[user] = groupUsers[user];
         }
+
+        this.groupUsersFiltered.push(...this.groupUsers);
     }
 
     @action

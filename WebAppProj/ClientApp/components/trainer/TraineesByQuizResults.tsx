@@ -106,7 +106,7 @@ export class TraineesByQuizResults extends React.Component<Props> {
                             }
                         </ul>*/}
 
-                        {this.props.resultStore.traineesByQuizFiltered.length <= 0 && <div>No matching trainees have completed this quiz.</div>}
+                        {this.props.resultStore.traineesByQuizFiltered.length <= 0 && <div className='no-item-placeholder'>No matching trainees have completed this quiz.</div>}
                     </div>
                 </div>
             </div>

@@ -96,7 +96,17 @@ html, body, #react-app, .container-fluid {
 }
 
 .strd-btn {
-    max-width: 200px;
+    //max-width: 200px;
+}
+
+.button-container-auth {
+    display: flex;
+    justify-content: center;
+
+    > button {
+        max-width: 200px;
+        width: 100%;
+    }
 }
 
 .page-header {
@@ -271,3 +281,26 @@ form {
         }
     }
 }
+
+.no-item-placeholder {
+    box-shadow: none !important;
+    cursor: default !important;
+}
+
+    .filter-container {
+        display: flex;
+        align-items: flex-end;
+        margin-bottom: 15px;
+
+        .filter-input {
+            margin-right: 40px;
+            max-width: 500px;
+        }
+
+        .form-group {
+            width: 100%;
+            max-width: 500px;
+            margin-right: 40px;
+            margin-bottom: 0px;
+        }
+    }

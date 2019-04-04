@@ -59,7 +59,7 @@ export class QuizResultList extends React.Component<Props> {
                             )
                         }
 
-                        {this.props.quizStore.quizzesDetailsFiltered.length <= 0 && <div>No quizzes</div>}
+                        {this.props.quizStore.quizzesDetailsFiltered.length <= 0 && <div className='no-item-placeholder'>No matched quizzes were found.</div>}
                     </div>
                 </div>
             </div>

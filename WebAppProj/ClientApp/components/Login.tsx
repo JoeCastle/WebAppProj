@@ -43,12 +43,14 @@ export class Login extends React.Component<Props> {
                             onChange={this.onPasswordChange}
                         />
                     </div>
+                    <div className='button-container-auth'>
                     <button className='btn btn-primary strd-btn login-button'
                         onClick={
                             this.login
                         }
                     > Login
                 </button>
+                        </div>
                 </form>
             </div>
         </div>;

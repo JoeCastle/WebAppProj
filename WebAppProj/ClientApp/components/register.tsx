@@ -1,30 +1,4 @@
-﻿//https://dzone.com/articles/aspnet-core-crud-with-reactjs-and-entity-framework
-//
-//https://jonhilton.net/2017/10/07/a-simple-way-to-secure-your-.net-core-2.0-web-app/
-//
-//https://jonhilton.net/2017/10/11/secure-your-asp.net-core-2.0-api-part-1---issuing-a-jwt/
-//
-//https://www.pointblankdevelopment.com.au/blog/135/react-redux-with-aspnet-core-20-login-registration-tutorial-example
-//
-//http://jasonwatmore.com/post/2017/12/07/react-redux-jwt-authentication-tutorial-example - http://jasonwatmore.com/post/2018/08/14/aspnet-core-21-jwt-authentication-tutorial-with-example-api
-
-/* Try these examples:
- * http://jasonwatmore.com/post/2018/08/14/aspnet-core-21-jwt-authentication-tutorial-with-example-api
- * http://jasonwatmore.com/post/2017/12/07/react-redux-jwt-authentication-tutorial-example
- * https://www.pointblankdevelopment.com.au/blog/135/react-redux-with-aspnet-core-20-login-registration-tutorial-example
- * https://jonhilton.net/2017/10/11/secure-your-asp.net-core-2.0-api-part-1---issuing-a-jwt/ - https://jonhilton.net/security/apis/secure-your-asp.net-core-2.0-api-part-2---jwt-bearer-authentication/ - https://github.com/jonhilt/NetCoreAuth
- * https://jonhilton.net/identify-users-permissions-with-jwts-and-asp-net-core-webapi/
- * https://jonhilton.net/2017/10/07/a-simple-way-to-secure-your-.net-core-2.0-web-app/
- * https://stackoverflow.com/questions/51119926/jwt-authentication-usermanager-getuserasync-returns-null
- * https://www.c-sharpcorner.com/article/jwt-json-web-token-authentication-in-asp-net-core/
- * https://pioneercode.com/post/authentication-in-an-asp-dot-net-core-api-part-3-json-web-token
- * https://www.youtube.com/watch?v=Nq9RmAB9eag
- * https://www.youtube.com/watch?v=FyyPUIAe6kc
- * https://www.youtube.com/watch?v=hjp-JHVsgxQ
- * 
- */
-
-import * as React from 'react';
+﻿import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import { AuthStore } from '../stores/AuthStore/AuthStore';
 import { inject, observer } from 'mobx-react';
@@ -117,13 +91,14 @@ export class Register extends React.Component<Props> {
                             maxLength={25}
                         />
                     </div>
+                    <div className='button-container-auth'>
                     <button className='btn btn-primary strd-btn register-button'
                         onClick={
                             this.register
                         }
                     > Register
                 </button>
-
+                        </div>
                     <div>{this.props.authStore.registerError}</div>
                 </form>
             </div>

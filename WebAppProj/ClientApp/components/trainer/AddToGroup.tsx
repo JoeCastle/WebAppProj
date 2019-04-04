@@ -27,18 +27,30 @@ export class AddToGroup extends React.Component<Props> {
         let trainerHasGroup = this.props.authStore.userGroupID != 1 && this.props.authStore.userGroupID != -1 && isTrainer;
 
         let loading = <div>Loading...</div>; //TODO: Create dedicated loading component, also a default my group page for undefined group, asking if they would like to create one
-        return (<div className="page">
-            {/*{trainerHasGroup ? <AddToGroupPage {... this.props} /> : loading}*/}
+
+        return (<div className='page'>
             <div className='page-header'>
                 <h1>Add to Group</h1>
             </div>
 
             <div className='page-content'>
                 <p>Here you can add new trainees to your existing group.</p>
+
+                <div className='filter-container'>
+                    <div className='form-group'>
+                        <label htmlFor='search-input'>Search list: </label>
+                        <input
+                            className='form-control filter-input'
+                            placeholder='Search by UserID, Username, Firstname or Surname...'
+                            onChange={this.filterList}
+                        />
+                    </div>
+                </div>
+
                 <div className="addToGroupListsContainer">
                     <div className="noGroupUsersList">
                         {
-                            this.users.map(
+                            this.props.groupStore.nonGroupUsersFiltered.map(
                                 user => <div
                                     key={user.userID}
                                     onClick={() => this.selectUser(user)}
@@ -50,7 +62,7 @@ export class AddToGroup extends React.Component<Props> {
                             )
                         }
 
-                        {!this.users && <div>No users</div>}
+                        {this.props.groupStore.nonGroupUsersFiltered.length <= 0 && <div className='no-item-placeholder'>No matching users found.</div>}
                     </div>
 
                     <div className="selectedUsersList">
@@ -67,7 +79,7 @@ export class AddToGroup extends React.Component<Props> {
                             )
                         }
 
-                        {!this.users && <div>No users</div>}
+                        {this.selectedUsers.length <= 0 && <div className='no-item-placeholder'>No users selected. Please select one or more users.</div>}
                     </div>
                 </div>
 
@@ -97,13 +109,13 @@ export class AddToGroup extends React.Component<Props> {
     @action
     private selectUser = async (user: UserDetails) => {
         this.selectedUsers.push(user);
-        let index = this.users.indexOf(user);
-        this.users.splice(index, 1);
+        let index = this.props.groupStore.nonGroupUsersFiltered.indexOf(user);
+        this.props.groupStore.nonGroupUsersFiltered.splice(index, 1);
     }
 
     @action
     private unSelectUser = async (user: UserDetails) => {
-        this.users.push(user);
+        this.props.groupStore.nonGroupUsersFiltered.push(user);
         let index = this.selectedUsers.indexOf(user);
         this.selectedUsers.splice(index, 1);
     }
@@ -120,5 +132,32 @@ export class AddToGroup extends React.Component<Props> {
             //display error, move to store, have error observable
             return false;
         }
+    }
+
+    @action
+    private filterList = (e: React.ChangeEvent<HTMLInputElement>) => {
+        let filter = e.target.value;
+
+        this.props.groupStore.nonGroupUsersFiltered = this.props.groupStore.nonGroupUsers.filter((trainee) => {
+            let traineeName = trainee.firstname!.toLowerCase() && trainee.surname.toLowerCase();
+            let traineeFirstname = trainee.firstname!.toLowerCase();
+            let traineeSurname = trainee.surname.toLowerCase();
+            let traineeID = trainee.userID.toString().toLowerCase();
+            let traineeUsername = trainee.username!.toLowerCase();
+
+            for (let selectedUser in this.selectedUsers) {
+                if (this.selectedUsers[selectedUser] == trainee) {
+                    return false;
+                }
+            }
+            
+            return (
+                traineeName.lastIndexOf(filter.toLowerCase()) !== -1 ||
+                traineeFirstname.lastIndexOf(filter.toLowerCase()) !== -1 ||
+                traineeSurname.lastIndexOf(filter.toLowerCase()) !== -1 ||
+                traineeID.toString().lastIndexOf(filter.toLowerCase()) !== -1 ||
+                traineeUsername.toString().lastIndexOf(filter.toLowerCase()) !== -1
+            )
+        })
     }
 }
