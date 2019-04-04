@@ -105,11 +105,6 @@ export class NavMenu extends React.Component<Props> {
                                     </button>
                                     <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                         {trainerHasGroup &&
-                                            <NavLink to={'/resultsbytrainee'} activeClassName='active'>
-                                                <i className='fa fa-list fa-fw' aria-hidden='true'></i> Results by trainee
-                                            </NavLink>
-                                        }
-                                        {trainerHasGroup &&
                                             <NavLink to={'/resultsbyquiz'} activeClassName='active'>
                                                 <i className='fa fa-pen fa-fw' aria-hidden='true'></i> Results by quiz
                                             </NavLink>

@@ -24,17 +24,30 @@ export class QuizResultList extends React.Component<Props> {
     quizzes = this.props.quizStore.quizzesDetails;
 
     public render() {
-        return <div className="page">
+        return <div className='page quiz-results-list-page'>
             <div className='page-header'>
                 <h1>View quiz results by quiz</h1>
             </div>
 
             <div className='page-content'>
                 <p>Here you can view a list of quizzes that belong to your group. Click on one of the quizzes below to view the results for trainees that have completed that quiz.</p>
+
+                <div className='filter-container'>
+                    <div className='form-group'>
+                        <label htmlFor='search-input'>Search list: </label>
+                        <input
+                            className='form-control filter-input'
+                            id='search-input'
+                            placeholder='Search by QuizID or Quiz name...'
+                            onChange={this.filterList}
+                        />
+                    </div>
+                </div>
+
                 <div className="quiz-list-container">
                     <div className="quiz-list">
                         {
-                            this.quizzes.map(
+                            this.props.quizStore.quizzesDetailsFiltered.map(
                                 quiz => <Link
                                     className="quiz"
                                     to={`/traineesbyquizresults/${quiz.quizID}`}
@@ -46,10 +59,24 @@ export class QuizResultList extends React.Component<Props> {
                             )
                         }
 
-                        {!this.quizzes && <div>No quizzes</div>}
+                        {this.props.quizStore.quizzesDetailsFiltered.length <= 0 && <div>No quizzes</div>}
                     </div>
                 </div>
             </div>
         </div>;
+    }
+
+    @action
+    private filterList = (e: React.ChangeEvent<HTMLInputElement>) => {
+        let filter = e.target.value;
+
+        this.props.quizStore.quizzesDetailsFiltered = this.props.quizStore.quizzesDetails.filter((quiz) => {
+            let quizName = quiz.quizName!.toLowerCase();
+            let quizID = quiz.quizID!.toString().toLowerCase();
+            return (
+                quizName.lastIndexOf(filter.toLowerCase()) !== -1 ||
+                quizID.lastIndexOf(filter.toLowerCase()) !== -1
+            )
+        })
     }
 };

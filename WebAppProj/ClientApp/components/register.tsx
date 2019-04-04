@@ -68,10 +68,11 @@ export class Register extends React.Component<Props> {
                             required
                             onChange={this.onPasswordChange}
                             maxLength={25}
+                            minLength={8}
                             //pattern="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\S+$)$"
                             //pattern="[0-9]"
-                            pattern="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\S+$)$"
-                            title="Password must contain atlease: 1 uppercase letter, 1 lowercase letter and a number."
+                            //pattern="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\S+$)$"
+                            //title="Password must contain atlease: 1 uppercase letter, 1 lowercase letter and a number."
                         />
                     </div>
                     <div className='form-group'>

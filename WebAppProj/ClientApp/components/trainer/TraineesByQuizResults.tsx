@@ -54,13 +54,15 @@ export class TraineesByQuizResults extends React.Component<Props> {
             <div className='page-content'>
                 <p>Here you can view a list of quizzes that belong to your group. Click on one of the quizzes below to view the results for trainees that have completed that quiz.</p>
 
-                {/*Try to move filter code to seperate component. Also move bar interface to seperate file. Also rename bar interface.*/}
                 <div className='filter-container'>
-                    <input
-                        className='form-control filter-input'
-                        placeholder='Search by UserID, Username, Firstname, Surname or Score...'
-                        onChange={this.filterList} />
-
+                    <div className='form-group'>
+                        <label htmlFor='search-input'>Search list: </label>
+                        <input
+                            className='form-control filter-input'
+                            placeholder='Search by UserID, Username, Firstname, Surname or Score...'
+                            onChange={this.filterList}
+                        />
+                    </div>
                     {this.trainees.length > 0 &&
                         <CSVLink
                             data={this.props.resultStore.dataExport.slice()} //.slice() added as the initial data type is "observable array" not "array"

@@ -11,13 +11,14 @@
     margin-right: 20px;
 
     > div, a {
-        padding: 5px;
+        //padding: 5px;
         border: 1px solid darkslategrey;
-        margin-bottom: 5px;
+        margin-bottom: 10px;
         border-radius: 3px;
         background-color: #F6E6CA;
         cursor: pointer;
         color: $main-text-colour;
+        padding: 10px 8px 10px 8px;
     }
 
     > div:hover, div:focus, div:active {

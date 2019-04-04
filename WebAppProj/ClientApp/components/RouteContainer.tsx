@@ -290,24 +290,6 @@ export class RouteContainer extends React.Component<Props> {
                     }
                 }} />
 
-                <Route exact path={`${match.url}resultsbytrainee`} render={(props: any) => {
-                    if (isloggedIn) {
-                        if (isTrainer) {
-                           // return <TraineeResultsList {...props} />
-                        } else {
-                            return <Redirect to={{
-                                pathname: '/',
-                                state: { from: props.location }
-                            }} />
-                        }
-                    } else {
-                        return <Redirect to={{
-                            pathname: '/login',
-                            state: { from: props.location }
-                        }} />
-                    }
-                }} />
-
                 <Route exact path={`${match.url}resultsbyquiz`} render={(props: any) => {
                     if (isloggedIn) {
                         if (isTrainer) {

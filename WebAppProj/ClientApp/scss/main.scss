@@ -28,6 +28,10 @@ body {
         p, label, div {
             color: $main-text-colour;
         }
+
+        p, label, div, button, a, input {
+            font-size: 16px;
+        }
     }
 
     .btn, .btn-primary {

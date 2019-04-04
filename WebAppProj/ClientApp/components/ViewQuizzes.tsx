@@ -22,17 +22,29 @@ export class ViewQuizzes extends React.Component<Props> {
     quizzes = this.props.quizStore.quizzesDetails;
 
     public render() {
-        return <div className="page">
+        return <div className='page view-quizzes-page'>
             <div className='page-header'>
                 <h1>View quizzes</h1>
             </div>
 
             <div className='page-content'>
                 <p>Here you can view a list of quizzes that belong to your group.</p>
+
+                <div className='filter-container'>
+                    <div className='form-group'>
+                        <label htmlFor='search-input'>Search list: </label>
+                        <input
+                            className='form-control filter-input'
+                            placeholder='Search by QuizID or Quiz name...'
+                            onChange={this.filterList}
+                        />
+                    </div>
+                </div>
+
                 <div className="quiz-list-container">
                     <div className="quiz-list">
                         {
-                            this.quizzes.map(
+                            this.props.quizStore.quizzesDetailsFiltered.map(
                                 quiz => <Link
                                         className="quiz"
                                         to={`/viewquiz/${quiz.quizID}`}
@@ -44,10 +56,24 @@ export class ViewQuizzes extends React.Component<Props> {
                             )
                         }
 
-                        {!this.quizzes && <div>No quizzes</div>}
+                        {this.props.quizStore.quizzesDetailsFiltered.length <= 0 && <div>No matching quizzes found.</div>}
                     </div>
                 </div>
             </div>
         </div>;
+    }
+
+    @action
+    private filterList = (e: React.ChangeEvent<HTMLInputElement>) => {
+        let filter = e.target.value;
+
+        this.props.quizStore.quizzesDetailsFiltered = this.props.quizStore.quizzesDetails.filter((quiz) => {
+            let quizName = quiz.quizName!.toLowerCase();
+            let quizID = quiz.quizID!.toString().toLowerCase();
+            return (
+                quizName.lastIndexOf(filter.toLowerCase()) !== -1 ||
+                quizID.lastIndexOf(filter.toLowerCase()) !== -1
+            )
+        })
     }
 };

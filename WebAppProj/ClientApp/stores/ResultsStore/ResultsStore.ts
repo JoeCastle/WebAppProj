@@ -14,6 +14,7 @@ interface bar {
 class ResultStore {
 
     @observable quizzesDetails: QuizDetails[] = [];
+    @observable quizzesDetailsFiltered: QuizDetails[] = [];
 
     @observable traineesByQuiz: TraineeByQuizDetails[] = [];
     @observable traineesByQuizFiltered: TraineeByQuizDetails[] = [];
@@ -81,6 +82,8 @@ class ResultStore {
         for (let quiz in quizzesDetails) {
             this.quizzesDetails[quiz] = quizzesDetails[quiz];
         }
+
+        this.quizzesDetailsFiltered.push(...this.quizzesDetails);
     }
 
     @action

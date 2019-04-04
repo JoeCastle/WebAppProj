@@ -19,6 +19,7 @@ class QuizStore {
     @observable choicesText: string[];
 
     @observable quizzesDetails: QuizDetails[] = [];
+    @observable quizzesDetailsFiltered: QuizDetails[] = [];
     @observable quizDetails: QuizDetails;
 
     @observable choicesCorrect: boolean[];
@@ -281,6 +282,8 @@ class QuizStore {
         for (let quiz in quizzesDetails) {
             this.quizzesDetails[quiz] = quizzesDetails[quiz];
         }
+
+        this.quizzesDetailsFiltered.push(...this.quizzesDetails);
     }
 
     @action
