@@ -54,17 +54,23 @@ export class StartQuiz extends React.Component<Props> {
     }
 
     private submitQuiz = async (e: any) => {
-        let quizSubmitted = await this.props.quizStore.submitQuiz();
+        let form = document.getElementsByTagName('form')[0];
 
-        //Prevent the page from refreshing when the form is submitted
-        e.preventDefault();
+        if (form.checkValidity()) {
+            let quizSubmitted = await this.props.quizStore.submitQuiz();
 
-        if (quizSubmitted) {
-            //this.props.history.push('/mygroup');
-            alert("Successfully submitted quiz.");
-            this.props.history.push('/viewcompletedquizzes');
+            if (quizSubmitted) {
+                //this.props.history.push('/mygroup');
+                alert("Successfully submitted quiz.");
+                this.props.history.push('/viewcompletedquizzes');
+            } else {
+                alert("Failed to submit quiz.");
+            }
+
+            //Prevent the page from refreshing when the form is submitted
+            e.preventDefault();
         } else {
-            alert("Failed to submit quiz.");
+            return false;
         }
     }
 }
@@ -126,6 +132,8 @@ export class ChoiceComponent extends React.Component<IChoiceProps, IChoiceProps>
                             onChange={(e) => this.onUserChoiceChange(e)}
                             checked={quizStore.userChoicesForm[this.props.choiceID + (this.props.questionID * 4)]}
                             required
+                            tabIndex={0}
+                            onKeyPress={(e) => { e.key == 'Enter' && e.preventDefault(); }}
                         />
                     </div>
                 </div>

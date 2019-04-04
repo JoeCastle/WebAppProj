@@ -43,7 +43,7 @@ export class CreateQuiz extends React.Component<Props> {
                             autoComplete='off'
                             required
                             onChange={this.onQuizNameChange}
-
+                            onKeyPress={(e) => { e.key == 'Enter' && e.preventDefault(); }}
                         />
                     </div>
                     <div className='questions-container'>{this.questions}</div>
@@ -64,17 +64,23 @@ export class CreateQuiz extends React.Component<Props> {
     }
 
     private createQuiz = async (e: any) => {
-        let quizCreated = await this.props.quizStore.createQuiz();
+        let form = document.getElementsByTagName('form')[0];
 
-        //Prevent the page from refreshing when the form is submitted
-        e.preventDefault();
+        if (form.checkValidity()) {
+            let quizCreated = await this.props.quizStore.createQuiz();
 
-        if (quizCreated) {
-            //this.props.history.push('/mygroup');
-            alert("Successfully created quiz.");
-            this.props.history.push('/viewquizzes');
+            if (quizCreated) {
+                //this.props.history.push('/mygroup');
+                alert("Successfully created quiz.");
+                this.props.history.push('/viewquizzes');
+            } else {
+                alert("Failed to create quiz.");
+            }
+
+            //Prevent the page from refreshing when the form is submitted
+            e.preventDefault();
         } else {
-            alert("Failed to create quiz.");
+            return false;
         }
     }
 
@@ -112,6 +118,7 @@ const QuestionComponent = (props: any) => {
                     autoComplete='off'
                     required
                     onChange={onQuestionTextChange}
+                    onKeyPress={(e) => { e.key == 'Enter' && e.preventDefault(); }}
                 />
             </div>
         </div>
@@ -162,6 +169,8 @@ export class ChoiceComponent extends React.Component<IChoiceProps, IChoiceProps>
                             autoComplete='off'
                             required
                             onChange={this.onChoiceTextChange}
+                            tabIndex={0}
+                            onKeyPress={(e) => { e.key == 'Enter' && e.preventDefault(); }}
                         />
                     </div>
                 </div>
@@ -176,6 +185,8 @@ export class ChoiceComponent extends React.Component<IChoiceProps, IChoiceProps>
                             onChange={(e) => this.onChoiceIsCorrectChange(e)}
                             checked={quizStore.choicesCorrect[this.props.choiceID + (this.props.questionID * 4)]}
                             required
+                            tabIndex={0}
+                            onKeyPress={(e) => { e.key == 'Enter' && e.preventDefault(); }}
                         />
                     </div>
                 </div>

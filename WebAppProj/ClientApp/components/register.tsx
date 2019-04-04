@@ -68,22 +68,9 @@ export class Register extends React.Component<Props> {
                             required
                             onChange={this.onPasswordChange}
                             maxLength={25}
-                            pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)"
-                            title="Password must contain atlease: 1 uppercase letter, 1 lowercase letter and a number."
-                        />
-                    </div>
-                    <div className='form-group'>
-                        <label htmlFor='confirmpassword'>Confirm password:</label>
-                        <input
-                            className='textbox form-control'
-                            id='confirmpassword'
-                            type='password'
-                            placeholder='Confirm password'
-                            autoComplete='off'
-                            onChange={this.onConfirmPasswordChange}
-                            required
-                            maxLength={25}
-                            pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)"
+                            //pattern="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\S+$)$"
+                            //pattern="[0-9]"
+                            pattern="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\S+$)$"
                             title="Password must contain atlease: 1 uppercase letter, 1 lowercase letter and a number."
                         />
                     </div>
@@ -147,16 +134,20 @@ export class Register extends React.Component<Props> {
     }
 
     private register = async (e: any) => {
-        console.log(this.props.authStore.isRegistered);
-        let authenticated = await this.props.authStore.userRegister();
-        console.log(this.props.authStore.isRegistered);
+        let form = document.getElementsByTagName('form')[0];
 
-        //Prevent the page from refreshing when the form is submitted
-        e.preventDefault();
+        if (form.checkValidity()) {
+            let authenticated = await this.props.authStore.userRegister();
 
-        if (authenticated) {
-            this.props.history.push('/login');
-            alert("You have now registered, please login.");
+            if (authenticated) {
+                this.props.history.push('/login');
+                alert("You have now registered, please login.");
+            } else {
+                alert("Failed to register.");
+                //return false;
+            }
+            //Prevent the page from refreshing when the form is submitted
+            e.preventDefault();
         } else {
             return false;
         }
@@ -174,19 +165,12 @@ export class Register extends React.Component<Props> {
         this.props.authStore.onPasswordChange(password);
     }
 
-    private onConfirmPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        let confirmPassword = e.target.value;
-
-        this.props.authStore.onConfirmPasswordChange(confirmPassword);
-    }
-
     private onUserRoleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         let userRole = e.target.value;
 
         this.props.authStore.onUserRoleChange(userRole);
     }
 
-    //
     private onFirstnameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         let firstname = e.target.value;
 

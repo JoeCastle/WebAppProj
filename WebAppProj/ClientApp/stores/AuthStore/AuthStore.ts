@@ -20,7 +20,6 @@ class AuthStore {
     @observable userID = -1;
     @observable username = "";
     @observable password = "";
-    @observable confirmPassword = "";
     @observable isLoggedIn = false;
     @observable isRegistered = false;
     @observable userRole = "";
@@ -106,7 +105,6 @@ class AuthStore {
         this.isLoggedIn = false;
         this.username = "";
         this.password = "";
-        this.confirmPassword = "";
         this.userRole = "";
         this.userGroupID = -1;
         this.isRegistered = false;
@@ -138,7 +136,7 @@ class AuthStore {
         //if (authenticated) then return true
         //else return false
 
-        if (this.username != "" && this.password != "" && this.confirmPassword != "" && this.userRole != "") {
+        if (this.username != "" && this.password != "" && this.userRole != "") {
             //Create data transfer object
             let userRegisterDetailsDTO: UserRegisterDetails = {
                 username: this.username,
@@ -260,11 +258,6 @@ class AuthStore {
     @action
     public onPasswordChange = (password: string): void => {
         this.password = password;
-    }
-
-    @action
-    public onConfirmPasswordChange = (confirmPassword: string): void => {
-        this.confirmPassword = confirmPassword;
     }
 
     @action
