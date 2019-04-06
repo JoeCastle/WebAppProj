@@ -16,20 +16,15 @@ export class Settings extends React.Component<Props> {
                 <h1>Settings</h1>
             </div>
             <div className='page-content'>
-                <p>Here you will be able to adjust various web accessibility settings.</p>
-
-                <p>You will be able to change or adjust:</p>
-                <ul>
-                    <li>Font type (maybe font size).</li>
-                    <li>High contrast theme.</li>
-                    <li>Etc.</li>
-                </ul>
+                <p>Here you will be able to adjust various web accessibility settings and view the accessibility features of this web application.</p>
 
                 <p>Below is a list of accessibility features used on this web application:</p>
                 <ul>
                     <li>It is possible to navigate this web application using only a keyboard. Most situations are intuative, however selecting a Radio input can be triky. It is possible to select the apptopriate Radio input using the tab key to get to the correct group, then the arrow keys to select an input. This normal behavior as the Radio groups are treated as a single element in HTML.</li>
 
                     <li>This web application supports upto 200% browser zoom.</li>
+
+                    <li>A minimum font size of 16px has been used throughout the web application.</li>
 
                     <li>While this web application uses colours with appropriate contrasts by default, you can also toggle to a high contrast theme using the button below: </li>
                 </ul>

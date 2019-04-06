@@ -23,7 +23,7 @@ export class NavMenu extends React.Component<Props> {
         let trainerHasGroup = this.props.authStore.userGroupID != 1 && isTrainer;
         let traineeHasGroup = this.props.authStore.userGroupID != 1 && isTrainee;
 
-        //debugger;
+        debugger;
 
         return <div className='main-nav'>
             <div className='navbar navbar-inverse'>
@@ -76,7 +76,7 @@ export class NavMenu extends React.Component<Props> {
                             }
                         </li>
                         <li>
-                            {isTrainer &&
+                            {trainerHasGroup &&
                                 <div className='dropdown'>
                                     <button className='dropdown-toggle' type='button' id='dropdownMenuButton' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
                                         <i className='fa fa-pencil-ruler fa-fw' aria-hidden='true'></i> Quizzes <span className="caret"></span>

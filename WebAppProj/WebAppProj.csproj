@@ -31,10 +31,8 @@
     <None Remove="ClientApp\components\register.tsx" />
     <None Remove="ClientApp\components\RouteContainer.tsx" />
     <None Remove="ClientApp\components\Settings.tsx" />
-    <None Remove="ClientApp\components\TraineeHome.tsx" />
     <None Remove="ClientApp\components\trainee\StartQuiz.tsx" />
     <None Remove="ClientApp\components\trainee\ViewQuizResult.tsx" />
-    <None Remove="ClientApp\components\TrainerHome.tsx" />
     <None Remove="ClientApp\components\trainer\AddToGroup.tsx" />
     <None Remove="ClientApp\components\trainer\CreateGroup.tsx" />
     <None Remove="ClientApp\components\trainer\CreateQuiz.tsx" />
@@ -72,8 +70,6 @@
     <None Remove="ClientApp\stores\index.ts" />
     <None Remove="ClientApp\stores\QuizStore\QuizStore.ts" />
     <None Remove="ClientApp\stores\ResultsStore\ResultsStore.ts" />
-    <None Remove="ClientApp\stores\TraineeStore\TraineeStore.ts" />
-    <None Remove="ClientApp\stores\TrainerStore\TrainerStore.ts" />
     <None Remove="ClientApp\userLoginDetails.ts" />
   </ItemGroup>
 
@@ -82,15 +78,12 @@
     <TypeScriptCompile Include="ClientApp\components\About.tsx" />
     <TypeScriptCompile Include="ClientApp\components\FourZeroFour.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Login.tsx" />
-    <TypeScriptCompile Include="ClientApp\components\routehelpers\MultiPrivateRoute.tsx" />
     <TypeScriptCompile Include="ClientApp\components\routehelpers\PrivateRoute.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Register.tsx" />
     <TypeScriptCompile Include="ClientApp\components\RouteContainer.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Settings.tsx" />
-    <TypeScriptCompile Include="ClientApp\components\TraineeHome.tsx" />
     <TypeScriptCompile Include="ClientApp\components\trainee\StartQuiz.tsx" />
     <TypeScriptCompile Include="ClientApp\components\trainee\ViewQuizResult.tsx" />
-    <TypeScriptCompile Include="ClientApp\components\TrainerHome.tsx" />
     <TypeScriptCompile Include="ClientApp\components\trainer\AddToGroup.tsx" />
     <TypeScriptCompile Include="ClientApp\components\trainer\CreateGroup.tsx" />
     <TypeScriptCompile Include="ClientApp\components\trainer\CreateQuiz.tsx" />
@@ -128,8 +121,6 @@
     <TypeScriptCompile Include="ClientApp\models\userLoginDetails.ts" />
     <TypeScriptCompile Include="ClientApp\stores\QuizStore\QuizStore.ts" />
     <TypeScriptCompile Include="ClientApp\stores\ResultsStore\ResultsStore.ts" />
-    <TypeScriptCompile Include="ClientApp\stores\TraineeStore\TraineeStore.ts" />
-    <TypeScriptCompile Include="ClientApp\stores\TrainerStore\TrainerStore.ts" />
   </ItemGroup>
 
   <Target Name="DebugRunWebpack" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('wwwroot\dist') ">

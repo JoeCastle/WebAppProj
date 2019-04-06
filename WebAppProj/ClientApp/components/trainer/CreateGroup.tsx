@@ -2,35 +2,35 @@
 import { RouteComponentProps } from 'react-router';
 //import { AuthStore } from '../stores/AuthStore/AuthStore';
 import { inject, observer } from 'mobx-react';
-import { TrainerStore } from '../../stores/TrainerStore/TrainerStore';
+import { GroupStore } from '../../stores/GroupStore/GroupStore';
 
 interface Props extends RouteComponentProps<any>, React.Props<any> {
-    trainerStore: TrainerStore
+    groupStore: GroupStore
 }
 
-//TODO: Move to groupstore.
-@inject('trainerStore')
+@inject('groupStore')
 @observer
 export class CreateGroup extends React.Component<Props> {
     public render() {
-        return <div className="page">
+        return <div className='page create-group-page'>
             <div className='page-header'>
-                <h1>This is the create group page.</h1>
+                <h1>Create a group</h1>
             </div>
             <div className='page-content'>
-                <p>Create a group.</p>
                 <form onSubmit={this.formSubmit}>
-                    <label htmlFor='groupname'>Group name: </label>
-                    <input
-                        className="textbox"
-                        id='groupname'
-                        type='text'
-                        placeholder='Group name'
-                        autoComplete='off'
-                        required
-                        onChange={this.onGroupNameChange}
+                    <div className='form-group'>
+                        <label htmlFor='groupname'>Group name: </label>
+                        <input
+                            className='textbox form-control'
+                            id='groupname'
+                            type='text'
+                            placeholder='Group name'
+                            autoComplete='off'
+                            required
+                            onChange={this.onGroupNameChange}
+                        />
+                    </div>
 
-                    />
                     <button className='btn btn-primary strd-btn create-group-button'
                         onClick={
                             this.createGroup
@@ -47,7 +47,7 @@ export class CreateGroup extends React.Component<Props> {
     }
 
     private createGroup = async (e: any) => {
-        let groupCreated = await this.props.trainerStore.createGroup();
+        let groupCreated = await this.props.groupStore.createGroup();
 
         //Prevent the page from refreshing when the form is submitted
         e.preventDefault();
@@ -63,6 +63,6 @@ export class CreateGroup extends React.Component<Props> {
     private onGroupNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         let groupName = e.target.value;
 
-        this.props.trainerStore.onGroupnameChange(groupName);
+        this.props.groupStore.onGroupnameChange(groupName);
     }
 }

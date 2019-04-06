@@ -120,7 +120,7 @@ export class Register extends React.Component<Props> {
                 alert("You have now registered, please login.");
             } else {
                 alert("Failed to register.");
-                //return false;
+                return false;
             }
             //Prevent the page from refreshing when the form is submitted
             e.preventDefault();

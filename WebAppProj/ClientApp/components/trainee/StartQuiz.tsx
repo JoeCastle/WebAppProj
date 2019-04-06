@@ -60,7 +60,6 @@ export class StartQuiz extends React.Component<Props> {
             let quizSubmitted = await this.props.quizStore.submitQuiz();
 
             if (quizSubmitted) {
-                //this.props.history.push('/mygroup');
                 alert("Successfully submitted quiz.");
                 this.props.history.push('/viewcompletedquizzes');
             } else {

@@ -34,6 +34,7 @@ export class ViewQuizzes extends React.Component<Props> {
                     <div className='form-group'>
                         <label htmlFor='search-input'>Search list: </label>
                         <input
+                            id='search-input'
                             className='form-control filter-input'
                             placeholder='Search by QuizID or Quiz name...'
                             onChange={this.filterList}

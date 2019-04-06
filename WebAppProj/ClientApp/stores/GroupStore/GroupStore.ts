@@ -6,11 +6,34 @@ import UserDetails from '../../models/userDetails';
 import UsersToAddToGroup from '../../models/usersToAddToGroup';
 
 class GroupStore {
+    @observable groupName = "";
     @observable groupUsers: UserDetails[] = [];
     @observable groupUsersFiltered: UserDetails[] = [];
     @observable nonGroupUsers: UserDetails[] = [];
     @observable nonGroupUsersFiltered: UserDetails[] = [];
     @observable selectedUsers: UserDetails[] = [];
+
+    @action
+    public createGroup = async (): Promise<boolean> => {
+        if (this.groupName != "") {
+            //Create data transfer object
+            let createGroupDetailsDTO: CreateGroupDetails = {
+                groupName: this.groupName,
+                userID: authStore.userID
+            }
+
+            //Use fetch to call the login controller
+            let groupCreated: Response = await api.createGroup(createGroupDetailsDTO);
+
+            if (groupCreated) {
+                return true
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
 
     @action
     public getCurrentGroupUsers = async (): Promise<void> => {
@@ -130,6 +153,11 @@ class GroupStore {
         }
 
         return true;
+    }
+
+    @action
+    public onGroupnameChange = (groupName: string): void => {
+        this.groupName = groupName;
     }
 
     @action

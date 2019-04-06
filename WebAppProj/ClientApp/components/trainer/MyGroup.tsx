@@ -1,17 +1,15 @@
 ﻿import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import { inject, observer } from 'mobx-react';
-import { TrainerStore } from '../../stores/TrainerStore/TrainerStore';
 import { AuthStore } from '../../stores/AuthStore/AuthStore';
 import { GroupStore } from '../../stores/GroupStore/GroupStore';
 
 interface Props extends RouteComponentProps<any>, React.Props<any> {
-    trainerStore: TrainerStore,
     authStore: AuthStore,
     groupStore: GroupStore
 }
 
-@inject('trainerStore', 'authStore', 'groupStore')
+@inject('authStore', 'groupStore')
 @observer
 export class MyGroup extends React.Component<Props> {
     async componentDidMount() {

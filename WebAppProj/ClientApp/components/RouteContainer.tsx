@@ -5,8 +5,6 @@ import { Home } from './Home';
 import { Login } from './Login';
 import { Register } from './Register';
 import { FourZeroFour } from './FourZeroFour';
-import { TrainerHome } from './TrainerHome';
-import { TraineeHome } from './TraineeHome';
 import { NavMenu } from './NavMenu';
 import { RouteComponentProps } from 'react-router';
 import { AuthStore } from '../stores/AuthStore/AuthStore';

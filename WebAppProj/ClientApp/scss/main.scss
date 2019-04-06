@@ -169,6 +169,10 @@ form {
             filter: invert(100%);*/
             background-color: black !important;
 
+            .page-header {
+                border-bottom: 1px solid yellow;
+            }
+
             p, li, button, div, h1, h2, h3, h4, h5, h6, a, label, span {
                 color: yellow !important;
             }
