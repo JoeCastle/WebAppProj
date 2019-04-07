@@ -15,7 +15,7 @@ interface Props extends RouteComponentProps<any>, React.Props<any> {
     resultStore: ResultStore
 }
 
-interface bar {
+interface exportData {
     traineeusername: string;
     firstname: string;
     surname: string;
@@ -43,7 +43,7 @@ export class TraineesByQuizResults extends React.Component<Props> {
         { label: "Result", key: "result" },
     ];
 
-    dataExport: bar[] = this.props.resultStore.dataExport.slice()
+    dataExport: exportData[] = this.props.resultStore.dataExport.slice()
     headersExport = this.props.resultStore.headersExport;
 
     public render() {
@@ -81,6 +81,8 @@ export class TraineesByQuizResults extends React.Component<Props> {
                             Export quiz results
                     </CSVLink>
                     }
+
+                    <p className='average-score'>Average score: {this.props.resultStore.averageQuizScore}</p>
                 </div>
 
                 <div className="addToGroupListsContainer">

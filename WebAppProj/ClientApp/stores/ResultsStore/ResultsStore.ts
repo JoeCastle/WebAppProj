@@ -4,7 +4,7 @@ import { api } from '../../api';
 import QuizDetails from '../../models/GetQuiz/quizDetails';
 import TraineeByQuizDetails from '../../models/TraineeByQuizDetails';
 
-interface bar {
+interface exportData {
     traineeusername: string;
     firstname: string;
     surname: string;
@@ -19,6 +19,8 @@ class ResultStore {
     @observable traineesByQuiz: TraineeByQuizDetails[] = [];
     @observable traineesByQuizFiltered: TraineeByQuizDetails[] = [];
 
+    @observable averageQuizScore: number = 0;
+
     @observable headersExport = [
         { label: "Username", key: "traineeusername" },
         { label: "First Name", key: "firstname" },
@@ -26,7 +28,7 @@ class ResultStore {
         { label: "Result", key: "result" }
     ];
 
-    @observable dataExport: bar[];
+    @observable dataExport: exportData[];
 
 //    headers = observable([
 //        { label: "Username", key: "traineeusername" },
@@ -88,15 +90,22 @@ class ResultStore {
 
     @action
     private setTraineesByQuiz = (traineesByQuiz: TraineeByQuizDetails[]): void => {
-        let dataExportTemp: bar[] = [];
+        let dataExportTemp: exportData[] = [];
+
+        this.averageQuizScore = 0;
 
         for (let trainee in traineesByQuiz) {
             this.traineesByQuiz[trainee] = traineesByQuiz[trainee];
 
-            let item: bar = { traineeusername: this.traineesByQuiz[trainee].username || "N/A", firstname: this.traineesByQuiz[trainee].firstname, surname: this.traineesByQuiz[trainee].surname, result: this.traineesByQuiz[trainee].result }
+            let item: exportData = { traineeusername: this.traineesByQuiz[trainee].username || "N/A", firstname: this.traineesByQuiz[trainee].firstname, surname: this.traineesByQuiz[trainee].surname, result: this.traineesByQuiz[trainee].result }
 
             dataExportTemp.push(item);
+
+            this.averageQuizScore = this.averageQuizScore + traineesByQuiz[trainee].result;
+
         }
+
+        this.averageQuizScore = this.averageQuizScore / traineesByQuiz.length;
 
         this.dataExport.push(...dataExportTemp);
 
@@ -110,6 +119,7 @@ class ResultStore {
         this.traineesByQuiz = [];
         this.traineesByQuizFiltered = [];
         this.dataExport = [];
+        this.averageQuizScore = 0;
     }
 }
 
