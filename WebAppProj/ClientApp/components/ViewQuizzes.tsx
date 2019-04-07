@@ -5,6 +5,7 @@ import quizStore, { QuizStore } from '../stores/QuizStore/QuizStore';
 import { action } from 'mobx';
 import { AuthStore } from '../stores/AuthStore/AuthStore';
 import { Link } from 'react-router-dom';
+import Helmet from 'react-helmet';
 
 interface Props extends RouteComponentProps<any>, React.Props<any> {
     quizStore: QuizStore,
@@ -23,6 +24,11 @@ export class ViewQuizzes extends React.Component<Props> {
 
     public render() {
         return <div className='page view-quizzes-page'>
+            <Helmet>
+                <title>View Quizzes List - Training App</title>
+                <meta name='description' content='View a list of past quizzes you have created.' />
+            </Helmet>
+
             <div className='page-header'>
                 <h1>View quizzes</h1>
             </div>

@@ -6,6 +6,7 @@ import { action } from 'mobx';
 import QuizDetails from '../../models/GetQuiz/quizDetails';
 import { AuthStore } from '../../stores/AuthStore/AuthStore';
 import { Link } from 'react-router-dom';
+import Helmet from 'react-helmet';
 
 interface Props extends RouteComponentProps<any>, React.Props<any> {
     quizStore: QuizStore,
@@ -28,6 +29,11 @@ export class ViewUncompleteQuizzes extends React.Component<Props> {
 
     public render() {
         return <div className="page">
+            <Helmet>
+                <title>Uncompleted Quizzes - Training App</title>
+                <meta name='description' content='List of quizzes that you have not completed and therefore are able to complete.' />
+            </Helmet>
+
             <div className='page-header'>
                 <h1>View uncompleted quizzes</h1>
             </div>

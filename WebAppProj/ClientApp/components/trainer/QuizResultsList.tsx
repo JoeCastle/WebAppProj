@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { ResultStore } from '../../stores/ResultsStore/ResultsStore';
 import { AuthStore } from '../../stores/AuthStore/AuthStore';
 import { QuizStore } from '../../stores/QuizStore/QuizStore';
+import Helmet from 'react-helmet';
 
 interface Props extends RouteComponentProps<any>, React.Props<any> {
     quizStore: QuizStore,
@@ -25,6 +26,11 @@ export class QuizResultList extends React.Component<Props> {
 
     public render() {
         return <div className='page quiz-results-list-page'>
+            <Helmet>
+                <title>Results Quiz List - Training App</title>
+                <meta name='description' content='List of quizzes for your group, view results per quiz.' />
+            </Helmet>
+
             <div className='page-header'>
                 <h1>View quiz results by quiz</h1>
             </div>

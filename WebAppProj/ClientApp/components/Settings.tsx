@@ -2,6 +2,7 @@
 import { RouteComponentProps } from 'react-router';
 import { AuthStore } from '../stores/AuthStore/AuthStore';
 import { inject, observer } from 'mobx-react';
+import Helmet from 'react-helmet';
 
 interface Props extends RouteComponentProps<any>, React.Props<any> {
     authStore: AuthStore
@@ -12,6 +13,11 @@ interface Props extends RouteComponentProps<any>, React.Props<any> {
 export class Settings extends React.Component<Props> {
     public render() {
         return <div className="page">
+            <Helmet>
+                <title>Settings - Training App</title>
+                <meta name='description' content='Understand the accessibility features of this web application and toggle on/off a high contrast theme.' />
+            </Helmet>
+
             <div className='page-header'>
                 <h1>Settings</h1>
             </div>

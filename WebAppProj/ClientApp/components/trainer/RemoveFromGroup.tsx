@@ -5,6 +5,7 @@ import { GroupStore } from '../../stores/GroupStore/GroupStore';
 import { AuthStore } from '../../stores/AuthStore/AuthStore';
 import UserDetails from '../../models/userDetails';
 import { action } from 'mobx';
+import Helmet from 'react-helmet';
 
 interface Props extends RouteComponentProps<any>, React.Props<any> {
     groupStore: GroupStore,
@@ -30,9 +31,16 @@ export class RemoveFromGroup extends React.Component<Props> {
 
         return (<div className="page">
             {/*{trainerHasGroup ? <RemoveFromGroupPage {... this.props} /> : loading}*/}
+
+            <Helmet>
+                <title>Remove from Group - Training App</title>
+                <meta name='description' content='Remove a trainee from your group.' />
+            </Helmet>
+
             <div className='page-header'>
                 <h1>Remove from Group.</h1>
             </div>
+
             <div className='page-content'>
                 <p>Here you can remove trainees from your group.</p>
 

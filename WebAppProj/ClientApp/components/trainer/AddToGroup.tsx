@@ -5,6 +5,7 @@ import { GroupStore } from '../../stores/GroupStore/GroupStore';
 import { AuthStore } from '../../stores/AuthStore/AuthStore';
 import UserDetails from '../../models/userDetails';
 import { action } from 'mobx';
+import Helmet from 'react-helmet';
 
 interface Props extends RouteComponentProps<any>, React.Props<any> {
     groupStore: GroupStore,
@@ -29,6 +30,11 @@ export class AddToGroup extends React.Component<Props> {
         let loading = <div>Loading...</div>; //TODO: Create dedicated loading component, also a default my group page for undefined group, asking if they would like to create one
 
         return (<div className='page'>
+            <Helmet>
+                <title>Add to Group - Training App</title>
+                <meta name='description' content='Add a trainee to your group.' />
+            </Helmet>
+
             <div className='page-header'>
                 <h1>Add to Group</h1>
             </div>

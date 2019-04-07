@@ -2,6 +2,7 @@ import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import { AuthStore } from '../stores/AuthStore/AuthStore';
 import { inject, observer } from 'mobx-react';
+import { Helmet } from "react-helmet";
 
 interface Props extends RouteComponentProps<any>, React.Props<any> {
     authStore: AuthStore
@@ -38,6 +39,11 @@ export class Home extends React.Component<Props> {
 //Functional components
 const StandardHome = (props: Props) => {
     return <div className='page-content'>
+        <Helmet>
+            <title>Home - Training App</title>
+            <meta name='description' content='Home page and landing point for logged out users.' />
+        </Helmet>
+
         <p>You are <b>not</b> logged in.</p>
 
         <br />
@@ -71,6 +77,11 @@ const StandardHome = (props: Props) => {
 
 const TrainerHome = (props: Props) => {
     return <div className='page-content'>
+        <Helmet>
+            <title>Trainer Home - Training App</title>
+            <meta name='description' content='Home page and landing point for trainers.' />
+        </Helmet>
+
         <p>Trainer home, welcome {props.authStore.username}</p>
 
         <p>As a trainer you are able to:</p>
@@ -88,6 +99,11 @@ const TrainerHome = (props: Props) => {
 
 const TraineeHome = (props: Props) => {
     return <div className='page-content'>
+        <Helmet>
+            <title>Trainee Home - Training App</title>
+            <meta name='description' content='Home page and landing point for trainees.' />
+        </Helmet>
+
         <p>Trainee home, welcome {props.authStore.username}</p>
 
         <p>As a trainee, assuming you are in a group, you are able to:</p>

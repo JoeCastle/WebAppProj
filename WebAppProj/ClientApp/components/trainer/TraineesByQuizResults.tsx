@@ -7,6 +7,7 @@ import { ResultStore } from '../../stores/ResultsStore/ResultsStore';
 import authStore, { AuthStore } from '../../stores/AuthStore/AuthStore';
 import { QuizStore } from '../../stores/QuizStore/QuizStore';
 import { CSVLink } from 'react-csv'; //https://www.npmjs.com/package/react-csv
+import Helmet from 'react-helmet';
 
 interface Props extends RouteComponentProps<any>, React.Props<any> {
     quizStore: QuizStore,
@@ -47,6 +48,11 @@ export class TraineesByQuizResults extends React.Component<Props> {
 
     public render() {
         return <div className="page trainer-results-page">
+            <Helmet>
+                <title>Trainee Results - Training App</title>
+                <meta name='description' content='A list of trainees that have completed a specific quiz, and their results..' />
+            </Helmet>
+
             <div className='page-header'>
                 <h1>List of trainees who have completed this quiz, with their results.</h1>
             </div>

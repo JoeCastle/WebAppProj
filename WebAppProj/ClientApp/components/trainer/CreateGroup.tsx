@@ -3,6 +3,7 @@ import { RouteComponentProps } from 'react-router';
 //import { AuthStore } from '../stores/AuthStore/AuthStore';
 import { inject, observer } from 'mobx-react';
 import { GroupStore } from '../../stores/GroupStore/GroupStore';
+import Helmet from 'react-helmet';
 
 interface Props extends RouteComponentProps<any>, React.Props<any> {
     groupStore: GroupStore
@@ -13,6 +14,11 @@ interface Props extends RouteComponentProps<any>, React.Props<any> {
 export class CreateGroup extends React.Component<Props> {
     public render() {
         return <div className='page create-group-page'>
+            <Helmet>
+                <title>Create - Training App</title>
+                <meta name='description' content='Create a new group.' />
+            </Helmet>
+
             <div className='page-header'>
                 <h1>Create a group</h1>
             </div>

@@ -3,6 +3,7 @@ import { RouteComponentProps } from 'react-router';
 import { inject, observer } from 'mobx-react';
 import quizStore, { QuizStore } from '../../stores/QuizStore/QuizStore';
 import { AuthStore } from '../../stores/AuthStore/AuthStore';
+import Helmet from 'react-helmet';
 
 interface Props extends RouteComponentProps<any>, React.Props<any> {
     quizStore: QuizStore,
@@ -28,6 +29,11 @@ export class ViewQuizResult extends React.Component<Props> {
 
     public render() {
         return <div className="page">
+            <Helmet>
+                <title>Quiz Result - Training App</title>
+                <meta name='description' content='The results for a specific quiz.' />
+            </Helmet>
+
             <div className='page-header'>
                 <h1>View quiz results</h1>
             </div>

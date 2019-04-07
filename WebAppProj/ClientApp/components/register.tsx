@@ -2,6 +2,7 @@
 import { RouteComponentProps } from 'react-router';
 import { AuthStore } from '../stores/AuthStore/AuthStore';
 import { inject, observer } from 'mobx-react';
+import Helmet from 'react-helmet';
 
 interface Props extends RouteComponentProps<any>, React.Props<any> {
     authStore: AuthStore
@@ -12,6 +13,11 @@ interface Props extends RouteComponentProps<any>, React.Props<any> {
 export class Register extends React.Component<Props> {
     public render() {
         return <div className="page register-page">
+            <Helmet>
+                <title>Register - Training App</title>
+                <meta name='description' content='Register and create an account so you can access all the features of the web application.' />
+            </Helmet>
+
             <div className='page-header'>
                 <h1>Register</h1>
             </div>
