@@ -247,6 +247,8 @@ class QuizStore {
         this.quizzesDetails = [];
         this.quizTotal = 0;
         this.quizResults = {} as QuizResults;
+        this.quizzesDetails = [];
+        this.quizzesDetailsFiltered = [];
     }
 
     @action

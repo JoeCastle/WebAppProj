@@ -148,6 +148,14 @@ class GroupStore {
     }
 
     @action
+    public resetStore = async (): Promise<void> => {
+        this.nonGroupUsers = [];
+        this.groupUsers = [];
+        this.nonGroupUsersFiltered = [];
+        this.groupUsersFiltered = [];
+    }
+
+    @action
     public onGroupnameChange = (groupName: string): void => {
         this.groupName = groupName;
     }

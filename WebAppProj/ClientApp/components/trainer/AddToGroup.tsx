@@ -20,6 +20,10 @@ export class AddToGroup extends React.Component<Props> {
         await this.props.groupStore.getUsersNotInGroup();
     }
 
+    componentWillUnmount() {
+        this.props.groupStore.resetStore();
+    }
+
     users = this.props.groupStore.nonGroupUsers;
     selectedUsers: UserDetails[] = [];
 

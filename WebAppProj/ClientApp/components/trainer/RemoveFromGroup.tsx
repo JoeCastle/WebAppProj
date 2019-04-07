@@ -20,6 +20,10 @@ export class RemoveFromGroup extends React.Component<Props> {
         await this.props.groupStore.getCurrentGroupUsers();
     }
 
+    componentWillUnmount() {
+        this.props.groupStore.resetStore();
+    }
+
     users = this.props.groupStore.groupUsers;
     selectedUsers: UserDetails[] = [];
 

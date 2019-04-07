@@ -164,10 +164,12 @@ class AuthStore {
 
         this.userTheme = themeClass;
 
-        document.body.classList.add(themeClass);
+        if (themeClass != "") {
+            document.body.classList.add(themeClass);
 
-        let html = document.getElementsByTagName('html')[0];
-        html.classList.add(themeClass);
+            let html = document.getElementsByTagName('html')[0];
+            html.classList.add(themeClass);
+        }
     }
 
     @action

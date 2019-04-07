@@ -22,6 +22,10 @@ export class QuizResultList extends React.Component<Props> {
         await this.props.quizStore.getAllQuizzesforGroup();
     }
 
+    componentWillUnmount() {
+        this.props.quizStore.resetStore();
+    }
+
     quizzes = this.props.quizStore.quizzesDetails;
 
     public render() {
