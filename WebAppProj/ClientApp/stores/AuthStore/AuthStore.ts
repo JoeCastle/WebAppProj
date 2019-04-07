@@ -1,19 +1,8 @@
-﻿//https://devhints.io/mobx
-//https://devhints.io/react
-//https://github.com/pinqy520/mobx-persist
-//https://reactcheatsheet.com/
-
-
-//https://serverless-stack.com/chapters/redirect-on-login-and-logout.html
-
-
-import { observable, computed, reaction, action } from 'mobx';
+﻿import { observable, computed, reaction, action } from 'mobx';
 import { api } from '../../api';
 import UserLoginDetails from '../../models/userLoginDetails';
 import UserRegisterDetails from '../../models/userRegisterDetails';
 import CurrentUserDetails from '../../models/currentUserDetails';
-import { RouteComponentProps } from 'react-router';
-import { Redirect } from 'react-router-dom';
 import browserHistory from '../../history';
 
 class AuthStore {
@@ -32,17 +21,9 @@ class AuthStore {
 
     @observable userTheme = '';
 
-    /*@observable user = ({
-        username: "",
-        password: "",
-        isLoggedIn: false;
-    })*/
-
     @action
     public userLogin = async (): Promise<boolean> => {
-        //Validate username and password, potentially do this in the component.
-        //Check we exist in database.
-        //Log the user in.
+
         if (this.username != "" && this.password != "") {
             
             //Create data transfer object
@@ -58,7 +39,7 @@ class AuthStore {
             //Check response
             if (userDetails) {
                 this.setIsLoggedIn(true);
-                localStorage.setItem('userDetails', JSON.stringify(userDetails)); //consider using a user object that contains username/id, jwt and other info, role and name
+                localStorage.setItem('userDetails', JSON.stringify(userDetails));
                 console.log(userDetails);
                 console.log(localStorage.getItem('userDetails'));
                 return true;
@@ -68,31 +49,6 @@ class AuthStore {
                 this.setIsLoggedIn(false);
                 return false;
             }
-            
-
-            //browserHistory.push('/home');
-
-            //Push location - https://stackoverflow.com/questions/42701129/how-to-push-to-history-in-react-router-v4
-
-            //alert(JSON.stringify(userDetails));      
-
-            //---------------
-            //This works.
-            /*const rawResponse = await fetch('api/Auth/UserLogin', {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(userLoginDetailsDTO)
-            });
-            const content = await rawResponse.json();
-
-            console.log(content);
-            alert(content);*/
-
-            //----------------
-
         } else {
             this.setIsLoggedIn(false);
             return false;
@@ -112,29 +68,12 @@ class AuthStore {
         sessionStorage.removeItem('userDetails');
 
         if (!manualLogout) {
-            //location.href = '/login';
-            //location.replace('/login');
-            //history.pushState(null, '', '/login');
-            //history.replaceState(null, '', '/login');
             browserHistory.push('/login');
-            //browserHistory.replace('/login');
         }       
     }
 
     @action
     public userRegister = async (): Promise<boolean> => {
-        //Validate username and password, potentially do this in the component.
-        //Check that the password and conform password match.
-        //Check that these credentials don't already exist.
-        //Add user credentials to database.
-        //Log the user in.
-
-
-        //Change to this format:
-        //if (checkfail) then return false
-        //if (checkfail) then return false
-        //if (authenticated) then return true
-        //else return false
 
         if (this.username != "" && this.password != "" && this.userRole != "") {
             //Create data transfer object
@@ -177,19 +116,16 @@ class AuthStore {
 
     @action
     public validateJWT = async (): Promise<void> => {
-        //this.setIsLoggedIn(true);
-
-        //check if local storage/jwt exists
+        //Check if local storage/jwt exists
         let userJSON = JSON.parse(localStorage.getItem("userDetails") || '{}');
         let isLoggedIn = Object.keys(userJSON).length != 0 ? true : false;
-        //debugger;
 
         if (Object.keys(userJSON).length != 0) {
             let responseJson: CurrentUserDetails = await api.verifyJWT(userJSON.user.jwt);
 
             if (responseJson != null) {
                 this.setUserObservables(responseJson);
-            } else { //400 for bad request
+            } else {
                 if (isLoggedIn) {
                     this.userLogout();
                 }
@@ -249,7 +185,6 @@ class AuthStore {
         this.isRegistered = isRegistered;
     }
 
-    //Figure out how to put this into one function
     @action
     public onUsernameChange = (name: string): void => {
         this.username = name;

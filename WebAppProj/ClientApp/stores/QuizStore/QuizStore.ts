@@ -1,14 +1,11 @@
 ﻿import { observable, computed, reaction, action } from 'mobx';
 import authStore from '../AuthStore/AuthStore';
 import { api } from '../../api';
-import UserDetails from '../../models/userDetails';
 import CreateQuizDetails from '../../models/CreateQuiz/createQuizDetails';
 import CreateQuestionDetails from '../../models/CreateQuiz/createQuestionDetails';
 import CreateChoiceDetails from '../../models/CreateQuiz/createChoiceDetails';
-import { CreateQuiz } from '../../components/trainer/CreateQuiz';
 import QuizDetails from '../../models/GetQuiz/quizDetails';
 import TraineeGetQuizzes from '../../models/traineeGetQuizzes';
-import QuestionDetails from '../../models/GetQuiz/questionDetails';
 import SubmitQuizResultsDetails from '../../models/submitQuizResultsDetails';
 import QuizResults from '../../models/GetQuizResults/quizResults';
 import TraineeGetQuizResults from '../../models/traineeGetQuizResults';
@@ -60,11 +57,7 @@ class QuizStore {
         if (trainerHasGroup) {
             let response: Response = await api.createQuiz(this.quiz);
 
-            //debugger;
-
             if (response) {
-
-                //this.setNonGroupUsers(nonGroupUsers)
                 return true;
 
             } else {
@@ -106,9 +99,7 @@ class QuizStore {
             }
         } else {
             return false;
-
         }
-        //return true;
     }
 
     @action
@@ -170,7 +161,6 @@ class QuizStore {
 
             if (quizDetails) {
                 this.setQuizDetails(quizDetails);
-                //debugger;
             } else {
 
             }
@@ -243,7 +233,6 @@ class QuizStore {
             if (quizResults) {
                 this.setQuizResults(quizResults);
                 this.setQuizTotal();
-                //debugger;
             } else {
 
             }
@@ -364,7 +353,7 @@ class QuizStore {
         //Get the total index for the current choice. (Converts 0-3 to 0-19)
         //Learned from CUDA on the HPC module.
         let index = choiceID + (questionID * 4);
-        //debugger;
+
         //TODO: Get boolean value
         if (choice == "on") {
             this.userChoicesForm[index] = true;
@@ -379,7 +368,6 @@ class QuizStore {
                 }
             }
         } else {
-            //debugger;
             this.userChoicesForm[index] = false;
         }
     }

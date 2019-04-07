@@ -76,7 +76,6 @@ export class CreateQuiz extends React.Component<Props> {
             let quizCreated = await this.props.quizStore.createQuiz();
 
             if (quizCreated) {
-                //this.props.history.push('/mygroup');
                 alert("Successfully created quiz.");
                 this.props.history.push('/viewquizzes');
             } else {

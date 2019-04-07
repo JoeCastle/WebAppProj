@@ -12,10 +12,6 @@ interface Props extends RouteComponentProps<any>, React.Props<any> {
 @observer
 export class NavMenu extends React.Component<Props> {
 
-    componentDidMount() {
-
-    }
-
     public render() {
         let isTrainer = this.props.authStore.isLoggedIn && this.props.authStore.userRole == "trainer";
         let isTrainee = this.props.authStore.isLoggedIn && this.props.authStore.userRole == "trainee";

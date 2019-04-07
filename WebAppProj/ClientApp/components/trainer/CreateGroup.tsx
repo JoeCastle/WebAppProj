@@ -1,6 +1,5 @@
 ﻿import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
-//import { AuthStore } from '../stores/AuthStore/AuthStore';
 import { inject, observer } from 'mobx-react';
 import { GroupStore } from '../../stores/GroupStore/GroupStore';
 import Helmet from 'react-helmet';

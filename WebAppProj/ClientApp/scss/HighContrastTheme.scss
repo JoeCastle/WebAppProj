@@ -1,13 +1,10 @@
-﻿//Move all colours to variables, change variables on click.
-//http://colorsafe.co/
+﻿//http://colorsafe.co/
 
 :root {
     .high-contrast-theme {
         background-color: black;
 
         .page {
-            /*background-color: #fefefe;
-            filter: invert(100%);*/
             background-color: black !important;
 
             .page-header {
@@ -16,10 +13,6 @@
 
             p, li, button, div, h1, h2, h3, h4, h5, h6, a, label, span {
                 color: yellow !important;
-            }
-
-            div {
-                //border-color: white; //Find all border colours and box shadows, move colour to variable
             }
 
             .noGroupUsersList, .selectedUsersList, .quiz-list {
@@ -103,13 +96,13 @@
                 color: yellow !important;
             }
 
-            .navbar {
-                background-color: black;
+            a:hover, a:focus, a:active, button:hover, button:focus, button:active, a.active {
+                outline: 1px solid yellow;
+                outline-offset: -2px;
             }
 
-            img {
-                /*-webkit-filter: opacity(.5) drop-shadow(0 0 0 yellow);
-                filter: opacity(.5) drop-shadow(0 0 0 yellow);*/
+            .navbar {
+                background-color: black;
             }
 
             .navbar-collapse {

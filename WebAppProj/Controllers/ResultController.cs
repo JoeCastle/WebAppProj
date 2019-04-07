@@ -28,12 +28,6 @@ namespace WebAppProj.Controllers
         [HttpPost("[action]")]
         public IActionResult GetTraineesResultsByQuizID([FromBody] int quizID)
         {
-            //Query Results table.
-            //Get list of all userIDs where the row matches the quiz ID
-            //For each userID get result for where userID and quizID match
-            //Work out sum of result
-            //Return list of users and their total result for that quiz.
-
             string connectionString = Configuration["ConnectionStrings:DefaultConnectionString"];
 
             var trainees = new List<TraineeByQuizDetails>();

@@ -136,7 +136,6 @@ export class AddToGroup extends React.Component<Props> {
             this.props.history.push('/');
             alert("The users have been added to your group.");
         } else {
-            //display error, move to store, have error observable
             return false;
         }
     }

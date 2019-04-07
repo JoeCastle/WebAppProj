@@ -15,8 +15,8 @@ class GroupStore {
 
     @action
     public createGroup = async (): Promise<boolean> => {
+
         if (this.groupName != "") {
-            //Create data transfer object
             let createGroupDetailsDTO: CreateGroupDetails = {
                 groupName: this.groupName,
                 userID: authStore.userID
@@ -45,18 +45,12 @@ class GroupStore {
         if (trainerHasGroup) {
             let groupUsers: UserDetails[] = await api.getCurrentGroupUsers(groupID);
 
-            //debugger;
-
             if (groupUsers) {
                 this.setGroupUsers(groupUsers)
-
-                //return this.groupUsers;
             } else {
-                //return false;
+
             }
         }
-
-        //return true;
     }
 
     @action
@@ -72,11 +66,9 @@ class GroupStore {
                 this.setNonGroupUsers(nonGroupUsers)
 
             } else {
-                //return false;
+
             }
         }
-
-        //return true;
     }
 
     @action
@@ -112,7 +104,7 @@ class GroupStore {
 
     @action
     public removeUsersFromGroup = async (): Promise<boolean> => {
-        //Move to dedicated function, to reduce code. (Move to auth store?)
+
         let isTrainer = authStore.isLoggedIn && authStore.userRole == "trainer";
         let trainerHasGroup = authStore.userGroupID != 1 && authStore.userGroupID != -1 && isTrainer;
 

@@ -30,8 +30,6 @@ export class RemoveFromGroup extends React.Component<Props> {
         let loading = <div>Loading...</div>; //TODO: Create dedicated loading component, also a default my group page for undefined group, asking if they would like to create one
 
         return (<div className="page">
-            {/*{trainerHasGroup ? <RemoveFromGroupPage {... this.props} /> : loading}*/}
-
             <Helmet>
                 <title>Remove from Group - Training App</title>
                 <meta name='description' content='Remove a trainee from your group.' />
@@ -138,7 +136,6 @@ export class RemoveFromGroup extends React.Component<Props> {
             this.props.history.push('/');
             alert("The users have been removed from your group.");
         } else {
-            //display error, move to store, have error observable
             return false;
         }
     }

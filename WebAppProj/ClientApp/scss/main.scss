@@ -1,14 +1,4 @@
-﻿//Add Autoprefixer with sass
-//https://www.youtube.com/watch?v=1uweInAfAoo
-//https://github.com/postcss/autoprefixer
-
-//https://stackoverflow.com/questions/52261260/react-dynamic-themes
-//https://itnext.io/css-variables-dynamic-app-themes-86c0db61cbbb
-//Basically set all colours in SASS variables, then use a mobx variable and local storage to change the theme
-//https://codeburst.io/a-successful-sass-theme-structure-ca9d1c477dc7
-
-
-@import 'Variables.scss';
+﻿@import 'Variables.scss';
 @import 'Login.scss';
 @import 'NavMenu.scss';
 @import 'AddToGroup.scss';
@@ -19,8 +9,6 @@
 body {
     background-color: rgb(220, 204, 176);
 
-    //background-color: #dcccb0;
-    
     h1, h2, h3, h4, h5, h6 {
         color: $main-text-colour;
     }
@@ -96,10 +84,6 @@ html, body, #react-app, .container-fluid {
     }
 }
 
-.strd-btn {
-    //max-width: 200px;
-}
-
 .button-container-auth {
     display: flex;
     justify-content: center;
@@ -124,10 +108,6 @@ html, body, #react-app, .container-fluid {
         margin-right: 30px;
         margin-left: 30px;
     }
-}
-
-.page-content {
-
 }
 
 input:disabled {
@@ -163,20 +143,20 @@ form {
     cursor: default !important;
 }
 
-    .filter-container {
-        display: flex;
-        align-items: flex-end;
-        margin-bottom: 15px;
+.filter-container {
+    display: flex;
+    align-items: flex-end;
+    margin-bottom: 15px;
 
-        .filter-input {
-            margin-right: 40px;
-            max-width: 500px;
-        }
-
-        .form-group {
-            width: 100%;
-            max-width: 500px;
-            margin-right: 40px;
-            margin-bottom: 0px;
-        }
+    .filter-input {
+        margin-right: 40px;
+        max-width: 500px;
     }
+
+    .form-group {
+        width: 100%;
+        max-width: 500px;
+        margin-right: 40px;
+        margin-bottom: 0px;
+    }
+}

@@ -5,7 +5,7 @@ import Helmet from 'react-helmet';
 
 export class FourZeroFour extends React.Component<RouteComponentProps<{}>, {}> {
     public render() {
-        return <div className="page">
+        return <div className='page not-found-page'>
             <Helmet>
                 <title>Error 404 Page Not Found - Training App</title>
                 <meta name='description' content='Error 404 page not found, sorry please try another page.' />
@@ -16,10 +16,7 @@ export class FourZeroFour extends React.Component<RouteComponentProps<{}>, {}> {
             </div>
             <div className='page-content'>
                 <h2>Oops!</h2>
-                <p>Page not found, click here to get back to the homepage: </p>
-                <Link to={'/'}>
-                    <span className='glyphicon glyphicon-home'></span> Home
-            </Link>
+                <p>Page not found, click here to get back to the homepage: <Link to={'/'}>Home</Link></p>
             </div>
         </div>;
     }
