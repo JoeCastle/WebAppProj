@@ -44,6 +44,7 @@
 .addToGroupListsContainer, .removeFromGroupListsContainer, .quiz-list-container {
     display: flex;
     flex-direction: row;
+    margin-bottom: 10px;
 }
 
 .my-group-page {
