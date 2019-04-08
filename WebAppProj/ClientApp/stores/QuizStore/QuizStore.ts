@@ -47,6 +47,7 @@ class QuizStore {
         this.quizTotal = 0;
     }
 
+    //Creates a new quiz, used by a trainer.
     @action
     public createQuiz = async (): Promise<boolean> => {
         let isTrainer = authStore.isLoggedIn && authStore.userRole == "trainer";
@@ -68,6 +69,7 @@ class QuizStore {
         }
     }
 
+    //Submits an existing quiz, used by a trainee.
     @action
     public submitQuiz = async (): Promise<boolean> => {
         let isTrainee = authStore.isLoggedIn && authStore.userRole == "trainee";
@@ -100,6 +102,7 @@ class QuizStore {
         }
     }
 
+    //Marks a quiz completed by a trainee.
     @action
     private markQuiz = (): void => {
         let quizDetails: QuizDetails = this.quizDetails;
@@ -130,6 +133,7 @@ class QuizStore {
         this.userChoices = this.userChoicesForm;
     }
 
+    //Gets a list of all quizzes that belong to a group.
     @action
     public getAllQuizzesforGroup = async (): Promise<void> => {
         let isLoggedIn = authStore.isLoggedIn;
@@ -149,6 +153,7 @@ class QuizStore {
         }
     }
 
+    //Gets a specific quiz by quiz ID.
     @action
     public getQuizByQuizID = async (quizID: number): Promise<void> => {
         let isLoggedIn = authStore.isLoggedIn;
@@ -167,6 +172,7 @@ class QuizStore {
         }
     }
 
+    //Gets a list of all uncompleted quizzes for a trainee.
     @action
     public getUncompletedQuizzesForTrainee = async (): Promise<void> => {
         let isLoggedIn = authStore.isLoggedIn;
@@ -191,6 +197,7 @@ class QuizStore {
         }
     }
 
+    //Gets a list of all completed quizzes for a trainee.
     @action
     public getCompletedQuizzesForTrainee = async (): Promise<void> => {
         let isLoggedIn = authStore.isLoggedIn;
@@ -215,6 +222,7 @@ class QuizStore {
         }
     }
 
+    //Gets a trainees result for a specific quiz.
     @action
     public getQuizResults = async (quizID: number): Promise<void> => {
         let isLoggedIn = authStore.isLoggedIn;
@@ -239,6 +247,9 @@ class QuizStore {
         }
     }
 
+    /*
+     * The folowwing actions/functions handle changes to input values and/or set the value of an observable.
+     */
     @action
     public resetStore = async (): Promise<void> => {
         this.quizDetails = {} as QuizDetails;

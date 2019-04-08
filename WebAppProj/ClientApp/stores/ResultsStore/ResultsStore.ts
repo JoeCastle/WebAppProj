@@ -4,6 +4,7 @@ import { api } from '../../api';
 import QuizDetails from '../../models/GetQuiz/quizDetails';
 import TraineeByQuizDetails from '../../models/TraineeByQuizDetails';
 
+//Export data object.
 interface exportData {
     traineeusername: string;
     firstname: string;
@@ -12,12 +13,11 @@ interface exportData {
 }
 
 class ResultStore {
+    @observable quizzesDetails: QuizDetails[] = []; //Array of quiz details.
+    @observable quizzesDetailsFiltered: QuizDetails[] = []; //Filtered array of quiz details.
 
-    @observable quizzesDetails: QuizDetails[] = [];
-    @observable quizzesDetailsFiltered: QuizDetails[] = [];
-
-    @observable traineesByQuiz: TraineeByQuizDetails[] = [];
-    @observable traineesByQuizFiltered: TraineeByQuizDetails[] = [];
+    @observable traineesByQuiz: TraineeByQuizDetails[] = []; //Array of trainees that have completed a quiz.
+    @observable traineesByQuizFiltered: TraineeByQuizDetails[] = []; //Filtered array of trainees that have completed a quiz.
 
     @observable averageQuizScore: number = 0;
 
@@ -30,18 +30,11 @@ class ResultStore {
 
     @observable dataExport: exportData[];
 
-//    headers = observable([
-//        { label: "Username", key: "traineeusername" },
-//        { label: "First Name", key: "firsrname" },
-//        { label: "Surname", key: "surname" },
-//        { label: "Result", key: "result" }
-//]);
-
-
     constructor() {
         this.dataExport = new Array();
     }
 
+    //Gets a list of all quizzes that belong to the current users group.
     @action
     public getAllQuizzesforGroup = async (): Promise<void> => {
         let isLoggedIn = authStore.isLoggedIn;
@@ -61,6 +54,7 @@ class ResultStore {
         }
     }
 
+    //Gets a list of trainee results for a specific quiz.
     @action
     public getTraineesResultsByQuizID = async (quizID: number): Promise<void> => {
         let isLoggedIn = authStore.isLoggedIn;
@@ -79,6 +73,9 @@ class ResultStore {
         }
     }
 
+    /*
+     * The folowwing actions/functions handle changes to input values and/or set the value of an observable.
+     */
     @action
     private setQuizzesDetails = (quizzesDetails: QuizDetails[]): void => {
         for (let quiz in quizzesDetails) {
