@@ -6,25 +6,29 @@ import UserDetails from '../../models/userDetails';
 import UsersToAddToGroup from '../../models/usersToAddToGroup';
 
 class GroupStore {
-    @observable groupName = "";
-    @observable groupUsers: UserDetails[] = [];
-    @observable groupUsersFiltered: UserDetails[] = [];
-    @observable nonGroupUsers: UserDetails[] = [];
-    @observable nonGroupUsersFiltered: UserDetails[] = [];
-    @observable selectedUsers: UserDetails[] = [];
+    @observable groupName = ""; //Group name of "Create group" form input.
+    @observable groupUsers: UserDetails[] = []; //Array of users that belong to the current group.
+    @observable groupUsersFiltered: UserDetails[] = []; //Filtered version of the array of users that belong to the current group.
+    @observable nonGroupUsers: UserDetails[] = []; //Array of users that don't belong to the current group.
+    @observable nonGroupUsersFiltered: UserDetails[] = []; //Filtered version of the array of users that belong to the current group.
+    @observable selectedUsers: UserDetails[] = []; //Array of users selected to be added or removed from the group.
 
+    //Create a new group using the groupName observable.
     @action
     public createGroup = async (): Promise<boolean> => {
 
         if (this.groupName != "") {
+
+            //Create DTO (Data Transfer Object) using custom object.
             let createGroupDetailsDTO: CreateGroupDetails = {
                 groupName: this.groupName,
                 userID: authStore.userID
             }
 
-            //Use fetch to call the login controller
+            //Call the api.
             let groupCreated: Response = await api.createGroup(createGroupDetailsDTO);
 
+            //Check response.
             if (groupCreated) {
                 return true
             } else {
@@ -35,8 +39,11 @@ class GroupStore {
         }
     }
 
+    //Gets a list of all users that belong to the group of the currently logged in user.
     @action
     public getCurrentGroupUsers = async (): Promise<void> => {
+
+        //Check permissions of current user.
         let isTrainer = authStore.isLoggedIn && authStore.userRole == "trainer";
         let trainerHasGroup = authStore.userGroupID != 1 && authStore.userGroupID != -1 && isTrainer;
 
@@ -53,6 +60,7 @@ class GroupStore {
         }
     }
 
+    //Gets a list of all users that don't belong to the group of the currently logged in user.
     @action
     public getUsersNotInGroup = async (): Promise<void> => {
         let isTrainer = authStore.isLoggedIn && authStore.userRole == "trainer";
@@ -71,12 +79,13 @@ class GroupStore {
         }
     }
 
+    //Adds one or more users to an existing group.
     @action
     public addUsersToGroup = async (): Promise<boolean> => {
-        //Move to dedicated function, to reduce code. (Move to auth store?)
         let isTrainer = authStore.isLoggedIn && authStore.userRole == "trainer";
         let trainerHasGroup = authStore.userGroupID != 1 && authStore.userGroupID != -1 && isTrainer;
 
+        //Generate local version of the selected users data.
         let selectedUsers: UserDetails[] = [];
 
         for (let i = 0; i < this.selectedUsers.length; i++) {
@@ -102,6 +111,7 @@ class GroupStore {
         }
     }
 
+    //Removes one or more users to an existing group.
     @action
     public removeUsersFromGroup = async (): Promise<boolean> => {
 
@@ -133,20 +143,7 @@ class GroupStore {
         }
     }
 
-    @action
-    public getCurrentGroupDetails = async (): Promise<boolean> => {
-        let isTrainer = authStore.isLoggedIn && authStore.userRole == "trainer";
-        let trainerHasGroup = authStore.userGroupID != 1 && authStore.userGroupID != -1 && isTrainer;
-
-        let groupID = authStore.userGroupID;
-
-        if (trainerHasGroup) {
-            let groupDetails: Response = await api.getCurrentGroupDetails(groupID);
-        }
-
-        return true;
-    }
-
+    //An action to reset the observables of this store to their initial values.
     @action
     public resetStore = async (): Promise<void> => {
         this.nonGroupUsers = [];
@@ -155,6 +152,9 @@ class GroupStore {
         this.groupUsersFiltered = [];
     }
 
+    /*
+     * The folowwing actions/functions handle changes to input values and/or set the value of an observable.
+     */
     @action
     public onGroupnameChange = (groupName: string): void => {
         this.groupName = groupName;

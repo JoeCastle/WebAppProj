@@ -76,8 +76,6 @@ class QuizStore {
         if (traineeHasGroup) {
             this.markQuiz();
 
-            console.log(this.questionResults);
-
             for (let i = 0; i < this.questionResults.length; i++) {
 
                 let submitQuizResultsDetails: SubmitQuizResultsDetails = {

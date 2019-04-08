@@ -6,21 +6,22 @@ import CurrentUserDetails from '../../models/currentUserDetails';
 import browserHistory from '../../history';
 
 class AuthStore {
-    @observable userID = -1;
-    @observable username = "";
-    @observable password = "";
+    @observable userID = -1; //ID of currently logged in user.
+    @observable username = ""; //Username of currently logged in user.
+    @observable password = ""; //Password of "Register user" form input.
     @observable isLoggedIn = false;
     @observable isRegistered = false;
-    @observable userRole = "";
-    @observable userGroupID = -1;
-    @observable firstname = "";
-    @observable surname = "";
+    @observable userRole = ""; //Role of currently logged in user.
+    @observable userGroupID = -1; //Group ID of currently logged in user.
+    @observable firstname = ""; //Firstname of currently logged in user.
+    @observable surname = ""; //Surname of currently logged in user.
     @observable registerError = "";
 
     @observable validating = false;
 
-    @observable userTheme = '';
+    @observable userTheme = ''; //Username of currently logged in user.
 
+    //Attempts to log the user in to the system using the provided credentials.
     @action
     public userLogin = async (): Promise<boolean> => {
 
@@ -35,17 +36,12 @@ class AuthStore {
             //Use fetch to call the login controller
             let userDetails: CurrentUserDetails = await api.loginUser(userLoginDetailsDTO);
 
-            //TODO: Update what is being stored in local storage, should just by jwt and accessibility preferences
             //Check response
             if (userDetails) {
                 this.setIsLoggedIn(true);
                 localStorage.setItem('userDetails', JSON.stringify(userDetails));
-                console.log(userDetails);
-                console.log(localStorage.getItem('userDetails'));
                 return true;
             } else {
-                console.log(userDetails);
-                console.log(localStorage.getItem('userDetails'));
                 this.setIsLoggedIn(false);
                 return false;
             }
@@ -56,6 +52,7 @@ class AuthStore {
         
     }
 
+    //Logs the user out of the system if they click logout or their JWT has expired.
     @action
     public userLogout = async (manualLogout?: boolean): Promise<void> => {
         this.isLoggedIn = false;
@@ -72,6 +69,7 @@ class AuthStore {
         }       
     }
 
+    //Registers a new user to the system.
     @action
     public userRegister = async (): Promise<boolean> => {
 
@@ -104,9 +102,9 @@ class AuthStore {
         }
     }
 
+    //Sets the value of observables related to user information after validating the JWT.
     @action
     private setUserObservables = (userDetails: CurrentUserDetails): void => {
-        //TODO: Add other user information, first and surnames etc. groupname?
         this.setIsLoggedIn(true);
         this.username = userDetails.user.username || "";
         this.userRole = userDetails.user.userRole;
@@ -114,8 +112,10 @@ class AuthStore {
         this.userID = userDetails.user.userID;
     }
 
+    //Validates the current users Json Web Token (JWT).
     @action
     public validateJWT = async (): Promise<void> => {
+
         //Check if local storage/jwt exists
         let userJSON = JSON.parse(localStorage.getItem("userDetails") || '{}');
         let isLoggedIn = Object.keys(userJSON).length != 0 ? true : false;
@@ -137,6 +137,7 @@ class AuthStore {
         }
     }
 
+    //Sets the users CSS theme by adding or removing a class name from the html and body elements.
     @action
     public setUserTheme = (): void => {
         let themeJSON = JSON.parse(localStorage.getItem('theme') || '{}');
@@ -157,6 +158,7 @@ class AuthStore {
         }
     }
 
+    //Gets the current CSS theme for the user.
     @action
     public getUserTheme = async (): Promise<void> => {
         let themeJSON = JSON.parse(localStorage.getItem('theme') || '{}');
@@ -172,6 +174,9 @@ class AuthStore {
         }
     }
 
+    /*
+     * The folowwing actions/functions handle changes to input values and/or set the value of an observable.
+     */
     @action
     private setRegisterError = (registerError: string): void => {
         this.registerError = registerError;

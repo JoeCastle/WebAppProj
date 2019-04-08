@@ -82,7 +82,7 @@ export class TraineesByQuizResults extends React.Component<Props> {
                     </CSVLink>
                     }
 
-                    <p className='average-score'>Average score: {this.props.resultStore.averageQuizScore}</p>
+                    <p className='average-score'>Average score: <b>{this.props.resultStore.averageQuizScore}/5</b></p>
                 </div>
 
                 <div className="addToGroupListsContainer">

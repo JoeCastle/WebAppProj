@@ -174,61 +174,6 @@ namespace WebAppProj.Controllers
 
         [Authorize(Roles = "trainer")]
         [HttpPost("[action]")]
-        public IActionResult GetCurrentGroupDetails([FromBody] int groupID)
-        {
-            string connectionString = Configuration["ConnectionStrings:DefaultConnectionString"];
-
-            //Create user
-            var user = new CurrentUserDetails();
-
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                //Create the SQL command and set type to stored procedure.
-                SqlCommand command = new SqlCommand("User_GetByGroupID", connection);
-                command.CommandType = System.Data.CommandType.StoredProcedure;
-
-                //Set the parameters for the command.
-                command.Parameters.AddWithValue("@groupID", groupID);
-
-                connection.Open();
-
-                //Execute the query and store the result
-                using (SqlDataReader reader = command.ExecuteReader())
-                {
-                    if (reader.HasRows)
-                    {
-                        while (reader.Read())
-                        {
-                            user.UserID = reader.GetInt32(reader.GetOrdinal("UserID"));
-                            user.Username = reader.GetString(reader.GetOrdinal("Username"));
-                            user.UserRole = reader.GetString(reader.GetOrdinal("Role"));
-                            user.Firstname = reader.GetString(reader.GetOrdinal("Firstname"));
-                            user.Surname = reader.GetString(reader.GetOrdinal("Surname"));
-                            user.GroupID = reader.GetInt32(reader.GetOrdinal("GroupID"));
-                        }
-                        reader.Close();
-                    }
-                    else
-                    {
-                        return BadRequest("Could not find matching user.");
-                    }
-                }
-
-                connection.Close();
-            }
-
-            //Return OK result with user
-            return Ok(new
-            {
-                user
-            });
-        }
-
-        //https://stackoverflow.com/questions/886293/how-do-i-execute-a-stored-procedure-once-for-each-row-returned-by-query
-        //https://www.aspsnippets.com/Articles/Send-Pass-DataTable-as-parameter-to-Stored-Procedure-in-C-and-VBNet.aspx
-        //https://www.codeproject.com/Articles/412802/Sending-a-DataTable-to-a-Stored-Procedure
-        [Authorize(Roles = "trainer")]
-        [HttpPost("[action]")]
         public IActionResult AddUsersToGroup([FromBody] UsersToAddToGroup usersToAddToGroup)
         {
             var queryResult = -1; //Set query result to fail.
