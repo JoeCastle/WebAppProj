@@ -32,6 +32,11 @@ body {
     }
 }
 
+main {
+    width: 100%;
+    display: flex;
+}
+
 html, body, #react-app, .container-fluid {
     height: 100%;
 

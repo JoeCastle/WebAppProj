@@ -52,52 +52,55 @@ export class RouteContainer extends React.Component<Props> {
         }
 
         return <div className={`page-parent ${this.props.authStore.userTheme}`}>
-            <NavMenu {...this.props} />
+            <header>
+                <NavMenu {...this.props} />
+            </header>
 
-            <Switch>
-                <Route exact path={`${match.url}`} render={(props: any) => <Home {...props} />} />
+            <main>
+                <Switch>
+                    <Route exact path={`${match.url}`} render={(props: any) => <Home {...props} />} />
 
-                <Route exact path={`${match.url}login`} render={(props: any) => {
-                    if (isloggedIn) {
-                        return <Redirect to={{
-                            pathname: '/',
-                            state: { from: props.location }
-                        }} />
-                    } else {
-                        return <Login {...props} />
-                    }
-                }} />
-
-                <Route exact path={`${match.url}register`} render={(props: any) => {
-                    if (isloggedIn) {
-                        return <Redirect to={{
-                            pathname: '/',
-                            state: { from: props.location }
-                        }} />
-                    } else {
-                        return <Register {...props} />
-                    }
-                }} />
-
-                <Route exact path={`${match.url}creategroup`} render={(props: any) => {
-                    if (isloggedIn) {
-                        if (isTrainer) {
-                            return <CreateGroup {...props} />
-                        } else {
+                    <Route exact path={`${match.url}login`} render={(props: any) => {
+                        if (isloggedIn) {
                             return <Redirect to={{
                                 pathname: '/',
                                 state: { from: props.location }
                             }} />
+                        } else {
+                            return <Login {...props} />
                         }
-                    } else {
-                        return <Redirect to={{
-                            pathname: '/login',
-                            state: { from: props.location }
-                        }} />
-                    }
-                }} />
+                    }} />
 
-                {/*<Route exact path={`${match.url}mygroup`} render={(props: any) => {
+                    <Route exact path={`${match.url}register`} render={(props: any) => {
+                        if (isloggedIn) {
+                            return <Redirect to={{
+                                pathname: '/',
+                                state: { from: props.location }
+                            }} />
+                        } else {
+                            return <Register {...props} />
+                        }
+                    }} />
+
+                    <Route exact path={`${match.url}creategroup`} render={(props: any) => {
+                        if (isloggedIn) {
+                            if (isTrainer) {
+                                return <CreateGroup {...props} />
+                            } else {
+                                return <Redirect to={{
+                                    pathname: '/',
+                                    state: { from: props.location }
+                                }} />
+                            }
+                        } else {
+                            return <Redirect to={{
+                                pathname: '/login',
+                                state: { from: props.location }
+                            }} />
+                        }
+                    }} />
+
+                    {/*<Route exact path={`${match.url}mygroup`} render={(props: any) => {
                     if (isloggedIn) {
                         if (isTrainer) {
                             return <MyGroup {...props} />
@@ -115,11 +118,11 @@ export class RouteContainer extends React.Component<Props> {
                     }
                 }} />*/}
 
-                <PrivateRoute path={`${match.url}mygroup`} component={MyGroup} roleRequired={"trainer"} />
+                    <PrivateRoute path={`${match.url}mygroup`} component={MyGroup} roleRequired={"trainer"} />
 
-                {/*<Route exact path={`${match.url}mygroup`} component={PrivateRoute(MyGroup)} />*/}
+                    {/*<Route exact path={`${match.url}mygroup`} component={PrivateRoute(MyGroup)} />*/}
 
-                {/*<Route exact path={`${match.url}addtogroup`} render={(props: any) => {
+                    {/*<Route exact path={`${match.url}addtogroup`} render={(props: any) => {
                     if (isloggedIn) {
                         if (isTrainer) {
                             return <AddToGroup {...props} />
@@ -137,196 +140,197 @@ export class RouteContainer extends React.Component<Props> {
                     }
                 }} />*/}
 
-                <PrivateRoute path={`${match.url}addtogroup`} component={AddToGroup} roleRequired={"trainer"} />
+                    <PrivateRoute path={`${match.url}addtogroup`} component={AddToGroup} roleRequired={"trainer"} />
 
-                <Route exact path={`${match.url}removefromgroup`} render={(props: any) => {
-                    if (isloggedIn) {
-                        if (isTrainer) {
-                            return <RemoveFromGroup {...props} />
+                    <Route exact path={`${match.url}removefromgroup`} render={(props: any) => {
+                        if (isloggedIn) {
+                            if (isTrainer) {
+                                return <RemoveFromGroup {...props} />
+                            } else {
+                                return <Redirect to={{
+                                    pathname: '/',
+                                    state: { from: props.location }
+                                }} />
+                            }
                         } else {
                             return <Redirect to={{
-                                pathname: '/',
+                                pathname: '/login',
                                 state: { from: props.location }
                             }} />
                         }
-                    } else {
-                        return <Redirect to={{
-                            pathname: '/login',
-                            state: { from: props.location }
-                        }} />
-                    }
-                }} />
+                    }} />
 
-                <Route exact path={`${match.url}createquiz`} render={(props: any) => {
-                    if (isloggedIn) {
-                        if (isTrainer) {
-                            return <CreateQuiz {...props} />
+                    <Route exact path={`${match.url}createquiz`} render={(props: any) => {
+                        if (isloggedIn) {
+                            if (isTrainer) {
+                                return <CreateQuiz {...props} />
+                            } else {
+                                return <Redirect to={{
+                                    pathname: '/',
+                                    state: { from: props.location }
+                                }} />
+                            }
                         } else {
                             return <Redirect to={{
-                                pathname: '/',
+                                pathname: '/login',
                                 state: { from: props.location }
                             }} />
                         }
-                    } else {
-                        return <Redirect to={{
-                            pathname: '/login',
-                            state: { from: props.location }
-                        }} />
-                    }
-                }} />
+                    }} />
 
-                <Route exact path={`${match.url}viewquizzes`} render={(props: any) => {
-                    if (isloggedIn) {
-                        if (isTrainer) {
-                            return <ViewQuizzes {...props} />
+                    <Route exact path={`${match.url}viewquizzes`} render={(props: any) => {
+                        if (isloggedIn) {
+                            if (isTrainer) {
+                                return <ViewQuizzes {...props} />
+                            } else {
+                                return <Redirect to={{
+                                    pathname: '/',
+                                    state: { from: props.location }
+                                }} />
+                            }
                         } else {
                             return <Redirect to={{
-                                pathname: '/',
+                                pathname: '/login',
                                 state: { from: props.location }
                             }} />
                         }
-                    } else {
-                        return <Redirect to={{
-                            pathname: '/login',
-                            state: { from: props.location }
-                        }} />
-                    }
-                }} />
+                    }} />
 
-                <Route exact path={`${match.url}viewquiz/:quizID`} render={(props: any) => {
-                    if (isloggedIn) {
-                        if (isTrainer) {
-                            return <ViewQuiz {...props} />
+                    <Route exact path={`${match.url}viewquiz/:quizID`} render={(props: any) => {
+                        if (isloggedIn) {
+                            if (isTrainer) {
+                                return <ViewQuiz {...props} />
+                            } else {
+                                return <Redirect to={{
+                                    pathname: '/',
+                                    state: { from: props.location }
+                                }} />
+                            }
                         } else {
                             return <Redirect to={{
-                                pathname: '/',
+                                pathname: '/login',
                                 state: { from: props.location }
                             }} />
                         }
-                    } else {
-                        return <Redirect to={{
-                            pathname: '/login',
-                            state: { from: props.location }
-                        }} />
-                    }
-                }} />
+                    }} />
 
-                <Route exact path={`${match.url}viewuncompletedquizzes`} render={(props: any) => {
-                    if (isloggedIn) {
-                        if (isTrainee) {
-                            return <ViewUncompleteQuizzes {...props} />
+                    <Route exact path={`${match.url}viewuncompletedquizzes`} render={(props: any) => {
+                        if (isloggedIn) {
+                            if (isTrainee) {
+                                return <ViewUncompleteQuizzes {...props} />
+                            } else {
+                                return <Redirect to={{
+                                    pathname: '/',
+                                    state: { from: props.location }
+                                }} />
+                            }
                         } else {
                             return <Redirect to={{
-                                pathname: '/',
+                                pathname: '/login',
                                 state: { from: props.location }
                             }} />
                         }
-                    } else {
-                        return <Redirect to={{
-                            pathname: '/login',
-                            state: { from: props.location }
-                        }} />
-                    }
-                }} />
+                    }} />
 
-                <Route exact path={`${match.url}startquiz/:quizID`} render={(props: any) => {
-                    if (isloggedIn) {
-                        if (isTrainee) {
-                            return <StartQuiz {...props} />
+                    <Route exact path={`${match.url}startquiz/:quizID`} render={(props: any) => {
+                        if (isloggedIn) {
+                            if (isTrainee) {
+                                return <StartQuiz {...props} />
+                            } else {
+                                return <Redirect to={{
+                                    pathname: '/',
+                                    state: { from: props.location }
+                                }} />
+                            }
                         } else {
                             return <Redirect to={{
-                                pathname: '/',
+                                pathname: '/login',
                                 state: { from: props.location }
                             }} />
                         }
-                    } else {
-                        return <Redirect to={{
-                            pathname: '/login',
-                            state: { from: props.location }
-                        }} />
-                    }
-                }} />
+                    }} />
 
-                <Route exact path={`${match.url}viewcompletedquizzes`} render={(props: any) => {
-                    if (isloggedIn) {
-                        if (isTrainee) {
-                            return <ViewCompleteQuizzes {...props} />
+                    <Route exact path={`${match.url}viewcompletedquizzes`} render={(props: any) => {
+                        if (isloggedIn) {
+                            if (isTrainee) {
+                                return <ViewCompleteQuizzes {...props} />
+                            } else {
+                                return <Redirect to={{
+                                    pathname: '/',
+                                    state: { from: props.location }
+                                }} />
+                            }
                         } else {
                             return <Redirect to={{
-                                pathname: '/',
+                                pathname: '/login',
                                 state: { from: props.location }
                             }} />
                         }
-                    } else {
-                        return <Redirect to={{
-                            pathname: '/login',
-                            state: { from: props.location }
-                        }} />
-                    }
-                }} />
+                    }} />
 
-                <Route exact path={`${match.url}viewquizresult/:quizID`} render={(props: any) => {
-                    if (isloggedIn) {
-                        if (isTrainee) {
-                            return <ViewQuizResult {...props} />
+                    <Route exact path={`${match.url}viewquizresult/:quizID`} render={(props: any) => {
+                        if (isloggedIn) {
+                            if (isTrainee) {
+                                return <ViewQuizResult {...props} />
+                            } else {
+                                return <Redirect to={{
+                                    pathname: '/',
+                                    state: { from: props.location }
+                                }} />
+                            }
                         } else {
                             return <Redirect to={{
-                                pathname: '/',
+                                pathname: '/login',
                                 state: { from: props.location }
                             }} />
                         }
-                    } else {
-                        return <Redirect to={{
-                            pathname: '/login',
-                            state: { from: props.location }
-                        }} />
-                    }
-                }} />
+                    }} />
 
-                <Route exact path={`${match.url}resultsbyquiz`} render={(props: any) => {
-                    if (isloggedIn) {
-                        if (isTrainer) {
-                            return <QuizResultList {...props} />
+                    <Route exact path={`${match.url}resultsbyquiz`} render={(props: any) => {
+                        if (isloggedIn) {
+                            if (isTrainer) {
+                                return <QuizResultList {...props} />
+                            } else {
+                                return <Redirect to={{
+                                    pathname: '/',
+                                    state: { from: props.location }
+                                }} />
+                            }
                         } else {
                             return <Redirect to={{
-                                pathname: '/',
+                                pathname: '/login',
                                 state: { from: props.location }
                             }} />
                         }
-                    } else {
-                        return <Redirect to={{
-                            pathname: '/login',
-                            state: { from: props.location }
-                        }} />
-                    }
-                }} />
+                    }} />
 
-                <Route exact path={`${match.url}traineesbyquizresults/:quizID`} render={(props: any) => {
-                    if (isloggedIn) {
-                        if (isTrainer) {
-                            return <TraineesByQuizResults {...props} />
+                    <Route exact path={`${match.url}traineesbyquizresults/:quizID`} render={(props: any) => {
+                        if (isloggedIn) {
+                            if (isTrainer) {
+                                return <TraineesByQuizResults {...props} />
+                            } else {
+                                return <Redirect to={{
+                                    pathname: '/',
+                                    state: { from: props.location }
+                                }} />
+                            }
                         } else {
                             return <Redirect to={{
-                                pathname: '/',
+                                pathname: '/login',
                                 state: { from: props.location }
                             }} />
                         }
-                    } else {
-                        return <Redirect to={{
-                            pathname: '/login',
-                            state: { from: props.location }
-                        }} />
-                    }
-                }} />
+                    }} />
 
-                <Route exact path={`${match.url}about`} component={About} />
+                    <Route exact path={`${match.url}about`} component={About} />
 
-                <Route exact path={`${match.url}settings`} render={(props: any) => {
-                    return <Settings {...props} />
-                }} />
+                    <Route exact path={`${match.url}settings`} render={(props: any) => {
+                        return <Settings {...props} />
+                    }} />
 
-                <Route component={FourZeroFour} />
-            </Switch>
+                    <Route component={FourZeroFour} />
+                </Switch>
+            </main>
         </div>;
     }
 }

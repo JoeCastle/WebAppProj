@@ -89,12 +89,13 @@ const QuestionComponent = (props: any) => {
         return choices;
     }
 
-    return <div className="question-component">
+    return <fieldset className="question-component">
+        <legend id={`legend${props.questionID}`}>Question {props.questionID + 1}.</legend>
         <div className='question-text-container'>
             <p>{props.questionID + 1}. {props.quizStore.quizDetails.questions[props.questionID].questionText}</p>
         </div>
         <div className='choices-container'>{createChoices()}</div>
-    </div>
+    </fieldset>
 };
 
 

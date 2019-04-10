@@ -19,7 +19,7 @@ export class NavMenu extends React.Component<Props> {
         let trainerHasGroup = this.props.authStore.userGroupID != 1 && isTrainer;
         let traineeHasGroup = this.props.authStore.userGroupID != 1 && isTrainee;
 
-        return <div className='main-nav'>
+        return <nav className='main-nav'>
             <div className='navbar navbar-inverse'>
                 <div className='navbar-header'>
                     <button type='button' className='navbar-toggle' data-toggle='collapse' data-target='.navbar-collapse'>
@@ -41,10 +41,10 @@ export class NavMenu extends React.Component<Props> {
                         <li>
                             {isTrainer &&
                                 <div className="dropdown">
-                                    <button className="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <button className="dropdown-toggle" type="button" id="dropdownMenuButtonGroup" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <i className='fa fa-users fa-fw' aria-hidden='true'></i> Group <span className="caret"></span>
                                     </button>
-                                    <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <div className="dropdown-menu" aria-labelledby="dropdownMenuButtonGroup">
                                         {!trainerHasGroup &&
                                             <NavLink to={'/creategroup'} activeClassName='active'>
                                                 <i className='fa fa-user-edit fa-fw' aria-hidden='true'></i> Create group
@@ -72,10 +72,10 @@ export class NavMenu extends React.Component<Props> {
                         <li>
                             {trainerHasGroup &&
                                 <div className='dropdown'>
-                                    <button className='dropdown-toggle' type='button' id='dropdownMenuButton' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
+                                    <button className='dropdown-toggle' type='button' id='dropdownMenuButtonQuizzes' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
                                         <i className='fa fa-pencil-ruler fa-fw' aria-hidden='true'></i> Quizzes <span className="caret"></span>
                                     </button>
-                                    <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <div className="dropdown-menu" aria-labelledby="dropdownMenuButtonQuizzes">
                                         {trainerHasGroup &&
                                             <NavLink to={'/viewquizzes'} activeClassName='active'>
                                                 <i className='fa fa-list fa-fw' aria-hidden='true'></i> View quizzes
@@ -94,10 +94,10 @@ export class NavMenu extends React.Component<Props> {
                         <li>
                             {trainerHasGroup &&
                                 <div className='dropdown'>
-                                    <button className='dropdown-toggle' type='button' id='dropdownMenuButton' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
+                                    <button className='dropdown-toggle' type='button' id='dropdownMenuButtonResults' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
                                         <i className='fa fa-poll fa-fw' aria-hidden='true'></i> Results <span className="caret"></span>
                                     </button>
-                                    <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <div className="dropdown-menu" aria-labelledby="dropdownMenuButtonResults">
                                         {trainerHasGroup &&
                                             <NavLink to={'/resultsbyquiz'} activeClassName='active'>
                                                 <i className='fa fa-pen fa-fw' aria-hidden='true'></i> Results by quiz
@@ -111,10 +111,10 @@ export class NavMenu extends React.Component<Props> {
                         <li>
                             {traineeHasGroup &&
                                 <div className='dropdown'>
-                                    <button className='dropdown-toggle' type='button' id='dropdownMenuButton' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
+                                    <button className='dropdown-toggle' type='button' id='dropdownMenuButtonQuizzesTrainee' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
                                         <i className='fa fa-pencil-ruler fa-fw' aria-hidden='true'></i> Quizzes <span className="caret"></span>
                                     </button>
-                                    <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <div className="dropdown-menu" aria-labelledby="dropdownMenuButtonQuizzesTrainee">
                                         <NavLink to={'/viewuncompletedquizzes'} activeClassName='active'>
                                             <i className='fa fa-pen fa-fw' aria-hidden='true'></i> Uncompleted quizzes
                                             </NavLink>
@@ -157,7 +157,7 @@ export class NavMenu extends React.Component<Props> {
                     </ul>
                 </div>
             </div>
-        </div>;
+        </nav>;
     }
 
     private handleLogout = async (e: any) => {

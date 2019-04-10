@@ -111,7 +111,8 @@ const QuestionComponent = (props: any) => {
         props.quizStore.onQuestionTextChange(questionText, props.questionID);
     }
 
-    return <div className="question-component">
+    return <fieldset className="question-component">
+        <legend id={`legend${props.questionID}`}>Question {props.questionID + 1}.</legend>
         <div className='question-text-container'>
             <div className='form-group'>
                 <label htmlFor={`questiontext${props.questionID}`}>{props.questionID + 1}. Question text: </label>
@@ -127,8 +128,8 @@ const QuestionComponent = (props: any) => {
                 />
             </div>
         </div>
-        <div className='choices-container'>{createChoices()}</div>
-    </div>
+        <div className='choices-container' role='radiogroup'>{createChoices()}</div>
+    </fieldset>
 };
 
 export interface IChoiceProps {
@@ -162,7 +163,7 @@ export class ChoiceComponent extends React.Component<IChoiceProps, IChoiceProps>
 
     public render() {
         return (
-            <div className='choice-component' id={'group' + this.props.questionID}>
+            <div className='choice-component' id={'group' + this.props.questionID + this.props.choiceID}>
                 <div className='choice-container'>
                     <div className='form-group'>
                         <label htmlFor={`choicetext${this.props.questionID}${this.props.choiceID}`}>{this.props.questionID + 1}.{this.props.choiceID + 1}. Choice text: </label>
@@ -192,6 +193,8 @@ export class ChoiceComponent extends React.Component<IChoiceProps, IChoiceProps>
                             required
                             tabIndex={0}
                             onKeyPress={(e) => { e.key == 'Enter' && e.preventDefault(); }}
+                            role='radio'
+                            aria-checked='false'
                         />
                     </div>
                 </div>
