@@ -137,7 +137,7 @@ export class RemoveFromGroup extends React.Component<Props> {
         let completed = await this.props.groupStore.removeUsersFromGroup();
 
         if (completed) {
-            this.props.history.push('/');
+            this.props.history.push('/mygroup');
             alert("The users have been removed from your group.");
         } else {
             return false;

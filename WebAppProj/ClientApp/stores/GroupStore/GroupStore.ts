@@ -150,6 +150,7 @@ class GroupStore {
         this.groupUsers = [];
         this.nonGroupUsersFiltered = [];
         this.groupUsersFiltered = [];
+        this.selectedUsers = [];
     }
 
     /*

@@ -18,6 +18,10 @@ export class MyGroup extends React.Component<Props> {
         await this.props.groupStore.getCurrentGroupUsers();
     }
 
+    componentWillUnmount() {
+        this.props.groupStore.resetStore();
+    }
+
     public render() {
         let loading = <div>Loading...</div>; //TODO: Create dedicated loading component, also a default my group page for undefined group, asking if they would like to create one
         return (<div className='page my-group-page'>

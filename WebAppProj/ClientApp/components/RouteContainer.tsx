@@ -100,7 +100,7 @@ export class RouteContainer extends React.Component<Props> {
                         }
                     }} />
 
-                    {/*<Route exact path={`${match.url}mygroup`} render={(props: any) => {
+                    <Route exact path={`${match.url}mygroup`} render={(props: any) => {
                     if (isloggedIn) {
                         if (isTrainer) {
                             return <MyGroup {...props} />
@@ -116,13 +116,13 @@ export class RouteContainer extends React.Component<Props> {
                             state: { from: props.location }
                         }} />
                     }
-                }} />*/}
+                }} />
 
-                    <PrivateRoute path={`${match.url}mygroup`} component={MyGroup} roleRequired={"trainer"} />
+                    {/*<PrivateRoute path={`${match.url}mygroup`} component={MyGroup} roleRequired={"trainer"} />*/}
 
                     {/*<Route exact path={`${match.url}mygroup`} component={PrivateRoute(MyGroup)} />*/}
 
-                    {/*<Route exact path={`${match.url}addtogroup`} render={(props: any) => {
+                    <Route exact path={`${match.url}addtogroup`} render={(props: any) => {
                     if (isloggedIn) {
                         if (isTrainer) {
                             return <AddToGroup {...props} />
@@ -138,9 +138,9 @@ export class RouteContainer extends React.Component<Props> {
                             state: { from: props.location }
                         }} />
                     }
-                }} />*/}
+                }} />
 
-                    <PrivateRoute path={`${match.url}addtogroup`} component={AddToGroup} roleRequired={"trainer"} />
+                    {/*<PrivateRoute path={`${match.url}addtogroup`} component={AddToGroup} roleRequired={"trainer"} />*/} {/* Breaks this.props.history.push. This component should use a route. */}
 
                     <Route exact path={`${match.url}removefromgroup`} render={(props: any) => {
                         if (isloggedIn) {

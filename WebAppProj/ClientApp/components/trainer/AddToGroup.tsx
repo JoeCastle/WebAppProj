@@ -137,7 +137,7 @@ export class AddToGroup extends React.Component<Props> {
         let completed = await this.props.groupStore.addUsersToGroup();
 
         if (completed) {
-            this.props.history.push('/');
+            this.props.history.push('/mygroup');
             alert("The users have been added to your group.");
         } else {
             return false;

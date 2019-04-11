@@ -28,20 +28,38 @@ export const PrivateRoute = (props: Props) => {
         }
     }
 
-    if (isloggedIn) {
-        if (isRoleRequired) {
-            return <Component {...props} />
+    //if (isloggedIn) {
+    //    if (isRoleRequired) {
+    //        return <Component {...props} />
+    //    } else {
+    //        return <Redirect to={{
+    //            pathname: '/',
+    //            state: { from: props.location }
+    //        }} />
+    //    }
+    //} else {
+    //    return <Redirect to={{
+    //        pathname: '/login',
+    //        state: { from: props.location }
+    //    }} />
+    //}
+
+    return <Route exact path={props.path} render={(props: any) => {
+        if (isloggedIn) {
+            if (isRoleRequired) {
+                return <Component {...props} />
+            } else {
+                return <Redirect to={{
+                    pathname: '/',
+                    state: { from: props.location }
+                }} />
+            }
         } else {
             return <Redirect to={{
-                pathname: '/',
+                pathname: '/login',
                 state: { from: props.location }
             }} />
         }
-    } else {
-        return <Redirect to={{
-            pathname: '/login',
-            state: { from: props.location }
-        }} />
-    }
+    }} />
 
 };
