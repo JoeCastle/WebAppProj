@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2050
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAppProj", "WebAppProj\WebAppProj.csproj", "{FBE4982A-5052-4493-9586-E8277DC0BB22}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAppProj", "WebAppProj\WebAppProj.csproj", "{FBE4982A-5052-4493-9586-E8277DC0BB22}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQL", "SQL", "{7CB27F7D-08B4-44FD-A3BC-70B9D19E42E8}"
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "WebAppProjDB", "WebAppProjDB\WebAppProjDB.sqlproj", "{15443562-1439-401D-97E8-9DA74071D17C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,9 +19,18 @@ Global
 		{FBE4982A-5052-4493-9586-E8277DC0BB22}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FBE4982A-5052-4493-9586-E8277DC0BB22}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FBE4982A-5052-4493-9586-E8277DC0BB22}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15443562-1439-401D-97E8-9DA74071D17C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15443562-1439-401D-97E8-9DA74071D17C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15443562-1439-401D-97E8-9DA74071D17C}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{15443562-1439-401D-97E8-9DA74071D17C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15443562-1439-401D-97E8-9DA74071D17C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15443562-1439-401D-97E8-9DA74071D17C}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{15443562-1439-401D-97E8-9DA74071D17C} = {7CB27F7D-08B4-44FD-A3BC-70B9D19E42E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BAF3DC80-52C6-48D4-92B8-187D691A5C5C}
