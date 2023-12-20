@@ -1,61 +1,87 @@
 # WebAppProj
-This is the repository for my university final year project. 
 
-Project setup:
-Download node.js
-Download visual studio
-Extract/un zip the .zip folder to a location of your choice. (Or just clone/download the project via GitHub.)
-(Note: Only the “” folder is necessary for now, the “” and “” folders will be needed for later steps.)
-From within Visual Studio, open the solution file. (File, open).
-Double click the solution file to load the project?
-Next, in windows explorer navigate to the “” folder where you should see the following:
-Next, navigate to this location in Command Prompt or PowerShell, and type “npm install”. This command may take some time to complete. If this doesn’t work or you receive any errors, try running Command Prompt or PowerShell as administrator or ensure that node.js was downloaded correctly. If this doesn’t solve the problem, Google the error (Sorry).
-Ensure that valid issuer and valid audience within “appsettings.json” match the localhost port number on your machine.
+This repository contains the codebase for my university final year project.
 
-Database setup:
-Download sql server
-Download sql server management studio
-https://campus.barracuda.com/product/backup/doc/15892599/how-to-restore-a-microsoft-sql-database-to-a-point-in-time/
-Restore from “”.bak file in the database > backup folder.
-Get connection string and replace the existing string in “appsettings.json” in visual studio. Ensure that the general format of the new connection string matches the old one.
+## Project Setup
 
-Launching/running the project:
-Assuming the previous steps have been completed you should now be ready to build and run the application.
-From within Visual Studio, build the solution (Build < Build Solution). Once built, then run the project (Debug < Start without debugging). You can debug if you want, it will just take longer to launch and isn’t necessary for this stage.
+### Prerequisites
+- [Node.js](https://nodejs.org/) (Download and install)
+- [Visual Studio](https://visualstudio.microsoft.com/) (Download and install)
 
-User credentials:
-There are two types of users, Trainers and Trainees.
-Trainer:
-Username: joe@joe.com
-Password: joepassword
+### Steps
+1. Clone/download the project from GitHub.
+2. Open the solution file in Visual Studio (File > Open).
+3. Navigate to the `WebAppProj` folder in Command Prompt or PowerShell.
+4. Run the command `npm install` to install project dependencies. (Note: Ensure Node.js is installed correctly and try running as administrator if any issues occur.)
 
-Trainee:
-Username: jim@jim.com
-Password: jimpassword
+### Configuration
+- Update the valid issuer and valid audience in `appsettings.json` to match the localhost port number on your machine.
 
-You can also register a new user, however the existing users have existing groups, quizzes and results.
+## Database Setup
 
-Trainers are able to:
-•	Create a group.
-•	Add and remove trainees to and from that group.
-•	Create quizzes for trainees in that group.
-•	View a list of quizzes they have created and view them individually.
-•	View trainee results by quiz.
-•	Export results to CSV file.
+### Prerequisites
+- [SQL Server](https://www.microsoft.com/en-us/sql-server/sql-server-downloads)
+- [SQL Server Management Studio](https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms)
 
-Trainees are able to:
-•	Complete quizzes available to them and view their results.
-•	View a list of uncompleted quizzes available to them that they can complete.
-•	View a list of completed quizzes and their score for that quiz.
+### Steps
+1. Restore the database from the `.bak` file located in the `Database > Backup` folder.
+   - Follow [these instructions](https://campus.barracuda.com/product/backup/doc/15892599/how-to-restore-a-microsoft-sql-database-to-a-point-in-time/) for assistance.
+2. Obtain the connection string and replace the existing string in `appsettings.json` in Visual Studio.
+   - Ensure the general format of the new connection string matches the old one.
 
-Both users are able to:
-•	Adjust accessibility settings such as the high contrast theme.
+## Launching/Running the Project
 
+1. Build the solution in Visual Studio (Build > Build Solution).
+2. Run the project (Debug > Start without debugging).
+   - Debugging is optional but might take longer to launch.
 
-Explanation of code and project structure.
-ClientApp
-Controllers
+## User Credentials
 
-Tables
-StoredProcedures
-UserDefinedData.
+### Trainers
+- **Username:** joe@joe.com
+- **Password:** joepassword
+
+### Trainees
+- **Username:** jim@jim.com
+- **Password:** jimpassword
+
+You can also register a new user, but existing users have associated groups, quizzes, and results.
+
+## User Features
+
+### Trainers can:
+- Create a group.
+- Add and remove trainees to and from that group.
+- Create quizzes for trainees in that group.
+- View a list of quizzes they have created and view them individually.
+- View trainee results by quiz.
+- Export results to CSV file.
+
+### Trainees can:
+- Complete quizzes available to them and view their results.
+- View a list of uncompleted quizzes available to them that they can complete.
+- View a list of completed quizzes and their score for each quiz.
+
+### Both Users can:
+- Adjust accessibility settings, such as the high contrast theme.
+
+## Explanation of Code and Project Structure
+
+### ClientApp
+- The frontend application.
+
+### Controllers
+- Backend controllers.
+
+### Tables
+- Database tables.
+
+### Stored Procedures
+- Database stored procedures.
+
+### User Defined Data
+- Additional user-defined data.
+
+## License
+
+This project is licensed under the [MIT License](LICENSE). See the [LICENSE](LICENSE) file for details.
