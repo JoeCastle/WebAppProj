@@ -1,6 +1,8 @@
 # WebAppProj
 
-This repository contains the codebase for my university final year project.
+This repository contains the codebase for my university final year project which served as a key component of my dissertation. The primary focus of this project was to design and implement a web application with a strong emphasis on accessibility.
+
+For my dissertation, I explored the critical role of accessibility in web applications, aiming to create an inclusive user experience for individuals with diverse abilities. The project aligns with the principles of universal design, ensuring that the application is usable by people of all abilities and disabilities.
 
 ## Project Setup
 
